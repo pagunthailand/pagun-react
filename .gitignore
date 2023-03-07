@@ -20,7 +20,8 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-project.xcworkspace
+PagunLocal.xcodeproj
+PagunLocal.xcworkspace
 
 # Android/IntelliJ
 #

@@ -115,22 +115,19 @@ export default function MainMenu() {
           headerShown: false ,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
+            var path_ = "../assets/Logo/Option.png"
             if (route.name === 'สินค้า') {
-              iconName = focused
-                ? 'ios-information-circle'
-                : 'ios-information-circle-outline';
-            } else if (route.name === 'ประวัติ') {
-              iconName = focused ? 'ios-list' : 'ios-list-outline';
+             if(!focused) {
+              return  <Image source={require('../assets/Logo/Option.png')} style={{width: 10,height: 20,}}/>;
+             }else{
+              return  <Image source={require('../assets/Logo/BG.png')} style={{width: 10,height: 20,}}/>;
+             }
+            } else {
+              return  <Image source={require('../assets/Logo/Option.png')} style={{width: 10,height: 20,}}/>;
             }
-            var path = "../assets/Logo/Option.png"
+           
             // You can return any component that you like here!
-            return  <Image source={require(path)}
-            style={{
-              width: 10,
-              height: 20,
-              marginLeft: 5,
-            }}
-          />;
+            
           },
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',

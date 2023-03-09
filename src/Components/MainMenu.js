@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {View, Image,Pressable, Alert} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Splash from './splash';
@@ -110,8 +111,31 @@ const Tab = createBottomTabNavigator();
 export default function MainMenu() {
   return (
          <NavigationContainer>
-        <Tab.Navigator screenOptions={{ headerShown: false }}>
-          <Tab.Screen name="สินค้า" component={ProductStackScreen} />
+        <Tab.Navigator screenOptions={({ route }) => ({
+          headerShown: false ,
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            if (route.name === 'สินค้า') {
+              iconName = focused
+                ? 'ios-information-circle'
+                : 'ios-information-circle-outline';
+            } else if (route.name === 'ประวัติ') {
+              iconName = focused ? 'ios-list' : 'ios-list-outline';
+            }
+            var path = "../assets/Logo/Option.png"
+            // You can return any component that you like here!
+            return  <Image source={require(path)}
+            style={{
+              width: 10,
+              height: 20,
+              marginLeft: 5,
+            }}
+          />;
+          },
+          tabBarActiveTintColor: 'tomato',
+          tabBarInactiveTintColor: 'gray',
+        })}>
+          <Tab.Screen name="Product" component={ProductStackScreen} />
           <Tab.Screen name="ประวัติ" component={HistoryStackScreen} />
           <Tab.Screen name="แจ้งเตือน" component={NoticationStackScreen} />
           <Tab.Screen name="ผู้ใช้" component={UserStackScreen} />

@@ -4,8 +4,9 @@
 import React from 'react';
 
 import {View, Image,Text} from 'react-native';
-
+import { useRoute } from '@react-navigation/native';
 const ActionBarLogo = () => {
+  const route = useRoute();
   return (
     <View style={{flexDirection: 'row'}}>
       <Image
@@ -22,7 +23,7 @@ const ActionBarLogo = () => {
         marginLeft:15,
         fontWeight:'700',
         color:'#000000'
-       }}>สินค้า</Text>
+       }}>{route.name}</Text>
     </View>
   );
 };

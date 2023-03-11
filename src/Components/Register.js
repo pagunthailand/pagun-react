@@ -1,8 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Dimensions ,Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert } from 'react-native';
 import ButtonRegister from '../Other/ButtonRegister';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { send_OTP_Action } from '../Model/Action';
 
-const Register = () => {
+
+
+
+const Register = ({navigation}) => {
+          const [phoneNumber, setPhoneNumber] = useState('');
+          const [phone, setphone] = useState({ phone: '' });
+
+          const send_OTP = async () => {
+                    phone.phone = phoneNumber;
+                    // alert(phone.phone + '333');
+                    var response = await send_OTP_Action(phone);
+                    if (response.ResultStatus == 200) {
+                              AsyncStorage.setItem('PhoneRegister', phoneNumber);
+                              AsyncStorage.setItem('OTPtoken', response.Result);
+                              navigation.navigate('VartifyOTP', {name: 'VartifyOTP'})
+                              // AsyncStorage.getItem('PhoneRegister', (err, result) => {
+
+                              //           alert("res " + JSON.stringify(result))
+                              // });
+
+                    } else {
+                              alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์")
+                    }
+
+          };
+
           return (
                     <View
                               style={{
@@ -14,12 +41,15 @@ const Register = () => {
                                         <Text style={style.title}>ระบุหมายเลขโทรศัพท์ ที่ใช้ในการลงทะเบียนของคุณ</Text>
                                         <Text style={style.subtitle}>กรุณาอ่านข้อกำหนดและนโยบายให้ครบถ้วนก่อนดำเนินรายการต่อไป เพื่อสิทธิประโยชน์ของท่าน</Text>
                                         <TextInput style={style.inputPhone}
-                                                  placeholder="เบอร์โทรศัพท์"></TextInput>
+                                                  value={phoneNumber}
+                                                  onChangeText={text => setPhoneNumber(text)}
+                                                  maxLength={10}
+                                                  placeholder="เบอร์โทรศัพท์ 10 หลัก"></TextInput>
 
-                              <ButtonRegister style={style.ButtonPhone} onPress={() => alert('Button pressed')} title="ต่อไป" />   
+                                        <ButtonRegister style={style.ButtonPhone} onPress={() => send_OTP()} title="ต่อไป" />
                               </View>
                               <View style={{ backgroundColor: '#F6F6F6', flex: 0.05 }} >
-                              <Text style={style.title_end}>ข้อกำหนด</Text> 
+                                        <Text style={style.title_end}>ข้อกำหนด</Text>
                               </View>
 
                     </View>
@@ -28,9 +58,9 @@ const Register = () => {
 
 }
 
-const { width } = Dimensions.get('window');
-const isSmallScreen = width <= 375; // Define the breakpoint for small screens
 
+const { width } = Dimensions.get('window');
+const isSmallScreen = width <= 375;
 const style = StyleSheet.create({
           title: {
                     color: '#232323',
@@ -64,7 +94,7 @@ const style = StyleSheet.create({
                     borderColor: '#E5E5E5'
           },
           ButtonPhone: {
-                  
+
                     marginTop: 35,
                     marginLeft: 25,
                     marginRight: 25,

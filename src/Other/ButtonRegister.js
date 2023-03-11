@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     marginTop:45,
-    marginLeft: 45,
-    marginRight: 45,
+    marginLeft: '30%',
+    marginRight: '30%',
     
   },
   buttonText: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ButtonRegister = ({ onPress, title }) => (
+const ButtonRegister = ({ onPress, title  }) => (
   <TouchableOpacity onPress={onPress} style={styles.button}>
     <Text style={styles.buttonText}>{title}</Text>
   </TouchableOpacity>

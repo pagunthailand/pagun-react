@@ -1,11 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import Splash from './src/Components/splash'
 import MainMenu from './src/Components/MainMenu'
+import Register from './src/Components/Register'
 
 const App = () => {
   return (
-    <MainMenu></MainMenu>
+    <Register></Register>
   )
 }
 

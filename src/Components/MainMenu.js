@@ -2,10 +2,6 @@ import * as React from 'react';
 import { View, Image, Pressable, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Splash from './splash';
-import ProfileScreen from './ProfileScreen';
-import { Text } from 'react-native/types';
-import HomeScreen from './HomeScreen';
 import ActionBarOption from './ActionBarOption';
 import ActionBarLogo from './ActionBarLogo';
 import Setting from './Setting';
@@ -14,48 +10,6 @@ import History from './History';
 import Notication from './Notication';
 import User from './User';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-
-// const MainMenu = () => {
-//   return (
-//         //   <NavigationContainer>
-//         //   <Stack.Navigator>
-//         //     <Stack.Screen
-//         //       name="Home"
-//         //       component={HomeScreen}
-//         //       options={{
-//         //             title: '',
-//         //             headerStyle: {
-//         //                       backgroundColor: '#F6F6F6', //Set Header color
-//         //                     },
-
-//         //                     headerTitleStyle: {
-//         //                       fontWeight: 'bold',
-//         //                       alignItems: 'flex-start',
-//         //                     },
-//         //                     headerLeft: () => <ActionBarLogo />,
-//         //                     headerRight: () => <ActionBarOption />,
-
-//         //   }}
-//         //     ></Stack.Screen>
-//         //     <Stack.Screen name="Profile" component={ProfileScreen} />
-//         //     <Stack.Screen name="Setting" component={Setting} />
-//         //   </Stack.Navigator>
-//         // </NavigationContainer>
-
-//       //   <NavigationContainer>
-//       //   <Tab.Navigator screenOptions={{ headerShown: false }}>
-//       //     <Tab.Screen name="Product" component={ProductStackScreen} />
-//       //     <Tab.Screen name="History" component={HistoryStackScreen} />
-//       //     <Tab.Screen name="Notication" component={NoticationStackScreen} />
-//       //     <Tab.Screen name="User" component={UserStackScreen} />
-//       //   </Tab.Navigator>
-//       // </NavigationContainer>
-
-//       <></>
-
-//   )
-// }
 
 const ProductStack = createNativeStackNavigator();
 function ProductStackScreen() {
@@ -67,7 +21,6 @@ function ProductStackScreen() {
           headerStyle: {
             backgroundColor: '#F6F6F6', //Set Header color
           },
-
           headerTitleStyle: {
             fontWeight: 'bold',
             alignItems: 'flex-start',

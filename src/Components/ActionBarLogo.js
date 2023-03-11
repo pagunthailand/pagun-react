@@ -1,5 +1,3 @@
-// 3 Ways to Add Image Icon Inside Navigation Bar in React Native
-// https://aboutreact.com/react-native-image-icon-inside-navigation-bar/
 
 import React from 'react';
 

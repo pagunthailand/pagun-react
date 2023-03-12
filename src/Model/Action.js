@@ -73,3 +73,37 @@ export const RegisterUser_Action = async (input) => {
                     };
           }
 };
+
+export const GetUserByid_Action = async (input) => {
+          var response = (await axios.get(Base_url + '/api/User/GetByid/'+input))
+          if (response.status == 200) {
+                    return {
+                              Result: response.data.value,
+                              ResultStatus : response.data.statusCode,
+                              StatusCode : response.status 
+                    }
+          } else {
+                    return {
+                              StatusCode: response.status,
+                              ResultStatus : response.data.statusCode,
+                              StatusCode : response.status
+                    };
+          }
+};
+
+export const UpdateUser_Action = async (input) => {
+          var response = (await axios.post(Base_url + '/api/User/UpdateUser/',input))
+          if (response.status == 200) {
+                    return {
+                              Result: response.data.value,
+                              ResultStatus : response.data.statusCode,
+                              StatusCode : response.status 
+                    }
+          } else {
+                    return {
+                              StatusCode: response.status,
+                              ResultStatus : response.data.statusCode,
+                              StatusCode : response.status
+                    };
+          }
+};

@@ -11,7 +11,7 @@ const ActionBarLogo = () => {
         source={require('../assets/Logo/BG.png')}
         style={{
           width: 100,
-          height: 25,
+          height: 27,
           marginLeft: 5,
         }}
        

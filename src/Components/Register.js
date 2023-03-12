@@ -8,7 +8,21 @@ import Global from '../Global';
 
 
 
-const Register = ({navigation}) => {
+const Register = ({ navigation }) => {
+
+          AsyncStorage.getItem('isLoggedIn').then((res) => {
+
+                    if (res == 'true') {
+                              Global.isLogin = 'true';
+                              // alert('if -- >' + Global.isLogin + JSON.stringify(res))
+                              navigation.navigate('สินค้า')
+                    } else {
+                              Global.isLogin = 'false';
+                              navigation.navigate('Register')
+                    }
+
+          })
+
           const [phoneNumber, setPhoneNumber] = useState('');
           const [phone, setphone] = useState({ phone: '' });
 
@@ -19,18 +33,20 @@ const Register = ({navigation}) => {
                     if (response.ResultStatus == 200) {
                               AsyncStorage.setItem('PhoneRegister', phoneNumber);
                               AsyncStorage.setItem('OTPtoken', response.Result);
-                              Global.userPhone =  phoneNumber;
-                              Global.OTPToken =  response.Result;
-                              navigation.navigate('VartifyOTP', {name: 'VartifyOTP'})
+                              Global.userPhone = phoneNumber;
+                              Global.OTPToken = response.Result;
+                              navigation.navigate('VartifyOTP', { name: 'VartifyOTP' })
                               // AsyncStorage.getItem('PhoneRegister', (err, result) => {
 
                               //           alert("res " + JSON.stringify(result))
                               // });
 
                     } else {
-                              Global.userPhone =  phoneNumber;
-                               navigation.navigate('สินค้า', {name: 'สินค้า'})
-                              alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์")
+                              Global.userPhone = phoneNumber;
+                              AsyncStorage.setItem('isLoggedIn', 'true');
+                              Global.isLogin = 'true'
+                              navigation.navigate('สินค้า', { name: 'สินค้า' })
+                              alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
                     }
 
           };

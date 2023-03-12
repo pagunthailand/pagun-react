@@ -1,6 +1,6 @@
 const Global = {
           userId: '',
-          isLogin: false,
+          isLogin: '',
           userPhone: '',
           googleToken: '',
           OTPToken: ''

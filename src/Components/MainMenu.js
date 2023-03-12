@@ -14,6 +14,7 @@ import Register from './Register';
 import NewUser from './NewUser';
 import VartifyOTP from './VartifyOTP';
 import Global from '../Global';
+import Onpage from './Onpage';
 
 const ProductStack = createNativeStackNavigator();
 function ProductStackScreen() {
@@ -167,20 +168,20 @@ export default function MainMenu() {
             elevation: 0
           },
           // showLabel: false,
-          tabBarStyle :  {display : route.name == 'Register' ? 'none' : 'flex' && route.name == 'VartifyOTP' ? 'none' : 'flex' && route.name == 'NewUser' ? 'none' : 'flex'},
+          tabBarStyle :  {display : route.name == 'Register' ? 'none' : 'flex' && route.name == 'VartifyOTP' ? 'none' : 'flex' && route.name == 'NewUser' ? 'none' : 'flex' && route.name == 'Onpage' ? 'none' : 'flex'},
           tabBarActiveTintColor: '#000000',
           tabBarInactiveTintColor: 'gray',
         })}>
 
-
-        <Tab.Screen name="Register" component={Register} options={{ tabBarItemStyle: { display: 'none', } }} />
-        <Tab.Screen name="VartifyOTP" component={VartifyOTP} options={{ tabBarItemStyle: { display: 'none', } }} />
-        <Tab.Screen name="NewUser" component={NewUser} options={{ tabBarItemStyle: { display: 'none', } }} />
-
+        <Tab.Screen name="Onpage" component={Onpage}  options={{ tabBarItemStyle: { display: 'none', } }}/>
         <Tab.Screen name="สินค้า" component={ProductStackScreen} />
         <Tab.Screen name="ประวัติ" component={HistoryStackScreen} />
         <Tab.Screen name="แจ้งเตือน" component={NoticationStackScreen} />
         <Tab.Screen name="ผู้ใช้" component={UserStackScreen}/>
+
+        <Tab.Screen name="Register" component={Register} options={{ tabBarItemStyle: { display: 'none', } }} />
+        <Tab.Screen name="VartifyOTP" component={VartifyOTP} options={{ tabBarItemStyle: { display: 'none', } }} />
+        <Tab.Screen name="NewUser" component={NewUser} options={{ tabBarItemStyle: { display: 'none', } }} />
 
       </Tab.Navigator>
 

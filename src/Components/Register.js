@@ -36,16 +36,12 @@ const Register = ({ navigation }) => {
                               Global.userPhone = phoneNumber;
                               Global.OTPToken = response.Result;
                               navigation.navigate('VartifyOTP', { name: 'VartifyOTP' })
-                              // AsyncStorage.getItem('PhoneRegister', (err, result) => {
-
-                              //           alert("res " + JSON.stringify(result))
-                              // });
 
                     } else {
-                              Global.userPhone = phoneNumber;
-                              AsyncStorage.setItem('isLoggedIn', 'true');
-                              Global.isLogin = 'true'
-                              navigation.navigate('สินค้า', { name: 'สินค้า' })
+                              // Global.userPhone = phoneNumber;
+                              // AsyncStorage.setItem('isLoggedIn', 'true');
+                              // Global.isLogin = 'true'
+                              // navigation.navigate('สินค้า', { name: 'สินค้า' })
                               alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
                     }
 

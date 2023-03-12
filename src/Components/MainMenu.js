@@ -161,12 +161,6 @@ export default function MainMenu() {
             }
 
           },
-          tabBarStyle: {
-            backgroundColor: '#F6F6F6',
-            borderTopWidth: 0,
-            borderTopColor: '#F6F6F6',
-            elevation: 0
-          },
           // showLabel: false,
           tabBarStyle :  {display : route.name == 'Register' ? 'none' : 'flex' && route.name == 'VartifyOTP' ? 'none' : 'flex' && route.name == 'NewUser' ? 'none' : 'flex' && route.name == 'Onpage' ? 'none' : 'flex'},
           tabBarActiveTintColor: '#000000',

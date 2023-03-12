@@ -41,7 +41,7 @@ const Register = ({ navigation }) => {
                               // Global.userPhone = phoneNumber;
                               // AsyncStorage.setItem('isLoggedIn', 'true');
                               // Global.isLogin = 'true'
-                              // navigation.navigate('สินค้า', { name: 'สินค้า' })
+                              navigation.navigate('NewUser')
                               alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
                     }
 

@@ -3,16 +3,15 @@ import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert } from 're
 import ButtonRegister from '../Other/ButtonRegister';
 import { RegisterUser_Action } from '../Model/Action';
 import Global from '../Global';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NewUser = ({navigation}) => {
 
-          const [Input, setInput] = useState({
-                    "name": "",
-                    "lastName": "",
-                    "emailAddress": "",
-                    "phoneNumber": "",
-                    "fcmToken": ""
-          });
+        
+          const [name, setName] = useState('');
+          const [lastName, setlastName] = useState('');
+          const [emailAddress, setemailAddress] = useState('');
+
           const [param, setparam] = useState(
                     {
                               "name": "",
@@ -24,14 +23,25 @@ const NewUser = ({navigation}) => {
 
           const Create_User = async () => {
                     param.phoneNumber = Global.userPhone;
+                    param.name = name;
+                    param.lastName = lastName;
+                    param.emailAddress = emailAddress;
                     param.fcmToken = Global.googleToken;
+                    //alert(JSON.stringify(param))
                     var response = await RegisterUser_Action(param);
                     //alert(JSON.stringify(response) )
                     if (response.ResultStatus == 200) {
+                              Global.userId = response.Result.id;
+                              Global.isLogin = true;
+                              navigation.navigate('สินค้า')
+                              AsyncStorage.setItem('sessionID', Global.userId.toString());
+                              AsyncStorage.setItem('isLoggedIn', 'true');
                               navigation.navigate('สินค้า')
                     } else {
+                              Global.isLogin = false;
+                              AsyncStorage.setItem('isLoggedIn', 'true');
                               alert("ไม่สามารถบันทึกข้อมูลได้")
-                              // navigation.navigate('Register')
+                              navigation.navigate('Register')
                     }
 
           };
@@ -47,16 +57,16 @@ const NewUser = ({navigation}) => {
                                         <Text style={style.title}>ผู้ใช้ใหม่</Text>
                                         <Text style={style.subtitle}>ข้อมูลที่บันทึกต่อไปนี้จะต้องเป็นข้อมูลจริง เพื่อปกป้องสิทธิประโยชน์ของท่าน</Text>
                                         <TextInput style={style.inputDetail}
-                                                  value={Input.name}
-                                                  onChangeText={text => setInput(text)}
+                                                  value={name}
+                                                  onChangeText={text => setName(text)}
                                                   placeholder="ชื่อจริง"></TextInput>
                                         <TextInput style={style.inputDetail}
-                                                  value={Input.lastName}
-                                                  onChangeText={text => setInput(text)}
+                                                  value={lastName}
+                                                  onChangeText={text => setlastName(text)}
                                                   placeholder="นามสกุลจริง"></TextInput>
                                         <TextInput style={style.inputDetail}
-                                                  value={Input.emailAddress}
-                                                  onChangeText={text => setInput(text)}
+                                                  value={emailAddress}
+                                                  onChangeText={text => setemailAddress(text)}
                                                   placeholder="อีเมลล์"></TextInput>
 
                                         <ButtonRegister onPress={() => Create_User()} title="บันทึก" />

@@ -13,7 +13,6 @@ const VartifyOTP = ({ navigation }) => {
       const [param, setparam] = useState({ pin: '', token: '' });
 
       const send_VartifyOTP = async () => {
-            alert( Global.userPhone)
             AsyncStorage.getItem('OTPtoken', async (err, result) => {
                   param.pin = Pin;
                   param.token = result;

@@ -4,7 +4,6 @@ const Global = {
           userPhone: '',
           googleToken: '',
           OTPToken: ''
-
 };
 
 export default Global;

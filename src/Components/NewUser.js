@@ -1,8 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Dimensions ,Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert } from 'react-native';
 import ButtonRegister from '../Other/ButtonRegister';
+import { RegisterUser_Action } from '../Model/Action';
+import Global from '../Global';
 
-const NewUser = () => {
+const NewUser = ({navigation}) => {
+
+          const [Input, setInput] = useState({
+                    "name": "",
+                    "lastName": "",
+                    "emailAddress": "",
+                    "phoneNumber": "",
+                    "fcmToken": ""
+          });
+          const [param, setparam] = useState(
+                    {
+                              "name": "",
+                              "lastName": "",
+                              "emailAddress": "",
+                              "phoneNumber": "",
+                              "fcmToken": ""
+                    });
+
+          const Create_User = async () => {
+                    param.phoneNumber = Global.userPhone;
+                    param.fcmToken = Global.googleToken;
+                    var response = await RegisterUser_Action(param);
+                    //alert(JSON.stringify(response) )
+                    if (response.ResultStatus == 200) {
+                              navigation.navigate('สินค้า')
+                    } else {
+                              alert("ไม่สามารถบันทึกข้อมูลได้")
+                              // navigation.navigate('Register')
+                    }
+
+          };
+
           return (
                     <View
                               style={{
@@ -13,17 +46,23 @@ const NewUser = () => {
                               <View style={{ backgroundColor: '#F6F6F6', flex: 0.80 }} >
                                         <Text style={style.title}>ผู้ใช้ใหม่</Text>
                                         <Text style={style.subtitle}>ข้อมูลที่บันทึกต่อไปนี้จะต้องเป็นข้อมูลจริง เพื่อปกป้องสิทธิประโยชน์ของท่าน</Text>
-                                        <TextInput style={style.inputDetail} 
+                                        <TextInput style={style.inputDetail}
+                                                  value={Input.name}
+                                                  onChangeText={text => setInput(text)}
                                                   placeholder="ชื่อจริง"></TextInput>
-                                                   <TextInput style={style.inputDetail} 
+                                        <TextInput style={style.inputDetail}
+                                                  value={Input.lastName}
+                                                  onChangeText={text => setInput(text)}
                                                   placeholder="นามสกุลจริง"></TextInput>
-                                                   <TextInput style={style.inputDetail} 
+                                        <TextInput style={style.inputDetail}
+                                                  value={Input.emailAddress}
+                                                  onChangeText={text => setInput(text)}
                                                   placeholder="อีเมลล์"></TextInput>
 
-                              <ButtonRegister  onPress={() => alert('Button pressed')} title="บันทึก" />   
+                                        <ButtonRegister onPress={() => Create_User()} title="บันทึก" />
                               </View>
                               <View style={{ backgroundColor: '#F6F6F6', flex: 0.05 }} >
-                              <Text style={style.title_end}>ข้อกำหนด</Text> 
+                                        <Text style={style.title_end}>ข้อกำหนด</Text>
                               </View>
 
                     </View>
@@ -48,7 +87,7 @@ const style = StyleSheet.create({
                     color: '#F0C3C3',
                     fontSize: isSmallScreen ? 12 : 18,
                     marginTop: 25,
-                    marginBottom:25,
+                    marginBottom: 25,
                     marginLeft: 25,
                     marginRight: 25,
                     textAlign: 'left',
@@ -69,7 +108,7 @@ const style = StyleSheet.create({
                     borderColor: '#E5E5E5'
           },
           ButtonPhone: {
-                  
+
                     marginTop: 35,
                     marginLeft: 25,
                     marginRight: 25,

@@ -29,7 +29,7 @@ const Register = ({navigation}) => {
 
                     } else {
                               Global.userPhone =  phoneNumber;
-                              // navigation.navigate('VartifyOTP', {name: 'VartifyOTP'})
+                               navigation.navigate('สินค้า', {name: 'สินค้า'})
                               alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์")
                     }
 

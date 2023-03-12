@@ -58,7 +58,7 @@ export const Check_Olduser_Action = async (input) => {
 };
 
 export const RegisterUser_Action = async (input) => {
-          var response = (await axios.get(Base_url + '/api/User/RegisterUser'+input))
+          var response = (await axios.post(Base_url + '/api/User/RegisterUser',input))
           if (response.status == 200) {
                     return {
                               Result: response.data.value,

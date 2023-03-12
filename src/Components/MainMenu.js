@@ -120,6 +120,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 export default function MainMenu() {
 
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -159,7 +160,14 @@ export default function MainMenu() {
             }
 
           },
-          tabBarStyle: { display: route.name == 'Register' || route.name == 'VartifyOTP' || route.name == 'NewUser' },
+          tabBarStyle: {
+            backgroundColor: '#F6F6F6',
+            borderTopWidth: 0,
+            borderTopColor: '#F6F6F6',
+            elevation: 0
+          },
+          // showLabel: false,
+          tabBarStyle :  {display : route.name == 'Register' ? 'none' : 'flex' && route.name == 'VartifyOTP' ? 'none' : 'flex' && route.name == 'NewUser' ? 'none' : 'flex'},
           tabBarActiveTintColor: '#000000',
           tabBarInactiveTintColor: 'gray',
         })}>
@@ -172,7 +180,7 @@ export default function MainMenu() {
         <Tab.Screen name="สินค้า" component={ProductStackScreen} />
         <Tab.Screen name="ประวัติ" component={HistoryStackScreen} />
         <Tab.Screen name="แจ้งเตือน" component={NoticationStackScreen} />
-        <Tab.Screen name="ผู้ใช้" component={UserStackScreen} />
+        <Tab.Screen name="ผู้ใช้" component={UserStackScreen}/>
 
       </Tab.Navigator>
 

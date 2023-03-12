@@ -3,6 +3,8 @@ import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert } from 're
 import ButtonRegister from '../Other/ButtonRegister';
 import { send_VartifyOTP_Action, Check_Olduser_Action } from '../Model/Action';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Global from '../Global';
+
 
 
 const VartifyOTP = ({ navigation }) => {
@@ -20,7 +22,9 @@ const VartifyOTP = ({ navigation }) => {
                               await Check_Olduser(result);
                         });
                   } else {
-                        alert("รหัสยืนยัน OTP ไม่ถูกต้อง")
+                        Globalobal.isLogin = true;
+                        //navigation.navigate('PathHome', { name: 'PathHome' })
+                        // alert("รหัสยืนยัน OTP ไม่ถูกต้อง")
                   }
             });
       };
@@ -30,19 +34,28 @@ const VartifyOTP = ({ navigation }) => {
             var response = await Check_Olduser_Action(phone);
             if (response.ResultStatus == 200) {
                   if (!!response.Result) {
-                        AsyncStorage.setItem('sessionID', response.Result.id);
+
+                        Global.userId = response.Result.id;
+                        Global.isLogin = true;
+                        navigation.navigate('MainMenu', { name: 'MainMenu' })
+                        AsyncStorage.setItem('sessionID', Global.userId.toString());
+                        AsyncStorage.setItem('isLoggedIn', 'true');
+
                   } else {
+                        Global.isLogin = false;
                         navigation.navigate('NewUser', { name: 'NewUser' })
                   }
 
             } else {
-                  alert("รหัสยืนยัน OTP ไม่ถูกต้อง")
-            }
+                  Global.isLogin = true;
+                  // navigation.navigate('MainMenu', { name: 'MainMenu' })
+                  // alert("รหัสยืนยัน OTP ไม่ถูกต้อง")
+            }     
 
       };
 
       return (
-            <View
+            <View if
                   style={{
                         flexDirection: 'column',
                         height: '100%',

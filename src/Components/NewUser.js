@@ -9,8 +9,8 @@ const NewUser = () => {
                                         flexDirection: 'column',
                                         height: '100%',
                               }}>
-                              <View style={{ backgroundColor: '#F6F6F6', flex: 0.05 }} />
-                              <View style={{ backgroundColor: '#F6F6F6', flex: 0.95 }} >
+                              <View style={{ backgroundColor: '#F6F6F6', flex: 0.15 }} />
+                              <View style={{ backgroundColor: '#F6F6F6', flex: 0.80 }} >
                                         <Text style={style.title}>ผู้ใช้ใหม่</Text>
                                         <Text style={style.subtitle}>ข้อมูลที่บันทึกต่อไปนี้จะต้องเป็นข้อมูลจริง เพื่อปกป้องสิทธิประโยชน์ของท่าน</Text>
                                         <TextInput style={style.inputDetail} 

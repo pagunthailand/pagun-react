@@ -10,6 +10,10 @@ import History from './History';
 import Notication from './Notication';
 import User from './User';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Register from './Register';
+import NewUser from './NewUser';
+import VartifyOTP from './VartifyOTP';
+import Global from '../Global';
 
 const ProductStack = createNativeStackNavigator();
 function ProductStackScreen() {
@@ -118,51 +122,57 @@ export default function MainMenu() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-          var path_ = "../assets/Logo/Option.png"
-          if (route.name === 'สินค้า') {
-            if (!focused) {
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            var path_ = "../assets/Logo/Option.png"
+            if (route.name === 'สินค้า') {
+              if (!focused) {
 
-              return <Image source={require('../assets/Navi/Home_inavtive.png')} style={{ width: 30, height: 30, }} />;
-            } else {
-              return <Image source={require('../assets/Navi/Home_active.png')} style={{ width: 30, height: 30, }} />;
+                return <Image source={require('../assets/Navi/Home_inavtive.png')} style={{ width: 30, height: 30, }} />;
+              } else {
+                return <Image source={require('../assets/Navi/Home_active.png')} style={{ width: 30, height: 30, }} />;
+              }
             }
-          }
-          else if (route.name === 'ประวัติ') {
-            if (!focused) {
-              return <Image source={require('../assets/Navi/Histy_inactive.png')} style={{ width: 30, height: 30, }} />;
-            } else {
-              return <Image source={require('../assets/Navi/Histy_active.png')} style={{ width: 30, height: 30, }} />;
+            else if (route.name === 'ประวัติ') {
+              if (!focused) {
+                return <Image source={require('../assets/Navi/Histy_inactive.png')} style={{ width: 30, height: 30, }} />;
+              } else {
+                return <Image source={require('../assets/Navi/Histy_active.png')} style={{ width: 30, height: 30, }} />;
+              }
             }
-          }
-          else if (route.name === 'แจ้งเตือน') {
-            if (!focused) {
-              return <Image source={require('../assets/Navi/Notification_inactive.png')} style={{ width: 30, height: 30, }} />;
-            } else {
-              return <Image source={require('../assets/Navi/Notification_active.png')} style={{ width: 30, height: 30, }} />;
+            else if (route.name === 'แจ้งเตือน') {
+              if (!focused) {
+                return <Image source={require('../assets/Navi/Notification_inactive.png')} style={{ width: 30, height: 30, }} />;
+              } else {
+                return <Image source={require('../assets/Navi/Notification_active.png')} style={{ width: 30, height: 30, }} />;
+              }
             }
-          }
-          else if (route.name === 'ผู้ใช้') {
-            if (!focused) {
-              return <Image source={require('../assets/Navi/User_inactive.png')} style={{ width: 30, height: 30, }} />;
-            } else {
-              return <Image source={require('../assets/Navi/User_active.png')} style={{ width: 30, height: 30, }} />;
+            else if (route.name === 'ผู้ใช้') {
+              if (!focused) {
+                return <Image source={require('../assets/Navi/User_inactive.png')} style={{ width: 30, height: 30, }} />;
+              } else {
+                return <Image source={require('../assets/Navi/User_active.png')} style={{ width: 30, height: 30, }} />;
+              }
             }
-          }
 
-        },
-        tabBarActiveTintColor: '#000000',
-        tabBarInactiveTintColor: 'gray',
-      })}>
+          },
+          tabBarStyle: { display: route.name == 'Register' || route.name == 'VartifyOTP' || route.name == 'NewUser' },
+          tabBarActiveTintColor: '#000000',
+          tabBarInactiveTintColor: 'gray',
+        })}>
+
+
+        <Tab.Screen name="Register" component={Register} options={{ tabBarItemStyle: { display: 'none', } }} />
+        <Tab.Screen name="VartifyOTP" component={VartifyOTP} options={{ tabBarItemStyle: { display: 'none', } }} />
+        <Tab.Screen name="NewUser" component={NewUser} options={{ tabBarItemStyle: { display: 'none', } }} />
+
         <Tab.Screen name="สินค้า" component={ProductStackScreen} />
         <Tab.Screen name="ประวัติ" component={HistoryStackScreen} />
         <Tab.Screen name="แจ้งเตือน" component={NoticationStackScreen} />
         <Tab.Screen name="ผู้ใช้" component={UserStackScreen} />
-
-
 
       </Tab.Navigator>
 
@@ -171,6 +181,8 @@ export default function MainMenu() {
     </NavigationContainer>
 
   );
+
+
 
   function reset_icon(routename) {
 

@@ -13,31 +13,34 @@ const VartifyOTP = ({ navigation }) => {
       const [param, setparam] = useState({ pin: '', token: '' });
 
       const send_VartifyOTP = async () => {
+            alert( Global.userPhone)
             AsyncStorage.getItem('OTPtoken', async (err, result) => {
                   param.pin = Pin;
                   param.token = result;
                   var response = await send_VartifyOTP_Action(param);
                   if (response.ResultStatus == 200) {
+                        
                         AsyncStorage.getItem('PhoneRegister', async (err, result) => {
                               await Check_Olduser(result);
                         });
                   } else {
-                        Globalobal.isLogin = true;
+                       // Global.isLogin = true;
+                      
                         //navigation.navigate('PathHome', { name: 'PathHome' })
-                        // alert("รหัสยืนยัน OTP ไม่ถูกต้อง")
+                         alert("รหัสยืนยัน OTP ไม่ถูกต้อง")
                   }
             });
       };
 
       const Check_Olduser = async (phone) => {
-
+           
             var response = await Check_Olduser_Action(phone);
             if (response.ResultStatus == 200) {
                   if (!!response.Result) {
-
+                      
                         Global.userId = response.Result.id;
                         Global.isLogin = true;
-                        navigation.navigate('MainMenu', { name: 'MainMenu' })
+                        navigation.navigate('สินค้า')
                         AsyncStorage.setItem('sessionID', Global.userId.toString());
                         AsyncStorage.setItem('isLoggedIn', 'true');
 
@@ -60,10 +63,10 @@ const VartifyOTP = ({ navigation }) => {
                         flexDirection: 'column',
                         height: '100%',
                   }}>
-                  <View style={{ backgroundColor: '#F6F6F6', flex: 0.05 }} />
-                  <View style={{ backgroundColor: '#F6F6F6', flex: 0.9 }} >
+                  <View style={{ backgroundColor: '#F6F6F6', flex: 0.15 }} />
+                  <View style={{ backgroundColor: '#F6F6F6', flex: 0.8 }} >
                         <Text style={style.title}>ใส่รหัสยืนยัน</Text>
-                        <Text style={style.subtitle}>รหัสยืนยันส่งไปยัง SMS บนโทรศัพท์มือถือของท่านที่ได้ระบุหมายเลข 084000XXXX</Text>
+                        <Text style={style.subtitle}>รหัสยืนยันส่งไปยัง SMS บนโทรศัพท์มือถือของท่านที่ได้ระบุหมายเลข {Global.userPhone}</Text>
                         <TextInput style={style.inputOTP}
                               value={Pin}
                               onChangeText={text => setPin(text)}

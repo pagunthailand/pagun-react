@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert } from 're
 import ButtonRegister from '../Other/ButtonRegister';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { send_OTP_Action } from '../Model/Action';
+import Global from '../Global';
 
 
 
@@ -18,6 +19,8 @@ const Register = ({navigation}) => {
                     if (response.ResultStatus == 200) {
                               AsyncStorage.setItem('PhoneRegister', phoneNumber);
                               AsyncStorage.setItem('OTPtoken', response.Result);
+                              Global.userPhone =  phoneNumber;
+                              Global.OTPToken =  response.Result;
                               navigation.navigate('VartifyOTP', {name: 'VartifyOTP'})
                               // AsyncStorage.getItem('PhoneRegister', (err, result) => {
 
@@ -25,6 +28,8 @@ const Register = ({navigation}) => {
                               // });
 
                     } else {
+                              Global.userPhone =  phoneNumber;
+                              // navigation.navigate('VartifyOTP', {name: 'VartifyOTP'})
                               alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์")
                     }
 

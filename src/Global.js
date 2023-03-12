@@ -2,7 +2,8 @@ const Global = {
           userId: '',
           isLogin: false,
           userPhone: '',
-          googleToken: ''
+          googleToken: '',
+          OTPToken: ''
 
 };
 

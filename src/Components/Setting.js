@@ -1,5 +1,6 @@
 import { View, Text, Dimensions, StyleSheet, ScrollView, Switch, Alert } from 'react-native'
 import React, { useState } from 'react'
+import ButtonSave from '../Other/ButtonSave';
 
 const Setting = ({navigation, route}) => {
 
@@ -9,6 +10,13 @@ const Setting = ({navigation, route}) => {
     setIsEnabled(previousState => !previousState);
     //alert(isEnabled)
   };
+
+  const logout = async () => {
+    await AsyncStorage.setItem('isLoggedIn','false');
+    Global.isLogin = 'false'
+    navigation.navigate('Register'); // navigate back to the login page
+  };
+
 
   return (
     <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
@@ -31,6 +39,7 @@ const Setting = ({navigation, route}) => {
         <Text style={style.text_version}>เวอร์ชั่นก์ 1.0.0 (PG2302)</Text>
       </View>
 
+      <ButtonSave onPress={() => logout()} title="ออกจากระบบ"></ButtonSave>
      
     </ScrollView>
   </View>

@@ -125,6 +125,7 @@ export default function MainMenu() {
   return (
     <NavigationContainer>
       <Tab.Navigator
+     
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
@@ -163,6 +164,7 @@ export default function MainMenu() {
           },
           // showLabel: false,
           tabBarStyle :  {display : route.name == 'Register' ? 'none' : 'flex' && route.name == 'VartifyOTP' ? 'none' : 'flex' && route.name == 'NewUser' ? 'none' : 'flex' && route.name == 'Onpage' ? 'none' : 'flex'},
+          
           tabBarActiveTintColor: '#000000',
           tabBarInactiveTintColor: 'gray',
         })}>

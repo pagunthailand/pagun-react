@@ -57,7 +57,7 @@ const VartifyOTP = ({ navigation }) => {
       };
 
       return (
-            <View if
+            <View 
                   style={{
                         flexDirection: 'column',
                         height: '100%',

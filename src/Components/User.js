@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, TextInput, Dimensions ,ScrollView} from 'react-native'
+import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { GetUserByid_Action, UpdateUser_Action } from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ButtonSave from '../Other/ButtonSave';
+import ButtonRegisPhone from '../Other/ButtonRegisPhone';
 
-const User = () => {
+const User = ({navigation}) => {
 
   [_name, setName] = useState('');
   [lastName, setlastName] = useState('');
@@ -75,6 +76,10 @@ const User = () => {
       alert("ไม่สำเร็จ")
     }
   };
+
+  const LinkToRes =  () => {
+    navigation.navigate('VartifyOTPphone1')
+  };
   const handleNameChange = (value) => {
     setData(prevData => ({ ...prevData, name: value }));
   }
@@ -121,9 +126,13 @@ const User = () => {
         <Text style={style.title_header}>เพิ่มเบอร์โทรศัพท์ที่ใช้ลงทะเบียน</Text>
         <View style={style.title_box}>
 
+
           <Text style={style.text_title_input}>เบอร์โทรศัพท์  ลำดับที่ 1</Text>
-          <TextInput style={style.input}
-            placeholder="หากเบอร์ที่ 1"></TextInput>
+          <View style={style.set_button}>
+            <TextInput style={style.input}
+              placeholder="หากเบอร์ที่ 1"></TextInput>
+            <ButtonRegisPhone onPress={() => LinkToRes()}  title="5555" />
+          </View>
 
           <Text style={style.text_title_input}>เบอร์โทรศัพท์  ลำดับที่ 2</Text>
           <TextInput style={style.input}
@@ -178,7 +187,15 @@ const style = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderBottomColor: '#F6F6F6',
     borderBottomWidth: 1,
+    flex: 1,
   },
+  set_button: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    textAlign: 'right',
+    paddingHorizontal: 10,
+  }
 
 });
 

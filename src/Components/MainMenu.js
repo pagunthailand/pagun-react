@@ -15,6 +15,7 @@ import NewUser from './NewUser';
 import VartifyOTP from './VartifyOTP';
 import Global from '../Global';
 import Onpage from './Onpage';
+import VartifyOTPphone1 from './VartifyOTPphone1';
 
 const ProductStack = createNativeStackNavigator();
 function ProductStackScreen() {
@@ -34,7 +35,7 @@ function ProductStackScreen() {
           headerLeft: () => <ActionBarLogo />,
         }}
       ></ProductStack.Screen>
-
+     
     </ProductStack.Navigator>
   );
 }
@@ -103,6 +104,19 @@ function UserStackScreen() {
           headerLeft: () => <ActionBarLogo />,
           headerRight: () => <ActionBarOption />
         }} />
+        <UserStack.Screen name='VartifyOTPphone1' component={VartifyOTPphone1} 
+         options={{
+          title: 'ลงทะเบียน เบอร์ 1',
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: '#F6F6F6',
+          },
+          headerTintColor: '#000000',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} 
+        ></UserStack.Screen>
       <ProductStack.Screen options={{
         title: 'ตั้งค่า',
         headerShadowVisible: false,
@@ -170,6 +184,7 @@ export default function MainMenu() {
         })}>
 
         <Tab.Screen name="Onpage" component={Onpage}  options={{ tabBarItemStyle: { display: 'none', } }}/>
+        
         <Tab.Screen name="สินค้า" component={ProductStackScreen} />
         <Tab.Screen name="ประวัติ" component={HistoryStackScreen} />
         <Tab.Screen name="แจ้งเตือน" component={NoticationStackScreen} />

@@ -8,7 +8,6 @@ const Onpage = ({ navigation }) => {
 
                     if (res == 'true') {
                               Global.isLogin = 'true';
-                              // alert('if -- >' + Global.isLogin + JSON.stringify(res))
                               navigation.navigate('สินค้า')
                     } else {
                               Global.isLogin = 'false';

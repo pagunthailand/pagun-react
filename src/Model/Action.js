@@ -4,8 +4,6 @@ import { Alert, StatusBar } from 'react-native';
 
 Base_url = 'http://183.90.170.87:3000';
 
-
-
 export const send_OTP_Action = async (send_OTP) => {
           var response = (await axios.post(Base_url + '/api/sms/SendOTP', send_OTP))
           if (response.status == 200) {

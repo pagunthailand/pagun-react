@@ -1,10 +1,13 @@
 
 import React from 'react';
 
-import {View, Image,Text} from 'react-native';
+import {View, Image,Text, Dimensions} from 'react-native';
 import { useRoute } from '@react-navigation/native';
 const ActionBarLogo = () => {
   const route = useRoute();
+  const { width } = Dimensions.get('window');
+  const isSmallScreen = width <= 375;
+  
   return (
     <View style={{flexDirection: 'row'}}>
       <Image
@@ -17,7 +20,7 @@ const ActionBarLogo = () => {
        
       />
        <Text style={{
-        fontSize:20,
+        fontSize:isSmallScreen ? 15 : 20,
         marginLeft:15,
         fontWeight:'700',
         color:'#000000'

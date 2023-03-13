@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "655788872875",
+    "project_id": "pagun-local",
+    "storage_bucket": "pagun-local.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655788872875:android:c4b7d6d1266c9e694513ee",
+        "android_client_info": {
+          "package_name": "com.pagunlocal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "655788872875-rm43639q3ebdru33dcobqmocee54t5gn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt96CgYYeVjUNoO-HI4y1s9dYyWpO-R3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "655788872875-rm43639q3ebdru33dcobqmocee54t5gn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

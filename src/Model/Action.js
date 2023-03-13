@@ -105,3 +105,23 @@ export const UpdateUser_Action = async (input) => {
                     };
           }
 };
+
+export const updateFCMToken_Action = async (input,token,userid) => {
+          var response = (await axios.post(Base_url + '/api/User/updateFCMToken?userid='+userid+'&token='+token,input))
+          if (response.status == 200) {
+                    return {
+                              Result: response.data.value,
+                              ResultStatus : response.data.statusCode,
+                              StatusCode : response.status 
+                    }
+          } else {
+                    return {
+                              StatusCode: response.status,
+                              ResultStatus : response.data.statusCode,
+                              StatusCode : response.status
+                    };
+          }
+};
+
+
+

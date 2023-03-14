@@ -21,10 +21,10 @@ const App = () => {
       AsyncStorage.getItem('sessionID', async (err, result_sessionID) => {
         param.token = token;
         myVariable = result_sessionID;
-        param.userid = myVariable;
-        //Alert.alert('A new FCM message arrived!', JSON.stringify(param));
+        param.userid = myVariable; 
+        Alert.alert('A new FCM message arrived!', JSON.stringify(param));
         var response = await updateFCMToken_Action(param,token,param.userid);
-        if (response.ResultStatus == 200) {
+        if (response.ResultStatus == 200) { 
         } else {
         }
       });

@@ -58,8 +58,8 @@ const App = () => {
         myVariable = result_sessionID;
         param.id = myVariable;
         //Alert.alert('A new FCM message arrived!', JSON.stringify(param));
-         console.log('Token', Platform.OS, token)
-         console.log('param.userid', param.id ,result_sessionID);
+        //  console.log('Token', Platform.OS, token)
+        //  console.log('param.userid', param.id ,result_sessionID);
         if (param.id != null) {
           var response = await updateFCMToken_Action(param);
           if (response.ResultStatus == 200) {

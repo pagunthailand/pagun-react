@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert } from 'react-native';
 import ButtonRegister from '../Other/ButtonRegister';
-import { RegisterUser_Action } from '../Model/Action';
+import { RegisterUser_Action, SendNotificationSingleUser_Action } from '../Model/Action';
 import Global from '../Global';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -60,7 +60,7 @@ const NewUser = ({navigation}) => {
                               paramnoti.body = "สวัสดี " +  param.name + " ยินดีให้บริการด้วยความเชื่อมั่น  ^-^ ";
                               paramnoti.subtitle = "";
 
-                              console.log('paramnoti' , paramnoti);
+                              //console.log('paramnoti' , paramnoti);
                           var response = await SendNotificationSingleUser_Action(paramnoti);
                           if (response.ResultStatus == 200) {
                                 

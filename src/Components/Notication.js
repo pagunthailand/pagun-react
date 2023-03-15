@@ -124,16 +124,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F6F6F6',
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
   },
   title_box: {
     backgroundColor: '#FFFFFF',
@@ -152,7 +142,6 @@ const styles = StyleSheet.create({
   title_header: {
     color: '#00008B',
     fontSize: isSmallScreen ? 15 : 20,
-    marginTop: 0,
     marginLeft: 20,
     marginRight: 20,
     textAlign: 'right',

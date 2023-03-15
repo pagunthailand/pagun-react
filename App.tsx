@@ -10,7 +10,7 @@ import { PermissionsAndroid } from 'react-native';
 
 const App = () => {
   let myVariable: any;
-  const [param, setparam] = useState({ userid: null, token: '' });
+  const [param, setparam] = useState({ id: null, fcmToken: '' });
 
   PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
   requestUserPermission();
@@ -39,21 +39,24 @@ const App = () => {
 
   const defaultAppMessaging = firebase.messaging();
   async function registerAppWithFCM() {
+    myVariable = null;
     await messaging().registerDeviceForRemoteMessages();
     messaging().setAutoInitEnabled(true);
     messaging().getToken().then(token => {
       Global.googleToken = token;
       AsyncStorage.setItem('googleToken', token);
       AsyncStorage.getItem('sessionID', async (err, result_sessionID) => {
-        param.token = token;
+        param.fcmToken = token;
         myVariable = result_sessionID;
-        param.userid = myVariable;
+        param.id = myVariable;
         //Alert.alert('A new FCM message arrived!', JSON.stringify(param));
          console.log('Token', Platform.OS, token)
-         console.log('param.userid', param.userid);
-        if (param.userid != null) {
-          var response = await updateFCMToken_Action(param, token, param.userid);
+         console.log('param.userid', param.id ,result_sessionID);
+        if (param.id != null) {
+          var response = await updateFCMToken_Action(param);
           if (response.ResultStatus == 200) {
+            console.log('Update Token Success');
+            
           } else { 
           }
         } 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Image, Pressable, Alert ,BackHandler} from 'react-native';
+import { View, Image, Pressable, Alert, BackHandler } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ActionBarOption from './ActionBarOption';
@@ -16,6 +16,7 @@ import VartifyOTP from './VartifyOTP';
 import Global from '../Global';
 import Onpage from './Onpage';
 import VartifyOTPphone1 from './VartifyOTPphone1';
+import { updateFCMToken_Action } from '../Model/Action';
 
 const ProductStack = createNativeStackNavigator();
 function ProductStackScreen() {
@@ -35,7 +36,7 @@ function ProductStackScreen() {
           headerLeft: () => <ActionBarLogo />,
         }}
       ></ProductStack.Screen>
-     
+
     </ProductStack.Navigator>
   );
 }
@@ -104,8 +105,8 @@ function UserStackScreen() {
           headerLeft: () => <ActionBarLogo />,
           headerRight: () => <ActionBarOption />
         }} />
-        <UserStack.Screen name='VartifyOTPphone1' component={VartifyOTPphone1} 
-         options={{
+      <UserStack.Screen name='VartifyOTPphone1' component={VartifyOTPphone1}
+        options={{
           title: 'ลงทะเบียน เบอร์ 1',
           headerShadowVisible: false,
           headerStyle: {
@@ -115,8 +116,8 @@ function UserStackScreen() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-        }} 
-        ></UserStack.Screen>
+        }}
+      ></UserStack.Screen>
       <ProductStack.Screen options={{
         title: 'ตั้งค่า',
         headerShadowVisible: false,
@@ -134,11 +135,20 @@ function UserStackScreen() {
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 export default function MainMenu() {
+  const [param, setparam] = React.useState({ id: null, fcmToken: '' });
+ 
 
   React.useEffect(() => {
     const backAction = () => {
       return true; // disable back button
     };
+
+
+    param.fcmToken = Global.googleToken;
+    param.id = Global.userId;
+    updateFCMToken_Action(param);
+   
+   
 
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -148,11 +158,11 @@ export default function MainMenu() {
     return () => backHandler.remove();
   }, []);
 
- 
+
   return (
     <NavigationContainer>
       <Tab.Navigator
-     
+
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
@@ -190,18 +200,18 @@ export default function MainMenu() {
 
           },
           // showLabel: false,
-          tabBarStyle :  {display : route.name == 'Register' ? 'none' : 'flex' && route.name == 'VartifyOTP' ? 'none' : 'flex' && route.name == 'NewUser' ? 'none' : 'flex' && route.name == 'Onpage' ? 'none' : 'flex'},
-          
+          tabBarStyle: { display: route.name == 'Register' ? 'none' : 'flex' && route.name == 'VartifyOTP' ? 'none' : 'flex' && route.name == 'NewUser' ? 'none' : 'flex' && route.name == 'Onpage' ? 'none' : 'flex' },
+
           tabBarActiveTintColor: '#000000',
           tabBarInactiveTintColor: 'gray',
         })}>
 
-        <Tab.Screen name="Onpage" component={Onpage}  options={{ tabBarItemStyle: { display: 'none', } }}/>
-        
+        <Tab.Screen name="Onpage" component={Onpage} options={{ tabBarItemStyle: { display: 'none', } }} />
+
         <Tab.Screen name="สินค้า" component={ProductStackScreen} />
         <Tab.Screen name="ประวัติ" component={HistoryStackScreen} />
         <Tab.Screen name="แจ้งเตือน" component={NoticationStackScreen} />
-        <Tab.Screen name="ผู้ใช้" component={UserStackScreen}/>
+        <Tab.Screen name="ผู้ใช้" component={UserStackScreen} />
 
         <Tab.Screen name="Register" component={Register} options={{ tabBarItemStyle: { display: 'none', } }} />
         <Tab.Screen name="VartifyOTP" component={VartifyOTP} options={{ tabBarItemStyle: { display: 'none', } }} />

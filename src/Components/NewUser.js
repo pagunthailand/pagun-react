@@ -19,7 +19,7 @@ const NewUser = ({navigation}) => {
                               "emailAddress": "",
                               "phoneNumber": "",
                               "fcmToken": ""
-                    });
+                    }); 
 
           const Create_User = async () => {
                     param.phoneNumber = Global.userPhone;
@@ -36,7 +36,7 @@ const NewUser = ({navigation}) => {
                               navigation.navigate('สินค้า')
                               AsyncStorage.setItem('sessionID', Global.userId.toString());
                               AsyncStorage.setItem('isLoggedIn', 'true');
-                              navigation.navigate('สินค้า')
+                              send_Noti_welcome();
                     } else {
                               Global.isLogin = false;
                               AsyncStorage.setItem('isLoggedIn', 'true');
@@ -45,6 +45,28 @@ const NewUser = ({navigation}) => {
                     }
 
           };
+
+          const [paramnoti, setparamnoti] = useState(
+                    {
+                              userid: 0,
+                              title: "",
+                              body: "",
+                              subtitle: ""
+                    });
+          const send_Noti_welcome = async () => {
+                    AsyncStorage.getItem('OTPtoken', async (err, result) => {
+                              paramnoti.userid =  Global.userId;
+                              paramnoti.title = "ยินดีต้องรับสู่ การรับประกันของท่าน";
+                              paramnoti.body = "สวัสดี " +  param.name + " ยินดีให้บริการด้วยความเชื่อมั่น  ^-^ ";
+                              paramnoti.subtitle = "";
+                          var response = await SendNotificationSingleUser_Action(paramnoti);
+                          if (response.ResultStatus == 200) {
+                                
+                          } else {
+                               
+                          }
+                    });
+              };
 
           return (
                     <View

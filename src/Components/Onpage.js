@@ -11,6 +11,10 @@ const Onpage = ({ navigation }) => {
 
                     if (res == 'true') {
                               Global.isLogin = 'true';
+                              AsyncStorage.getItem('sessionID').then((res) => {
+                                        Global.userId = res
+                              })
+                               
                               navigation.navigate('สินค้า')
                     } else {
                               Global.isLogin = 'false';

@@ -142,3 +142,20 @@ export const SendNotificationSingleUser_Action = async (input) => {
 };
 
 
+export const GetNoticationHistoryByuserid_Action = async (id) => {
+          var response = (await axios.get(Base_url + '/api/NoticationHistory/GetNoticationHistoryByuserid/'+id))
+          if (response.status == 200) {
+                    return {
+                              Result: response.data.value,
+                              ResultStatus : response.data.statusCode,
+                              StatusCode : response.status 
+                    }
+          } else {
+                    return {
+                              StatusCode: response.status,
+                              ResultStatus : response.data.statusCode,
+                              StatusCode : response.status
+                    };
+          }
+};
+

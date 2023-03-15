@@ -500,6 +500,9 @@
 				DEVELOPMENT_TEAM = 988T4SR3S6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PagunLocal/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PAGUN;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -528,6 +531,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 988T4SR3S6;
 				INFOPLIST_FILE = PagunLocal/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PAGUN;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

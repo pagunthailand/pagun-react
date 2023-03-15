@@ -133,12 +133,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row'
   },
-  point: {
-    width: 10,
-    height: 10,
-    backgroundColor: 'black',
-    borderRadius: 5 // to create a circular point
-  },
   title_header: {
     color: '#00008B',
     fontSize: isSmallScreen ? 15 : 20,

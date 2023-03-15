@@ -159,3 +159,21 @@ export const GetNoticationHistoryByuserid_Action = async (id) => {
           }
 };
 
+
+export const updateReadNotication_action = async (id) => {
+          var response = (await axios.post(Base_url + '/api/NoticationHistory/updateReadNotication?id='+id))
+          if (response.status == 200) {
+                    return {
+                              Result: response.data.value,
+                              ResultStatus : response.data.statusCode,
+                              StatusCode : response.status 
+                    }
+          } else {
+                    return {
+                              StatusCode: response.status,
+                              ResultStatus : response.data.statusCode,
+                              StatusCode : response.status
+                    };
+          }
+};
+

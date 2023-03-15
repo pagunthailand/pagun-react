@@ -50,12 +50,20 @@ const User = ({navigation}) => {
   });
 
   useEffect(() => {
-    AsyncStorage.getItem('sessionID', async (err, result_sessionID) => {
+   
 
-      await GetUserByid_Action(parseInt(result_sessionID)).then((res_GetUserByid_Action) => {
-        data = setData(res_GetUserByid_Action.Result);
+  
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      AsyncStorage.getItem('sessionID', async (err, result_sessionID) => {
+
+        await GetUserByid_Action(parseInt(result_sessionID)).then((res_GetUserByid_Action) => {
+          data = setData(res_GetUserByid_Action.Result);
+        });
       });
     });
+    return unsubscribe;
+
   }, []);
 
   const GetUserByid = async () => {

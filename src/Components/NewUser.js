@@ -59,6 +59,8 @@ const NewUser = ({navigation}) => {
                               paramnoti.title = "ยินดีต้องรับสู่ การรับประกันของท่าน";
                               paramnoti.body = "สวัสดี " +  param.name + " ยินดีให้บริการด้วยความเชื่อมั่น  ^-^ ";
                               paramnoti.subtitle = "";
+
+                              console.log('paramnoti' , paramnoti);
                           var response = await SendNotificationSingleUser_Action(paramnoti);
                           if (response.ResultStatus == 200) {
                                 

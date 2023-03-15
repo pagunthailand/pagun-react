@@ -7,10 +7,18 @@ import firebase from '@react-native-firebase/app';
 import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 import { updateFCMToken_Action } from './src/Model/Action'
 import { PermissionsAndroid } from 'react-native';
+// import PushNotification from 'react-native-push-notification';
 
 const App = () => {
   let myVariable: any;
   const [param, setparam] = useState({ id: null, fcmToken: '' });
+
+  // Initialize the push notification library
+// PushNotification.configure({
+//   onNotification: function (notification) {
+//     console.log('NOTIFICATION:', notification);
+//   },
+// });
 
   PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
   requestUserPermission();

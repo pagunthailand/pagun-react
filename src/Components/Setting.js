@@ -1,6 +1,8 @@
 import { View, Text, Dimensions, StyleSheet, ScrollView, Switch, Alert } from 'react-native'
 import React, { useState } from 'react'
 import ButtonSave from '../Other/ButtonSave';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Global from '../Global';
 
 const Setting = ({navigation, route}) => {
 

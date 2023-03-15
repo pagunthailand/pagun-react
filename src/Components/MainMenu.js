@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Image, Pressable, Alert } from 'react-native';
+import { View, Image, Pressable, Alert ,BackHandler} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ActionBarOption from './ActionBarOption';
@@ -135,7 +135,20 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 export default function MainMenu() {
 
+  React.useEffect(() => {
+    const backAction = () => {
+      return true; // disable back button
+    };
 
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+ 
   return (
     <NavigationContainer>
       <Tab.Navigator

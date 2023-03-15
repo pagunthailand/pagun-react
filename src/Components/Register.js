@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert ,BackHandler } from 'react-native';
 import ButtonRegister from '../Other/ButtonRegister';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { send_OTP_Action } from '../Model/Action';
@@ -9,6 +9,18 @@ import Global from '../Global';
 
 
 const Register = ({ navigation }) => {
+          useEffect(() => {
+                    const backAction = () => {
+                      return true; // disable back button
+                    };
+                
+                    const backHandler = BackHandler.addEventListener(
+                      'hardwareBackPress',
+                      backAction,
+                    );
+                
+                    return () => backHandler.remove();
+                  }, []);
 
           AsyncStorage.getItem('isLoggedIn').then((res) => {
 

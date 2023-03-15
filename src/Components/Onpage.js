@@ -4,6 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Global from '../Global';
 
 const Onpage = ({ navigation }) => {
+
+        
+
           AsyncStorage.getItem('isLoggedIn').then((res) => {
 
                     if (res == 'true') {

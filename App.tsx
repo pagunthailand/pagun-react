@@ -23,9 +23,6 @@ const App = () => {
 
     return unsubscribe;
 
-
-    // 
-    // return unsubscribe;
   }, []);
 
 
@@ -34,7 +31,7 @@ const App = () => {
     const enabled =
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-  
+
     if (enabled) {
       console.log('Authorization status:', authStatus);
     }
@@ -45,18 +42,22 @@ const App = () => {
     await messaging().registerDeviceForRemoteMessages();
     messaging().setAutoInitEnabled(true);
     messaging().getToken().then(token => {
-      Global.googleToken = token; 
-      AsyncStorage.setItem('googleToken', token); 
+      Global.googleToken = token;
+      AsyncStorage.setItem('googleToken', token);
       AsyncStorage.getItem('sessionID', async (err, result_sessionID) => {
         param.token = token;
         myVariable = result_sessionID;
         param.userid = myVariable;
-        Alert.alert('A new FCM message arrived!', JSON.stringify(param));
-        console.log('Token', Platform.OS, token)
-        var response = await updateFCMToken_Action(param, token, param.userid);
-        if (response.ResultStatus == 200) {
-        } else {
-        }
+        //Alert.alert('A new FCM message arrived!', JSON.stringify(param));
+         console.log('Token', Platform.OS, token)
+         console.log('param.userid', param.userid);
+        if (param.userid != null) {
+          var response = await updateFCMToken_Action(param, token, param.userid);
+          if (response.ResultStatus == 200) {
+          } else { 
+          }
+        } 
+
       });
 
     }, (err) => {

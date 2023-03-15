@@ -45,10 +45,10 @@ const App = () => {
     await messaging().registerDeviceForRemoteMessages();
     messaging().setAutoInitEnabled(true);
     messaging().getToken().then(token => {
-      Global.googleToken = token;
-      AsyncStorage.setItem('googleToken', token);
+      Global.googleToken = token; 
+      AsyncStorage.setItem('googleToken', token); 
       AsyncStorage.getItem('sessionID', async (err, result_sessionID) => {
-        param.token = token; 
+        param.token = token;
         myVariable = result_sessionID;
         param.userid = myVariable;
         Alert.alert('A new FCM message arrived!', JSON.stringify(param));

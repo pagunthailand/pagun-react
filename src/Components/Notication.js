@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   title_header: {
     color: '#00008B',
-    fontSize: isSmallScreen ? 15 : 20,
+    fontSize: isSmallScreen ? 14 : 18,
     marginLeft: 20,
     marginRight: 20,
     textAlign: 'right',

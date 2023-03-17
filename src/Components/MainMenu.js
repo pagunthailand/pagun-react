@@ -118,7 +118,7 @@ function UserStackScreen() {
           },
         }}
       ></UserStack.Screen>
-      <ProductStack.Screen options={{
+      <UserStack.Screen options={{
         title: 'ตั้งค่า',
         headerShadowVisible: false,
         headerStyle: {
@@ -200,7 +200,12 @@ export default function MainMenu() {
 
           },
           // showLabel: false,
-          tabBarStyle: { display: route.name == 'Register' ? 'none' : 'flex' && route.name == 'VartifyOTP' ? 'none' : 'flex' && route.name == 'NewUser' ? 'none' : 'flex' && route.name == 'Onpage' ? 'none' : 'flex' },
+          tabBarStyle: { display: 
+            route.name == 'Register' ? 'none' : 'flex' 
+            && route.name == 'VartifyOTP' ? 'none' : 'flex' 
+            && route.name == 'NewUser' ? 'none' : 'flex' 
+            && route.name == 'Onpage' ? 'none' : 'flex' 
+          },
 
           tabBarActiveTintColor: '#000000',
           tabBarInactiveTintColor: 'gray',

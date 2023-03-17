@@ -13,16 +13,17 @@ const ActionBarLogo = () => {
       <Image
         source={require('../assets/Logo/BG.png')}
         style={{
-          width: 100,
-          height: 27,
+          width: isSmallScreen ? 80 : 100,
+          height: isSmallScreen ? 25 : 30,
           marginLeft: 5,
         }}
        
       />
        <Text style={{
         fontSize:isSmallScreen ? 15 : 20,
+      
         marginLeft:15,
-        fontWeight:'700',
+        fontWeight:'bold',
         color:'#000000'
        }}>{route.name}</Text>
     </View>

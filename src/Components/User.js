@@ -52,8 +52,6 @@ const User = ({ navigation }) => {
   useEffect(() => {
 
 
-
-
     const unsubscribe = navigation.addListener('focus', () => {
       AsyncStorage.getItem('sessionID', async (err, result_sessionID) => {
 

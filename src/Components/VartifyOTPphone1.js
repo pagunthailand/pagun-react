@@ -8,18 +8,31 @@ const VartifyOTPphone1 = ({navigation}) => {
 
           const [Pin, setPin] = useState('');
           const [param, setparam] = useState({ pin: '', token: '' , Data : [{a : '' , b :'' } ] });
-
+        //  const [phone, setPhone] = useState('');
     
+        const send_updatePhoneReg1 = async () => {
+  
+            //      param.pin = Pin;
+             //     param.token = result;
+                  var response = await send_updatePhoneReg1(Global.userId,Pin);
+                  if (response.ResultStatus == 200) {
+                        navigation.navigate('ผู้ใช้')
+                   
+                  } else {
+                       // Global.isLogin = true;
+                        //navigation.navigate('PathHome', { name: 'PathHome' })
+                         alert("เกิดข้อผิดพลาด")
+                  }
+          
+      };
           const send_VartifyOTP = async () => {
                 AsyncStorage.getItem('OTPtoken', async (err, result) => {
                       param.pin = Pin;
                       param.token = result;
                       var response = await send_VartifyOTP_Action(param);
                       if (response.ResultStatus == 200) {
-                            
-                            AsyncStorage.getItem('PhoneRegister', async (err, result) => {
-                                  await Check_Olduser(result);
-                            });
+                        send_updatePhoneReg1()
+                       
                       } else {
                            // Global.isLogin = true;
                             //navigation.navigate('PathHome', { name: 'PathHome' })

@@ -11,7 +11,9 @@ const User = ({navigation}) => {
   [lastName, setlastName] = useState('');
   var [emailAddress, setemailAddress] = useState('');
   [phoneNumber, setphoneNumber] = useState('');
-
+  const  [phoneNumber1, setPhones] = useState('');
+   const  [phone1, setphone] = useState({ phone: '' });
+        
   [data, setData] = useState({
     "id": null,
     "googleAuthenticatorKey": null,
@@ -84,9 +86,39 @@ const User = ({navigation}) => {
       alert("ไม่สำเร็จ")
     }
   };
+  const send_OTP = async () => {
+    phone1.phone = phoneNumber1;
+ //  navigation.navigate('VartifyOTPphone1')
+ alert(phone1.phone);
+    var response = await send_OTP_Action(phone1);
+    if (response.ResultStatus == 200) {
 
+     // alert(phoneNumber1 + phoneNumber1);
+           //   AsyncStorage.setItem('PhoneRegister', phoneNumber);
+        //      AsyncStorage.setItem('OTPtoken', response.Result);
+              Global.userPhone = phoneNumber1;
+              Global.OTPToken = response.Result;
+           //   alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
+
+
+            
+ 
+    } else { 
+              // Global.userPhone = phoneNumber;
+              // AsyncStorage.setItem('isLoggedIn', 'true');
+              // Global.isLogin = 'true'
+           //   navigation.navigate('NewUser')
+              alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
+    }
+
+};
   const LinkToRes =  () => {
-    navigation.navigate('VartifyOTPphone1')
+    send_OTP();
+   
+  };
+
+  const LinkToRes2 =  () => {
+    navigation.navigate('VartifyOTPphone2')
   };
   const handleNameChange = (value) => {
     setData(prevData => ({ ...prevData, name: value }));
@@ -138,14 +170,19 @@ const User = ({navigation}) => {
           <Text style={style.text_title_input}>เบอร์โทรศัพท์  ลำดับที่ 1</Text>
           <View style={style.set_button}>
             <TextInput style={style.input}
-              placeholder="หากเบอร์ที่ 1"></TextInput>
-            <ButtonRegisPhone onPress={() => LinkToRes()}  title="5555" />
+              placeholder="หากเบอร์ที่ 1"
+              onChangeText={text => setPhones(text)}
+              
+              ></TextInput>
+            <ButtonRegisPhone onPress={() => LinkToRes()}  title="ยืนยัน" />
           </View>
 
           <Text style={style.text_title_input}>เบอร์โทรศัพท์  ลำดับที่ 2</Text>
+          <View style={style.set_button}>
           <TextInput style={style.input}
             placeholder="หากเบอร์ที่ 2"></TextInput>
-
+                <ButtonRegisPhone onPress={() => LinkToRes()}  title="ยืนยัน" />
+                </View>
         </View>
 
         <ButtonSave onPress={() => update_User()} title="บันทึกการเปลี่ยนแปลง"></ButtonSave>
@@ -199,6 +236,7 @@ const style = StyleSheet.create({
   },
   set_button: {
     flex: 1,
+    color: '#ffffff',
     flexDirection: 'row',
     justifyContent: 'space-between',
     textAlign: 'right',

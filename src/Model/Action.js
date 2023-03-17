@@ -177,3 +177,20 @@ export const updateReadNotication_action = async (id) => {
           }
 };
 
+export const updatePhoneReg1 = async (id,phoneNumber) => {
+    var response = (await axios.post(Base_url + '/api/User/updatePhoneReg1?id='+id+'&phoneNumber='+phoneNumber))
+    if (response.status == 200) {
+              return {
+                        Result: response.data.value,
+                        ResultStatus : response.data.statusCode,
+                        StatusCode : response.status 
+              }
+    } else {
+              return {
+                        StatusCode: response.status,
+                        ResultStatus : response.data.statusCode,
+                        StatusCode : response.status
+              };
+    }
+};
+

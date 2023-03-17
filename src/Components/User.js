@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView ,RefreshControl} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { GetUserByid_Action, UpdateUser_Action } from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ButtonSave from '../Other/ButtonSave';
 import ButtonRegisPhone from '../Other/ButtonRegisPhone';
 
-const User = ({navigation}) => {
+const User = ({ navigation }) => {
 
   [_name, setName] = useState('');
   [lastName, setlastName] = useState('');
@@ -52,9 +52,7 @@ const User = ({navigation}) => {
   });
 
   useEffect(() => {
-   
 
-  
 
     const unsubscribe = navigation.addListener('focus', () => {
       AsyncStorage.getItem('sessionID', async (err, result_sessionID) => {
@@ -67,6 +65,14 @@ const User = ({navigation}) => {
     return unsubscribe;
 
   }, []);
+
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    setRefreshing(true);
+    GetUserByid();
+    setRefreshing(false)
+  };
+
 
   const GetUserByid = async () => {
     AsyncStorage.getItem('sessionID', async (err, result_sessionID) => {
@@ -93,6 +99,8 @@ const User = ({navigation}) => {
     var response = await send_OTP_Action(phone1);
     if (response.ResultStatus == 200) {
 
+  const LinkToRes = () => {
+    navigation.navigate('VartifyOTPphone1')
      // alert(phoneNumber1 + phoneNumber1);
            //   AsyncStorage.setItem('PhoneRegister', phoneNumber);
         //      AsyncStorage.setItem('OTPtoken', response.Result);
@@ -134,7 +142,9 @@ const User = ({navigation}) => {
   }
   return (
     <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }} refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
         <Text style={style.title_header}>ตั้งค่าบัญชีผู้ใช้</Text>
         <View style={style.title_box}>
           <Text style={style.text_title_input}>ชื่อจริง</Text>
@@ -236,7 +246,6 @@ const style = StyleSheet.create({
   },
   set_button: {
     flex: 1,
-    color: '#ffffff',
     flexDirection: 'row',
     justifyContent: 'space-between',
     textAlign: 'right',

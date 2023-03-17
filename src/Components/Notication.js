@@ -7,6 +7,8 @@ import {
   StatusBar,
   TouchableOpacity,
   Dimensions,
+  ScrollView,
+  RefreshControl,
 } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
@@ -64,6 +66,13 @@ const Notication = ({ navigation }) => {
 
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    setRefreshing(true);
+    GetNoticationHistoryByuserid();
+    setRefreshing(false)
+  };
+
 
   let [selectedId, setSelectedId] = useState(null);
   const renderItem = ({ item }) => {
@@ -104,17 +113,21 @@ const Notication = ({ navigation }) => {
 
   return (
 
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title_header}>อ่านทั้งหมด</Text>
 
+
+    <View style={styles.container}
+     >
+      <Text style={styles.title_header}>อ่านทั้งหมด</Text>
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
-    </SafeAreaView>
-
+    </View>
   )
 }
 
@@ -135,7 +148,7 @@ const styles = StyleSheet.create({
   },
   title_header: {
     color: '#00008B',
-    fontSize: isSmallScreen ? 15 : 20,
+    fontSize: isSmallScreen ? 14 : 18,
     marginLeft: 20,
     marginRight: 20,
     textAlign: 'right',

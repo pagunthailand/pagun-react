@@ -95,11 +95,11 @@ const User = ({ navigation }) => {
   const send_OTP = async () => {
     phone1.phone = phoneNumber1;
  //  navigation.navigate('VartifyOTPphone1')
- alert(phone1.phone);
+    // alert(phone1.phone);
+    console.log('phone1.phone',phone1.phone)
     var response = await send_OTP_Action(phone1);
     if (response.ResultStatus == 200) {
 
-  const LinkToRes = () => {
     navigation.navigate('VartifyOTPphone1')
      // alert(phoneNumber1 + phoneNumber1);
            //   AsyncStorage.setItem('PhoneRegister', phoneNumber);
@@ -107,7 +107,6 @@ const User = ({ navigation }) => {
               Global.userPhone = phoneNumber1;
               Global.OTPToken = response.Result;
            //   alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
-
 
             
  

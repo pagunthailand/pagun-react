@@ -198,3 +198,36 @@ export const updatePhoneReg1 = async (id,phoneNumber) => {
     }
 };
 
+export const updatePhoneReg2 = async (id,phoneNumber) => {
+    var response = (await axios.post(Base_url + '/api/User/updatePhoneReg2?id='+id+'&phoneNumber='+phoneNumber))
+    if (response.status == 200) {
+              return {
+                        Result: response.data.value,
+                        ResultStatus : response.data.statusCode,
+                        StatusCode : response.status 
+              }
+    } else {
+              return {
+                        StatusCode: response.status,
+                        ResultStatus : response.data.statusCode,
+                        StatusCode : response.status
+              };
+    }
+};
+
+export const updateNotiStatus = async (id,phoneNumber) => {
+    var response = (await axios.post(Base_url + '/api/User/updateNotiStatus?id='+id))
+    if (response.status == 200) {
+              return {
+                        Result: response.data.value,
+                        ResultStatus : response.data.statusCode,
+                        StatusCode : response.status 
+              }
+    } else {
+              return {
+                        StatusCode: response.status,
+                        ResultStatus : response.data.statusCode,
+                        StatusCode : response.status
+              };
+    }
+};

@@ -3,7 +3,9 @@ const Global = {
           isLogin: '',
           userPhone: '',
           googleToken: '',
-          OTPToken: ''
+          OTPToken: '',
+          userPhone1: '',
+          userPhone2: ''
 };
 
 export default Global;

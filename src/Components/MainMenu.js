@@ -16,6 +16,7 @@ import VartifyOTP from './VartifyOTP';
 import Global from '../Global';
 import Onpage from './Onpage';
 import VartifyOTPphone1 from './VartifyOTPphone1';
+import VartifyOTPphone2 from './VartifyOTPphone2';
 import { updateFCMToken_Action } from '../Model/Action';
 
 const ProductStack = createNativeStackNavigator();
@@ -115,6 +116,20 @@ function UserStackScreen() {
           headerTintColor: '#000000',
           headerTitleStyle: {
             fontWeight: 'bold',
+          },
+        }}
+      ></UserStack.Screen>
+
+<UserStack.Screen name='VartifyOTPphone2' component={VartifyOTPphone2}
+        options={{
+          title: 'ลงทะเบียน เบอร์ 2',
+          headerShadowVisible: false,
+          headerStyle: { 
+            backgroundColor: '#F6F6F6',
+          },
+          headerTintColor: '#000000',
+          headerTitleStyle: {
+            fontWeight: 'bold', 
           },
         }}
       ></UserStack.Screen>

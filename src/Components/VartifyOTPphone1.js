@@ -2,21 +2,22 @@ import { View, Text, Dimensions, StyleSheet, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Global from '../Global';
+import { send_VartifyOTP_Action, updatePhoneReg1 } from '../Model/Action';
 import ButtonRegister from '../Other/ButtonRegister';
 
 const VartifyOTPphone1 = ({navigation}) => {
 
           const [Pin, setPin] = useState('');
-          const [param, setparam] = useState({ pin: '', token: '' , Data : [{a : '' , b :'' } ] });
+          const [param, setparam] = useState({ pin: '', token: '' });
         //  const [phone, setPhone] = useState('');
     
         const send_updatePhoneReg1 = async () => {
   
             //      param.pin = Pin;
              //     param.token = result;
-                  var response = await send_updatePhoneReg1(Global.userId,Pin);
-                  if (response.ResultStatus == 200) {
-                        navigation.navigate('ผู้ใช้')
+                  var response = await updatePhoneReg1(Global.userId,Global.userPhone1);
+                  if (response.ResultStatus == 200) { 
+                        navigation.navigate('ผู้ใช้');
                    
                   } else {
                        // Global.isLogin = true;
@@ -27,11 +28,22 @@ const VartifyOTPphone1 = ({navigation}) => {
       };
           const send_VartifyOTP = async () => {
                 AsyncStorage.getItem('OTPtoken', async (err, result) => {
+
+            //      Global.userPhone = phoneNumber1;
+           //       Global.OTPToken = response.Result;
+
+
                       param.pin = Pin;
-                      param.token = result;
-                      var response = await send_VartifyOTP_Action(param);
+                      param.token =   Global.OTPToken;
+                  //    AsyncStorage.getItem('PhoneRegister', phoneNumber);
+                      console.log('tomcode',Pin);
+                      console.log('tomcode',Global.OTPToken);
+                      console.log('tomcode',Global.userId);
+                      console.log('tomcode',Global.userPhone1);
+                    
+                      var response = await send_VartifyOTP_Action(param); 
                       if (response.ResultStatus == 200) {
-                        send_updatePhoneReg1()
+                        send_updatePhoneReg1();
                        
                       } else {
                            // Global.isLogin = true;
@@ -49,7 +61,7 @@ const VartifyOTPphone1 = ({navigation}) => {
           }}>
           <View style={{ backgroundColor: '#F6F6F6', flex: 1 }} >
                 <Text style={style.title}>ใส่รหัสยืนยัน</Text>
-                <Text style={style.subtitle}>รหัสยืนยันส่งไปยัง SMS บนโทรศัพท์มือถือของท่านที่ได้ระบุหมายเลข {Global.userPhone}</Text>
+                <Text style={style.subtitle}>รหัสยืนยันส่งไปยัง SMS บนโทรศัพท์มือถือของท่านที่ได้ระบุหมายเลข {Global.userPhone1}</Text>
                 <TextInput style={style.inputOTP}
                       value={Pin}
                       onChangeText={text => setPin(text)}

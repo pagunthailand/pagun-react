@@ -1,19 +1,21 @@
 import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView ,RefreshControl} from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { GetUserByid_Action, UpdateUser_Action } from '../Model/Action'
+import { GetUserByid_Action, UpdateUser_Action ,send_OTP_Action} from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ButtonSave from '../Other/ButtonSave';
 import ButtonRegisPhone from '../Other/ButtonRegisPhone';
-
+import Global from '../Global';
+ 
 const User = ({ navigation }) => {
 
   [_name, setName] = useState('');
   [lastName, setlastName] = useState('');
-  var [emailAddress, setemailAddress] = useState('');
+  [emailAddress, setemailAddress] = useState('');
   [phoneNumber, setphoneNumber] = useState('');
   const  [phoneNumber1, setPhones] = useState('');
    const  [phone1, setphone] = useState({ phone: '' });
-        
+   const  [phone2, setphones2] = useState({ phone: '' });    
+   const  [phoneNumber2, setphone2] = useState('');
   [data, setData] = useState({
     "id": null,
     "googleAuthenticatorKey": null,
@@ -92,31 +94,74 @@ const User = ({ navigation }) => {
       alert("ไม่สำเร็จ")
     }
   };
-  const send_OTP = async () => {
-    phone1.phone = phoneNumber1;
- //  navigation.navigate('VartifyOTPphone1')
-    // alert(phone1.phone);
-    console.log('phone1.phone',phone1.phone)
-    var response = await send_OTP_Action(phone1);
-    if (response.ResultStatus == 200) {
-
-    navigation.navigate('VartifyOTPphone1')
-     // alert(phoneNumber1 + phoneNumber1);
-           //   AsyncStorage.setItem('PhoneRegister', phoneNumber);
-        //      AsyncStorage.setItem('OTPtoken', response.Result);
-              Global.userPhone = phoneNumber1;
-              Global.OTPToken = response.Result;
-           //   alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
-
-            
  
-    } else { 
-              // Global.userPhone = phoneNumber;
-              // AsyncStorage.setItem('isLoggedIn', 'true');
-              // Global.isLogin = 'true'
-           //   navigation.navigate('NewUser')
-              alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
-    }
+
+const send_OTP2 = async () => {
+  phone2.phone = phoneNumber2;
+//  navigation.navigate('VartifyOTPphone1')
+  // alert(phone1.phone);
+  console.log('phone1.phone',phone2.phone);
+  var response = await send_OTP_Action(phone2);
+  if (response.ResultStatus == 200) {
+   
+    console.log('tomcode',response.Result);
+
+
+  Global.userPhone2 = phoneNumber2;
+  Global.OTPToken = response.Result;
+  navigation.navigate('VartifyOTPphone2');
+  //AsyncStorage.setItem('OTPtoken', phoneNumber2); 
+   // alert(phoneNumber1 + phoneNumber1);
+         //   AsyncStorage.setItem('PhoneRegister', phoneNumber);
+      //      AsyncStorage.setItem('OTPtoken', response.Result);
+          //  Global.userPhone = phoneNumber1;
+          //  Global.OTPToken = response.Result;
+         //   alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
+
+          
+
+  } else { 
+            // Global.userPhone = phoneNumber;
+            // AsyncStorage.setItem('isLoggedIn', 'true');
+            // Global.isLogin = 'true' 
+         //   navigation.navigate('NewUser')
+            alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
+  }
+
+};
+
+
+const send_OTP = async () => {
+  phone1.phone = phoneNumber1;
+//  navigation.navigate('VartifyOTPphone1')
+  // alert(phone1.phone);
+  console.log('phone1.phone',phone1.phone);
+  var response = await send_OTP_Action(phone1);
+  if (response.ResultStatus == 200) {
+   
+    console.log('tomcode',response.Result);
+
+
+  Global.userPhone1 = phoneNumber1;
+  Global.OTPToken = response.Result;
+  navigation.navigate('VartifyOTPphone1');
+  //AsyncStorage.setItem('OTPtoken', phoneNumber2); 
+   // alert(phoneNumber1 + phoneNumber1);
+         //   AsyncStorage.setItem('PhoneRegister', phoneNumber);
+      //      AsyncStorage.setItem('OTPtoken', response.Result);
+          //  Global.userPhone = phoneNumber1;
+          //  Global.OTPToken = response.Result;
+         //   alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
+
+          
+
+  } else { 
+            // Global.userPhone = phoneNumber;
+            // AsyncStorage.setItem('isLoggedIn', 'true');
+            // Global.isLogin = 'true' 
+         //   navigation.navigate('NewUser')
+            alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
+  }
 
 };
   const LinkToRes =  () => {
@@ -125,7 +170,7 @@ const User = ({ navigation }) => {
   };
 
   const LinkToRes2 =  () => {
-    navigation.navigate('VartifyOTPphone2')
+    send_OTP2();
   };
   const handleNameChange = (value) => {
     setData(prevData => ({ ...prevData, name: value }));
@@ -179,9 +224,10 @@ const User = ({ navigation }) => {
           <Text style={style.text_title_input}>เบอร์โทรศัพท์  ลำดับที่ 1</Text>
           <View style={style.set_button}>
             <TextInput style={style.input}
+             value={data ? data.phoneReg1 : ''}
               placeholder="หากเบอร์ที่ 1"
+             
               onChangeText={text => setPhones(text)}
-              
               ></TextInput>
             <ButtonRegisPhone onPress={() => LinkToRes()}  title="ยืนยัน" />
           </View>
@@ -189,8 +235,12 @@ const User = ({ navigation }) => {
           <Text style={style.text_title_input}>เบอร์โทรศัพท์  ลำดับที่ 2</Text>
           <View style={style.set_button}>
           <TextInput style={style.input}
-            placeholder="หากเบอร์ที่ 2"></TextInput>
-                <ButtonRegisPhone onPress={() => LinkToRes()}  title="ยืนยัน" />
+            value={data ? data.phoneReg2 : ''}
+            placeholder="หากเบอร์ที่ 2"
+            onChangeText={text => setphone2(text)}
+             
+            ></TextInput>
+                <ButtonRegisPhone onPress={() => LinkToRes2()}  title="ยืนยัน" />
                 </View>
         </View>
 

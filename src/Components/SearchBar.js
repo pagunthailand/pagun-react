@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, View, StyleSheet } from 'react-native';
+import { TextInput, View, StyleSheet, Dimensions } from 'react-native';
 
 const SearchBar = ({ searchValue, setSearchValue }) => {
   return (
@@ -14,19 +14,26 @@ const SearchBar = ({ searchValue, setSearchValue }) => {
   );
 };
 
+const { width } = Dimensions.get('window');
+const isSmallScreen = width <= 375;
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F6F6F6',
-    padding: 10,
+    paddingTop: 0,
+    paddingRight: 10,
+    paddingLeft:10,
+    paddingBottom: 5,
   },
   input: {
     backgroundColor: '#000000',
     color: '#000000',
     fontWeight: '700',
+    fontSize:isSmallScreen ? 12 : 15,
     borderRadius: 5,
     paddingHorizontal: 5,
     paddingVertical: 5,
-    height: 45,
+    height: isSmallScreen ? 35 : 45,
     backgroundColor: '#FFFFFF',
     borderBottomColor: '#F6F6F6',
   },

@@ -107,7 +107,7 @@ const Product = ({ navigation }) => {
             </View>
           </View>
           <Text style={{
-             fontSize: 18,
+             fontSize:  isSmallScreen ? 14 : 18,
              fontWeight: 'bold',
              textAlign: 'center',
              color: item.htmL_COLOR
@@ -215,6 +215,7 @@ const styles = StyleSheet.create({
     margin: 2.5,
     marginLeft: 10,
     textAlign: 'left',
+    fontSize: isSmallScreen ? 12 : 15,
     // bottom: '',
   },
   bodyFG2: {

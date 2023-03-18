@@ -16,6 +16,7 @@ import { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 import { GetNoticationHistoryByuserid_Action, updateReadNotication_action } from '../Model/Action';
 import Global from '../Global';
 import moment from 'moment';
+import SearchBar from './SearchBar';
 
 
 const Product = ({ navigation }) => {
@@ -43,7 +44,7 @@ const Product = ({ navigation }) => {
   })
 
   let [data, setData] = useState([]);
-
+  let [filteredData, setfilteredData] = useState([]);
   const GetNoticationHistoryByuserid = async () => {
 
     GetNoticationHistoryByuserid_Action(Global.userId)
@@ -113,19 +114,20 @@ const Product = ({ navigation }) => {
   };
 
 
-  const [phoneNumber2, setphone2] = useState('');
+  const [searchValue, setSearchValue] = useState('');
+  filteredData = data.filter(item =>
+    item.nthTitle.toLowerCase().includes(searchValue.toLowerCase()) ||
+    item.nthDetail.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
   return (
 
     <View style={styles.container}
     >
-      <View>
-        <TextInput style={styles.input}
-          placeholder="ค้นหา 1"
-        ></TextInput>
-      </View>
+      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
 
       <FlatList
-        data={data}
+        data={filteredData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={selectedId}

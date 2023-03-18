@@ -102,11 +102,13 @@ const Product = ({ navigation }) => {
               <Text style={styles.bodyFG1}>สิ้นสุดประกัน : <Text style={styles.bodyFG2}>{formatted_warrantY_VALID_FROM}</Text></Text>
               <Text style={styles.bodyFG1}>จากร้าน : <Text style={styles.bodyFG2}>{item.coM_NAME}</Text></Text>
             </View>
-            <View style={styles.bodyFG3}>
-              <Text style={styles.bodyFG3}></Text>
-            </View>
           </View>
-          <Text style={styles.bodyFG3}>
+          <Text style={{
+             fontSize: 18,
+             fontWeight: 'bold',
+             textAlign: 'center',
+             color: item.htmL_COLOR
+          }}>
             {item.eQ_STATUS}</Text>
 
 
@@ -219,14 +221,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'left',
 
-  },
-  bodyFG3: {
-    marginLeft: 10,
-    margin: 2.5,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    flexWrap: 'wrap'
   },
 });
 export default Product

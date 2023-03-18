@@ -61,9 +61,9 @@ const Claim = ({ navigation }) => {
 
           const get_Equipment_ฺbyID = async () => {
                     get_Equipment_ฺbyID_Action(route.params.id).then((res_GetUserByid_Action) => {
-                              data = res_GetUserByid_Action.Result;
+                              data = res_GetUserByid_Action.Result.data[0];
                               data = setData(data);
-
+                              //console.log('data',res_GetUserByid_Action.Result.data);
                               if (!data) {
                                         const datetimeUTIL = moment(res_GetUserByid_Action.Result.warrantY_VALID_UTIL);
                                         setformatted_warrantY_VALID_UTIL(datetimeUTIL.format('DD/MM/YYYY'))

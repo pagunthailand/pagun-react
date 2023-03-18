@@ -64,7 +64,7 @@ const Product = ({ navigation }) => {
   }
 
   const updateReadNotication = async (id_) => {
-    console.log(id_);
+    // console.log(id_);
     navigation.navigate('ส่งเครม', { id: id_ });
     // console.log(id);
     // updateReadNotication_action(id)

@@ -269,14 +269,12 @@ export const GetWorkOrderLog_Action = async (id) => {
     if (response.status == 200) {
         
         return {
-            Result: response.data.value,
-            ResultStatus: response.data.statusCode,
+            Result: response,
             StatusCode: response.status
         }
     } else {
         return {
-            Result: response.data.value,
-            ResultStatus: response.data.statusCode,
+            Result: response,
             StatusCode: response.status
         };
     }

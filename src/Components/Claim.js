@@ -118,7 +118,7 @@ const Claim = ({ navigation }) => {
                               <ScrollView style={{ flex: 1 }} refreshControl={
                                         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                               }>
-                                        <Text style={style.title_header}>สถานะการส่งเครมสินค้า</Text>
+                                        <Text style={style.title_header}>สถานะของสินค้า</Text>
                                         <View style={style.title_box}>
 
 

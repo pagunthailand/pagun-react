@@ -310,9 +310,9 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     textAlign: 'right',
-    paddingHorizontal: 10,
+  
   }
-
+ 
 });
 
 export default User

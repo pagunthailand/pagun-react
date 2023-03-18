@@ -266,3 +266,21 @@ export const get_Equipment_ฺbyID_Action = async (id) => {
 };
 
 
+export const GetWorkOrderLog_Action = async (id) => {
+    var response = (await axios.get(Base_url + '/api/WorkOrder/GetWorkOrderLog/' + id))
+    
+    if (response.status == 200) {
+        
+        return {
+            Result: response.data.value,
+            ResultStatus: response.data.statusCode,
+            StatusCode: response.status
+        }
+    } else {
+        return {
+            Result: response.data.value,
+            ResultStatus: response.data.statusCode,
+            StatusCode: response.status
+        };
+    }
+};

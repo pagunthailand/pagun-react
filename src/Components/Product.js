@@ -98,14 +98,9 @@ const Product = ({ navigation }) => {
 
           <View style={styles.container2}>
             <View style={styles.bodyFG1}>
-              <Text style={styles.bodyFG1}>SN/รายละเอียด </Text>
-              <Text style={styles.bodyFG1}>สิ้นสุดประกัน </Text>
-              <Text style={styles.bodyFG1}>จากร้าน </Text>
-            </View>
-            <View style={styles.bodyFG2}>
-              <Text style={styles.bodyFG2}>{item.description}</Text>
-              <Text style={styles.bodyFG2}>{formatted_warrantY_VALID_FROM}</Text>
-              <Text style={styles.bodyFG2}>{item.coM_NAME}</Text>
+              <Text style={styles.bodyFG1}>SN/รายละเอียด  : <Text style={styles.bodyFG2}>{item.description}</Text> </Text>
+              <Text style={styles.bodyFG1}>สิ้นสุดประกัน : <Text style={styles.bodyFG2}>{formatted_warrantY_VALID_FROM}</Text></Text>
+              <Text style={styles.bodyFG1}>จากร้าน : <Text style={styles.bodyFG2}>{item.coM_NAME}</Text></Text>
             </View>
             <View style={styles.bodyFG3}>
               <Text style={styles.bodyFG3}></Text>
@@ -210,16 +205,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   bodyFG1: {
-    flex: 0.3,
+    flex: 1,
     color: '#9E9E9E',
     margin: 2.5,
     marginLeft: 10,
     textAlign: 'left',
-    flexWrap: 'wrap',
     // bottom: '',
   },
   bodyFG2: {
-    flex: 0.7,
+    flex: 1,
     margin: 2.5,
     color: '#444444',
     fontWeight: '500',

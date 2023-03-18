@@ -4,6 +4,7 @@ import ButtonSave from '../Other/ButtonSave';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GetUserByid_Action, UpdateUser_Action, send_OTP_Action, updateNotiStatus } from '../Model/Action'
 import Global from '../Global';
+import ButtonCancel from '../Other/ButtonCancel';
 
 const Setting = ({ navigation, route }) => {
   let [isEnabled, setIsEnabled] = useState(false);
@@ -52,7 +53,7 @@ const Setting = ({ navigation, route }) => {
           <Text style={style.text_version}>เวอร์ชั่นก์ 1.0.0 (PG2302)</Text>
         </View>
 
-        <ButtonSave onPress={() => logout()} title="ออกจากระบบ"></ButtonSave>
+        <ButtonCancel onPress={() => logout()} title="ออกจากระบบ"></ButtonCancel>
 
       </ScrollView>
     </View>

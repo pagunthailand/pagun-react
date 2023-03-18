@@ -5,7 +5,7 @@ const { width } = Dimensions.get('window');
 const isSmallScreen = width <= 375;
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#3b50ce',
+    backgroundColor: '#E8E8E9',
     borderRadius: 15,
     padding: 10,
     marginTop:45,
@@ -15,17 +15,17 @@ const styles = StyleSheet.create({
     
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: 'red',
     fontSize: isSmallScreen ? 12 : 18,
     textAlign: 'center',
     fontWeight: 'bold',
   },
 });
 
-const ButtonSave = ({ onPress, title  }) => (
+const ButtonCancel = ({ onPress, title  }) => (
   <TouchableOpacity onPress={onPress} style={styles.button}>
     <Text style={styles.buttonText}>{title}</Text>
   </TouchableOpacity>
 );
 
-export default ButtonSave;
+export default ButtonCancel;

@@ -247,3 +247,22 @@ export const getuser_Equipment_Action = async (id) => {
     }
 };
 
+export const get_Equipment_ฺbyID_Action = async (id) => {
+    var response = (await axios.get(Base_url + '/api/Equipment/' + id))
+    
+    if (response.status == 200) {
+        
+        return {
+            Result: response.data,
+          
+            StatusCode: response.status
+        }
+    } else {
+        return {
+            StatusCode: response,
+            StatusCode: response.status
+        };
+    }
+};
+
+

@@ -58,8 +58,9 @@ const Product = ({ navigation }) => {
   }
 
 
-  setSelectedId_ = (id) => {
-    updateReadNotication(id);
+  setSelectedId_ = (id_) => {
+    
+    navigation.navigate('ส่งเครม',{ id : id_});
   }
 
   const updateReadNotication = async (id_) => {
@@ -101,7 +102,8 @@ const Product = ({ navigation }) => {
 
           <View style={styles.container2}>
             <View style={styles.bodyFG1}>
-              <Text style={styles.bodyFG1}>SN/รายละเอียด  : <Text style={styles.bodyFG2}>{item.description}</Text> </Text>
+              <Text style={styles.bodyFG1}>รายละเอียด  : <Text style={styles.bodyFG2}>{item.description}</Text> </Text>
+              <Text style={styles.bodyFG1}>Serial Number(S/N) : <Text style={styles.bodyFG2}>{item.seriaL_NO}</Text> </Text>
               <Text style={styles.bodyFG1}>สิ้นสุดประกัน : <Text style={styles.bodyFG2}>{formatted_warrantY_VALID_FROM}</Text></Text>
               <Text style={styles.bodyFG1}>จากร้าน : <Text style={styles.bodyFG2}>{item.coM_NAME}</Text></Text>
             </View>
@@ -203,6 +205,7 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 15 : 18,
     paddingTop: 5,
     marginLeft: 10,
+    marginRight: 5,
     fontWeight: 'bold'
   },
   body: {

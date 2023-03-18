@@ -59,13 +59,13 @@ const Product = ({ navigation }) => {
 
 
   setSelectedId_ = (id_) => {
-    
-    navigation.navigate('ส่งเครม',{ id : id_});
+
+    navigation.navigate('ส่งเครม', { id: id_ });
   }
 
   const updateReadNotication = async (id_) => {
     console.log(id_);
-    navigation.navigate('ส่งเครม',{ id : id_});
+    navigation.navigate('ส่งเครม', { id: id_ });
     // console.log(id);
     // updateReadNotication_action(id)
     //   .then(response => response.Result)
@@ -109,10 +109,10 @@ const Product = ({ navigation }) => {
             </View>
           </View>
           <Text style={{
-             fontSize:  isSmallScreen ? 14 : 18,
-             fontWeight: 'bold',
-             textAlign: 'center',
-             color: item.htmL_COLOR
+            fontSize: isSmallScreen ? 14 : 18,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: item.htmL_COLOR
           }}>
             {item.eQ_STATUS}</Text>
 
@@ -126,11 +126,12 @@ const Product = ({ navigation }) => {
 
 
   const [searchValue, setSearchValue] = useState('');
-  filteredData = data.filter(item =>
-    item.eQ_NAME.toLowerCase().includes(searchValue.toLowerCase()) ||
-    item.description.toLowerCase().includes(searchValue.toLowerCase() ||
-    item.coM_NAME.toLowerCase().includes(searchValue.toLowerCase()))
-  );
+  if (!!data)
+    filteredData = data.filter(item =>
+      item.eQ_NAME.toLowerCase().includes(searchValue.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchValue.toLowerCase() ||
+        item.coM_NAME.toLowerCase().includes(searchValue.toLowerCase()))
+    );
 
   return (
 

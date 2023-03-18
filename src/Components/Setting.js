@@ -49,8 +49,9 @@ const Setting = ({ navigation, route }) => {
 
         <Text style={style.title_header}>เกี่ยวกับแอพ</Text>
         <View style={style.title_box_version}>
-          <Text style={style.text_version}>ทีมงาน PAGUN</Text>
+          <Text style={style.text_version}>Pagun Thailand</Text>
           <Text style={style.text_version}>เวอร์ชั่นก์ 1.0.0 (PG2302)</Text>
+          <Text style={style.text_version}>www.pagunthailand.com</Text>
         </View>
 
         <ButtonCancel onPress={() => logout()} title="ออกจากระบบ"></ButtonCancel>
@@ -114,12 +115,12 @@ const style = StyleSheet.create({
     color: '#444444',
     textAlign: 'center',
     marginTop: 5,
-    paddingTop: 10,
+    paddingTop: 5,
     marginLeft: 20,
-    paddingBottom: 10,
+    paddingBottom: 5,
     marginRight: 20,
     fontSize: isSmallScreen ? 15 : 18,
-    fontWeight: '500'
+    fontWeight: '400'
   },
 
 });

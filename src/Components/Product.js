@@ -13,50 +13,52 @@ import {
 } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
-import { GetNoticationHistoryByuserid_Action, updateReadNotication_action } from '../Model/Action';
+import { GetNoticationHistoryByuserid_Action, getuser_Equipment_Action, updateReadNotication_action } from '../Model/Action';
 import Global from '../Global';
 import moment from 'moment';
 import SearchBar from './SearchBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Product = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      GetNoticationHistoryByuserid();
+      getuser_Equipment();
     });
     return unsubscribe;
   }, [navigation]);
 
-  [getnoti, setgetnoti] = useState({
-    "id": 0,
-    "createTime": null,
-    "isDelete": false,
-    "isRead": false,
-    "deleteTime": null,
-    "nthTitle": null,
-    "nthDetail": null,
-    "nthTime": null,
-    "nthStatus": null,
-    "nthLocationId": null,
-    "nthTyp": null,
-    "nthLinkAddress": null
+  [getProduct, setProduct] = useState({
+    "iD_USER": 0,
+    "eQ_CODE": null,
+    "eQ_NAME": null,
+    "description": null,
+    "warrantY_VALID_FROM": null,
+    "warrantY_VALID_UTIL": null,
+    "eQ_VALUE": null,
+    "phoneNumber": null,
+    "name": null,
+    "lastName": null,
+    "coM_NAME": null,
+    "coM_ID": null
   })
 
   let [data, setData] = useState([]);
   let [filteredData, setfilteredData] = useState([]);
-  const GetNoticationHistoryByuserid = async () => {
+  const getuser_Equipment = async () => {
+    AsyncStorage.getItem('sessionID', async (err, result_sessionID) => {
+      getuser_Equipment_Action(result_sessionID)
+        .then(response => response.Result.data)
+        .then(json => setData(json))
+        .catch(error => console.error('error ==>',result_sessionID, error))
 
-    GetNoticationHistoryByuserid_Action(Global.userId)
-      .then(response => response.Result)
-      .then(json => setData(json))
-      .catch(error => console.error(error))
+      console.log('response.Result ', result_sessionID, data);
+    });
+  }
 
-    //console.log('response.Result ', data);
-  };
 
   setSelectedId_ = (id) => {
-
     updateReadNotication(id);
   }
 
@@ -82,7 +84,7 @@ const Product = ({ navigation }) => {
     const backgroundColor = item.id === selectedId ? '#FFFFFF' : '#FFFFFF';
     //const backgroundColor = item.isRead === true ? '#000000' : '#FFFFFF';
     // datetime string in ISO format
-    const datetimeString = item.createTime;
+    const datetimeString = item.warrantY_VALID_FROM;
     // parse datetime string with moment
     const datetime = moment(datetimeString);
     // format datetime with moment
@@ -101,8 +103,8 @@ const Product = ({ navigation }) => {
                 backgroundColor: item.isRead === true ? '#EFCDCD' : '#F47322',
                 borderRadius: 5
               }}></View>
-              {item.nthTitle}</Text>
-            <Text style={{ color: '#444444', fontWeight: '300', paddingLeft: 10 }}>{item.nthDetail}</Text>
+              {item.eQ_NAME}</Text>
+            <Text style={{ color: '#444444', fontWeight: '300', paddingLeft: 10 }}>{item.description}</Text>
           </View>
           <View style={{ flex: 0.3, padding: 10, marginVertical: 2 }}>
             <Text style={{ color: '#444444', fontWeight: '300', fontSize: 10, paddingRight: 10, textAlign: 'right' }}>{formattedDatetime}</Text>
@@ -116,8 +118,8 @@ const Product = ({ navigation }) => {
 
   const [searchValue, setSearchValue] = useState('');
   filteredData = data.filter(item =>
-    item.nthTitle.toLowerCase().includes(searchValue.toLowerCase()) ||
-    item.nthDetail.toLowerCase().includes(searchValue.toLowerCase())
+    item.eQ_NAME.toLowerCase().includes(searchValue.toLowerCase()) ||
+    item.description.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   return (

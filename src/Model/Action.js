@@ -281,3 +281,18 @@ export const GetWorkOrderLog_Action = async (id) => {
         };
     }
 };
+
+export const create_WorkOrder = async (EQ_ID, ERR_DESC,REPORTED_BY_ID) => {
+    var response = (await axios.post(Base_url + '/api/WorkOrder?EQ_ID='+EQ_ID+'&ERR_DESC='+ERR_DESC+'&REPORTED_BY_ID=' + REPORTED_BY_ID))
+    if (response.status == 200) {
+        return {
+            Result: response.data,
+            StatusCode: response.status
+        }
+    } else {
+        return {
+            StatusCode: response.status
+        };
+    }
+};
+

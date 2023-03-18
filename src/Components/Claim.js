@@ -12,14 +12,8 @@ import ButtonCancel from '../Other/ButtonCancel';
 const Claim = ({ navigation }) => {
           [formatted_warrantY_VALID_UTIL, setformatted_warrantY_VALID_UTIL] = useState('');
           [formatted_warrantY_VALID_FROM, setformatted_warrantY_VALID_FROM] = useState('');
-          [_name, setName] = useState('');
-          [lastName, setlastName] = useState('');
-          [emailAddress, setemailAddress] = useState('');
-          [phoneNumber, setphoneNumber] = useState('');
-          const [phoneNumber1, setPhones] = useState('');
-          const [phone1, setphone] = useState({ phone: '' });
-          const [phone2, setphones2] = useState({ phone: '' });
-          const [phoneNumber2, setphone2] = useState('');
+   
+          [ClaimDetail, setClaimDetail] = useState('');
           [data, setData] = useState({
                     eQ_ID: 0,
                     eQ_CODE: null,
@@ -92,25 +86,8 @@ const Claim = ({ navigation }) => {
 
 
 
-          const handleNameChange = (value) => {
-                    setData(prevData => ({ ...prevData, name: value }));
-          }
-          const handlelastNameChange = (value) => {
-                    setData(prevData => ({ ...prevData, lastName: value }));
-          }
-          const handleemailAddressChange = (value) => {
-                    setData(prevData => ({ ...prevData, emailAddress: value }));
-          }
-          const handlephoneNumberChange = (value) => {
-                    setData(prevData => ({ ...prevData, phoneNumber: value }));
-          }
-
-          const handlephoneReg1Change = (value) => {
-                    setData(prevData => ({ ...prevData, phoneReg1: value }));
-          }
-
-          const handlephoneReg2Change = (value) => {
-                    setData(prevData => ({ ...prevData, phoneReg2: value }));
+          const handleClaimDetailChange = (value) => {
+                    setData(prevData => ({ ...prevData, ClaimDetail: value }));
           }
           return (
 
@@ -141,7 +118,9 @@ const Claim = ({ navigation }) => {
                                                                       <Text style={style.bodyFG1}>ราคาที่ซื้อ : <Text style={style.bodyFG2}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'THB' }).format(data.eQ_VALUE)}</Text></Text>
 
                                                                       <TextInput placeholder="ระบุรายละเอียด เครมสินค้า"
-                                                                                multiline={true}
+                                                                                multiline={true} 
+                                                                                value={ClaimDetail}
+                                                                                onChangeText={handleClaimDetailChange}
                                                                                 style={style.input_area}
                                                                       />
                                                             </View>

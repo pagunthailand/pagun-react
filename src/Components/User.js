@@ -239,7 +239,7 @@ const send_OTP = async () => {
               onChangeText={handlephoneReg1Change}
               keyboardType="numeric"
               ></TextInput>
-            <ButtonRegisPhone onPress={() => LinkToRes()}  title="ยืนยัน" />
+            <ButtonRegisPhone onPress={() => LinkToRes()}  title="ลงทะเบียน" />
           </View>
 
           <Text style={style.text_title_input}>เบอร์โทรศัพท์  ลำดับที่ 2</Text>
@@ -252,7 +252,7 @@ const send_OTP = async () => {
 
          
             ></TextInput>
-                <ButtonRegisPhone onPress={() => LinkToRes2()}  title="ยืนยัน" />
+                <ButtonRegisPhone onPress={() => LinkToRes2()}  title="ลงทะเบียน" />
                 </View>
         </View>
 

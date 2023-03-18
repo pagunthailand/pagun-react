@@ -216,6 +216,7 @@ const send_OTP = async () => {
             value={data ? data.phoneNumber : ''}
             onChangeText={handlephoneNumberChange}
             maxLength={10}
+            keyboardType="numeric"
             placeholder="ต้องระบุ"></TextInput>
 
           <Text style={style.text_title_input}>อีเมลล์</Text>
@@ -236,6 +237,7 @@ const send_OTP = async () => {
               placeholder="ลงทะเบียนเพิ่ม"
              
               onChangeText={handlephoneReg1Change}
+              keyboardType="numeric"
               ></TextInput>
             <ButtonRegisPhone onPress={() => LinkToRes()}  title="ยืนยัน" />
           </View>
@@ -246,7 +248,9 @@ const send_OTP = async () => {
             value={data ? data.phoneReg2 : ''}
             placeholder="ลงทะเบียนเพิ่ม"
             onChangeText={handlephoneReg2Change}
-             
+            keyboardType="numeric"
+
+         
             ></TextInput>
                 <ButtonRegisPhone onPress={() => LinkToRes2()}  title="ยืนยัน" />
                 </View>

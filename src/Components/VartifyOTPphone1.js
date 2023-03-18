@@ -66,6 +66,7 @@ const VartifyOTPphone1 = ({navigation}) => {
                       value={Pin}
                       onChangeText={text => setPin(text)}
                       maxLength={6}
+                      keyboardType="numeric"
                       placeholder="รหัส OTP 6 หลัก"></TextInput>
 
                 <ButtonRegister style={style.ButtonPhone} onPress={() => send_VartifyOTP()} title="ยืนยัน" />

@@ -72,6 +72,7 @@ const Register = ({ navigation }) => {
                                                   value={phoneNumber}
                                                   onChangeText={text => setPhoneNumber(text)}
                                                   maxLength={10}
+                                                  keyboardType="numeric"
                                                   placeholder="เบอร์โทรศัพท์ 10 หลัก"></TextInput>
 
                                         <ButtonRegister style={style.ButtonPhone} onPress={() => send_OTP()} title="ต่อไป" />

@@ -126,7 +126,7 @@ const Product = ({ navigation }) => {
 
 
   const [searchValue, setSearchValue] = useState('');
-  if (!!data)
+  if (data.length > 0)
     filteredData = data.filter(item =>
       item.eQ_NAME.toLowerCase().includes(searchValue.toLowerCase()) ||
       item.description.toLowerCase().includes(searchValue.toLowerCase() ||
@@ -134,7 +134,6 @@ const Product = ({ navigation }) => {
     );
 
   return (
-
     <View style={styles.container}
     >
       <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />

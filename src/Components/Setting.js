@@ -1,21 +1,31 @@
 import { View, Text, Dimensions, StyleSheet, ScrollView, Switch, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ButtonSave from '../Other/ButtonSave';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GetUserByid_Action, UpdateUser_Action ,send_OTP_Action} from '../Model/Action'
+import { GetUserByid_Action, UpdateUser_Action, send_OTP_Action, updateNotiStatus } from '../Model/Action'
 import Global from '../Global';
 
-const Setting = ({navigation, route}) => {
+const Setting = ({ navigation, route }) => {
+  let [isEnabled, setIsEnabled] = useState(false);
+  useEffect(() => {
+     GetUserByid_Action(Global.userId).then((res_GetUserByid_Action) => {
+      isEnabled = setIsEnabled(res_GetUserByid_Action.Result.notiStatus);
+    });
+  }, []);
 
-  const [isEnabled, setIsEnabled] = useState(false);
+
 
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
-    //alert(isEnabled)
+
+    updateNotiStatus(Global.userId).then((res) => {
+      isEnabled = setIsEnabled(res.Result.notiStatus);
+    }, (err) => {
+    })
   };
 
   const logout = async () => {
-    await AsyncStorage.setItem('isLoggedIn','false');
+    await AsyncStorage.setItem('isLoggedIn', 'false');
     Global.isLogin = 'false'
     navigation.navigate('Register'); // navigate back to the login page
   };
@@ -23,29 +33,29 @@ const Setting = ({navigation, route}) => {
 
   return (
     <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
-    <ScrollView style={{ flex: 1 }}>
-      <Text style={style.title_header}>ตั้งค่าการแจ้งเตือน</Text>
-      <View style={style.title_box }>
-        <Text style={style.input}>การแจ้งเตือนผ่านแอพ</Text>
-        <Switch  style={style.input}
-        trackColor={{ false: "#767577", true: "#9E9E9E" }}
-        thumbColor={isEnabled ? "#444444" : "#f4f3f4"}
-        ios_backgroundColor="#F6F6F6"
-        onValueChange={toggleSwitch}
-        value={isEnabled}
-      />
-      </View>
+      <ScrollView style={{ flex: 1 }}>
+        <Text style={style.title_header}>ตั้งค่าการแจ้งเตือน</Text>
+        <View style={style.title_box}>
+          <Text style={style.input}>การแจ้งเตือนผ่านแอพ</Text>
+          <Switch style={style.input}
+            trackColor={{ false: "#767577", true: "#9E9E9E" }}
+            thumbColor={isEnabled ? "#444444" : "#f4f3f4"}
+            ios_backgroundColor="#F6F6F6"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </View>
 
-      <Text style={style.title_header}>เกี่ยวกับแอพ</Text>
-      <View style={style.title_box_version }>
-        <Text style={style.text_version}>ทีมงาน PAGUN</Text>
-        <Text style={style.text_version}>เวอร์ชั่นก์ 1.0.0 (PG2302)</Text>
-      </View>
+        <Text style={style.title_header}>เกี่ยวกับแอพ</Text>
+        <View style={style.title_box_version}>
+          <Text style={style.text_version}>ทีมงาน PAGUN</Text>
+          <Text style={style.text_version}>เวอร์ชั่นก์ 1.0.0 (PG2302)</Text>
+        </View>
 
-      <ButtonSave onPress={() => logout()} title="ออกจากระบบ"></ButtonSave>
-     
-    </ScrollView>
-  </View>
+        <ButtonSave onPress={() => logout()} title="ออกจากระบบ"></ButtonSave>
+
+      </ScrollView>
+    </View>
   )
 }
 
@@ -90,7 +100,7 @@ const style = StyleSheet.create({
     paddingBottom: 10,
     marginRight: 20,
     fontSize: isSmallScreen ? 15 : 18,
-    fontWeight:'500'
+    fontWeight: '500'
   },
   title_box_version: {
     backgroundColor: '#FFFFFF',
@@ -108,7 +118,7 @@ const style = StyleSheet.create({
     paddingBottom: 10,
     marginRight: 20,
     fontSize: isSmallScreen ? 15 : 18,
-    fontWeight:'500'
+    fontWeight: '500'
   },
 
 });

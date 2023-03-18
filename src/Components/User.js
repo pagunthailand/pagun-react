@@ -97,7 +97,7 @@ const User = ({ navigation }) => {
  
 
 const send_OTP2 = async () => {
-  phone2.phone = phoneNumber2;
+  phone2.phone = data.phoneReg2;
 //  navigation.navigate('VartifyOTPphone1')
   // alert(phone1.phone);
   console.log('phone1.phone',phone2.phone);
@@ -107,7 +107,7 @@ const send_OTP2 = async () => {
     console.log('tomcode',response.Result);
 
 
-  Global.userPhone2 = phoneNumber2;
+  Global.userPhone2 = data.phoneReg2;
   Global.OTPToken = response.Result;
   navigation.navigate('VartifyOTPphone2');
   //AsyncStorage.setItem('OTPtoken', phoneNumber2); 
@@ -132,17 +132,17 @@ const send_OTP2 = async () => {
 
 
 const send_OTP = async () => {
-  phone1.phone = phoneNumber1;
+  phone1.phone =  data.phoneReg1;
 //  navigation.navigate('VartifyOTPphone1')
   // alert(phone1.phone);
-  console.log('phone1.phone',phone1.phone);
+  console.log('phone1.phone',phone1.phone , data.phoneReg1);
   var response = await send_OTP_Action(phone1);
   if (response.ResultStatus == 200) {
-   
+    
     console.log('tomcode',response.Result);
 
 
-  Global.userPhone1 = phoneNumber1;
+  Global.userPhone1 = data.phoneReg1;
   Global.OTPToken = response.Result;
   navigation.navigate('VartifyOTPphone1');
   //AsyncStorage.setItem('OTPtoken', phoneNumber2); 
@@ -183,6 +183,14 @@ const send_OTP = async () => {
   }
   const handlephoneNumberChange = (value) => {
     setData(prevData => ({ ...prevData, phoneNumber: value }));
+  }
+
+  const handlephoneReg1Change = (value) => {
+    setData(prevData => ({ ...prevData, phoneReg1: value }));
+  }
+
+  const handlephoneReg2Change = (value) => {
+    setData(prevData => ({ ...prevData, phoneReg2: value }));
   }
   return (
     <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
@@ -225,9 +233,9 @@ const send_OTP = async () => {
           <View style={style.set_button}>
             <TextInput style={style.input}
              value={data ? data.phoneReg1 : ''}
-              placeholder="หากเบอร์ที่ 1"
+              placeholder="ลงทะเบียนเพิ่ม"
              
-              onChangeText={text => setPhones(text)}
+              onChangeText={handlephoneReg1Change}
               ></TextInput>
             <ButtonRegisPhone onPress={() => LinkToRes()}  title="ยืนยัน" />
           </View>
@@ -236,8 +244,8 @@ const send_OTP = async () => {
           <View style={style.set_button}>
           <TextInput style={style.input}
             value={data ? data.phoneReg2 : ''}
-            placeholder="หากเบอร์ที่ 2"
-            onChangeText={text => setphone2(text)}
+            placeholder="ลงทะเบียนเพิ่ม"
+            onChangeText={handlephoneReg2Change}
              
             ></TextInput>
                 <ButtonRegisPhone onPress={() => LinkToRes2()}  title="ยืนยัน" />

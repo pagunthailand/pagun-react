@@ -215,8 +215,8 @@ export const updatePhoneReg2 = async (id,phoneNumber) => {
     }
 };
 
-export const updateNotiStatus = async (id,phoneNumber) => {
-    var response = (await axios.post(Base_url + '/api/User/updateNotiStatus?id='+id))
+export const updateNotiStatus = async (id) => {
+    var response = (await axios.get(Base_url + '/api/User/updateNotiStatus?id='+id))
     if (response.status == 200) {
               return {
                         Result: response.data.value,

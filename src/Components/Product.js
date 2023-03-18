@@ -18,6 +18,7 @@ import Global from '../Global';
 import moment from 'moment';
 import SearchBar from './SearchBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Product = ({ navigation }) => {
@@ -61,12 +62,14 @@ const Product = ({ navigation }) => {
     updateReadNotication(id);
   }
 
-  const updateReadNotication = async (id) => {
+  const updateReadNotication = async (id_) => {
+    console.log(id_);
+    navigation.navigate('ส่งเครม',{ id : id_});
     // console.log(id);
-    updateReadNotication_action(id)
-      .then(response => response.Result)
-      .then(GetNoticationHistoryByuserid())
-      .catch(error => console.error(error))
+    // updateReadNotication_action(id)
+    //   .then(response => response.Result)
+    //   .then(GetNoticationHistoryByuserid())
+    //   .catch(error => console.error(error))
 
   };
 
@@ -88,7 +91,7 @@ const Product = ({ navigation }) => {
     let formatted_warrantY_VALID_FROM = datetime.format('DD/MM/YYYY');
     return (
 
-      <TouchableOpacity onPress={() => setSelectedId_(item.id)}>
+      <TouchableOpacity onPress={() => setSelectedId_(item.eQ_ID)}>
 
         <View style={styles.title_box}>
           <View style={styles.title_header}>

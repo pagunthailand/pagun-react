@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Image, Pressable, Alert, BackHandler } from 'react-native';
+import { View, Image, Pressable, Alert, BackHandler, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ActionBarOption from './ActionBarOption';
@@ -18,6 +18,7 @@ import Onpage from './Onpage';
 import VartifyOTPphone1 from './VartifyOTPphone1';
 import VartifyOTPphone2 from './VartifyOTPphone2';
 import { updateFCMToken_Action } from '../Model/Action';
+import Claim from './Claim';
 
 const ProductStack = createNativeStackNavigator();
 function ProductStackScreen() {
@@ -37,7 +38,19 @@ function ProductStackScreen() {
           headerLeft: () => <ActionBarLogo />,
         }}
       ></ProductStack.Screen>
-
+      <ProductStack.Screen name='ส่งเครม' component={Claim} 
+      options={{
+        headerShadowVisible: false,
+        headerTintColor: '#000000',
+        title: 'ส่งเครม',
+        headerStyle: {
+          backgroundColor: '#F6F6F6', //Set Header color
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          alignItems: 'flex-start',
+        },
+      }}></ProductStack.Screen>
     </ProductStack.Navigator>
   );
 }
@@ -120,16 +133,16 @@ function UserStackScreen() {
         }}
       ></UserStack.Screen>
 
-<UserStack.Screen name='VartifyOTPphone2' component={VartifyOTPphone2}
+      <UserStack.Screen name='VartifyOTPphone2' component={VartifyOTPphone2}
         options={{
           title: 'ลงทะเบียน เบอร์ 2',
           headerShadowVisible: false,
-          headerStyle: { 
+          headerStyle: {
             backgroundColor: '#F6F6F6',
           },
           headerTintColor: '#000000',
           headerTitleStyle: {
-            fontWeight: 'bold', 
+            fontWeight: 'bold',
           },
         }}
       ></UserStack.Screen>
@@ -151,7 +164,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 export default function MainMenu() {
   const [param, setparam] = React.useState({ id: null, fcmToken: '' });
- 
+
 
   React.useEffect(() => {
     const backAction = () => {
@@ -162,8 +175,8 @@ export default function MainMenu() {
     param.fcmToken = Global.googleToken;
     param.id = Global.userId;
     updateFCMToken_Action(param);
-   
-   
+
+
 
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -215,11 +228,12 @@ export default function MainMenu() {
 
           },
           // showLabel: false,
-          tabBarStyle: { display: 
-            route.name == 'Register' ? 'none' : 'flex' 
-            && route.name == 'VartifyOTP' ? 'none' : 'flex' 
-            && route.name == 'NewUser' ? 'none' : 'flex' 
-            && route.name == 'Onpage' ? 'none' : 'flex' 
+          tabBarStyle: {
+            display:
+              route.name == 'Register' ? 'none' : 'flex'
+                && route.name == 'VartifyOTP' ? 'none' : 'flex'
+                  && route.name == 'NewUser' ? 'none' : 'flex'
+                    && route.name == 'Onpage' ? 'none' : 'flex'
           },
 
           tabBarActiveTintColor: '#000000',

@@ -51,9 +51,8 @@ const Product = ({ navigation }) => {
       getuser_Equipment_Action(result_sessionID)
         .then(response => response.Result.data)
         .then(json => setData(json))
-        .catch(error => console.error('error ==>',result_sessionID, error))
+        .catch(error => console.error('error ==>', result_sessionID, error))
 
-      console.log('response.Result ', result_sessionID, data);
     });
   }
 
@@ -63,7 +62,7 @@ const Product = ({ navigation }) => {
   }
 
   const updateReadNotication = async (id) => {
-    console.log(id);
+    // console.log(id);
     updateReadNotication_action(id)
       .then(response => response.Result)
       .then(GetNoticationHistoryByuserid())
@@ -74,7 +73,7 @@ const Product = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
     setRefreshing(true);
-    GetNoticationHistoryByuserid();
+    getuser_Equipment();
     setRefreshing(false)
   };
 
@@ -85,31 +84,39 @@ const Product = ({ navigation }) => {
     //const backgroundColor = item.isRead === true ? '#000000' : '#FFFFFF';
     // datetime string in ISO format
     const datetimeString = item.warrantY_VALID_FROM;
-    // parse datetime string with moment
     const datetime = moment(datetimeString);
-    // format datetime with moment
-    const formattedDatetime = datetime.format('DD/MM/YYYY HH:mm');
+    let formatted_warrantY_VALID_FROM = datetime.format('DD/MM/YYYY');
     return (
 
       <TouchableOpacity onPress={() => setSelectedId_(item.id)}>
 
         <View style={styles.title_box}>
-          <View style={{ flex: 0.7, padding: 10, marginVertical: 2 }}>
-
-            <Text style={{ color: '#000000', fontWeight: 'bold', paddingLeft: 10 }}>
-              <View style={{
-                width: 10,
-                height: 10,
-                backgroundColor: item.isRead === true ? '#EFCDCD' : '#F47322',
-                borderRadius: 5
-              }}></View>
+          <View style={styles.title_header}>
+            <Text style={styles.title_header}>
               {item.eQ_NAME}</Text>
-            <Text style={{ color: '#444444', fontWeight: '300', paddingLeft: 10 }}>{item.description}</Text>
           </View>
-          <View style={{ flex: 0.3, padding: 10, marginVertical: 2 }}>
-            <Text style={{ color: '#444444', fontWeight: '300', fontSize: 10, paddingRight: 10, textAlign: 'right' }}>{formattedDatetime}</Text>
+
+          <View style={styles.container2}>
+            <View style={styles.bodyFG1}>
+              <Text style={styles.bodyFG1}>SN/รายละเอียด </Text>
+              <Text style={styles.bodyFG1}>สิ้นสุดประกัน </Text>
+              <Text style={styles.bodyFG1}>จากร้าน </Text>
+            </View>
+            <View style={styles.bodyFG2}>
+              <Text style={styles.bodyFG2}>{item.description}</Text>
+              <Text style={styles.bodyFG2}>{formatted_warrantY_VALID_FROM}</Text>
+              <Text style={styles.bodyFG2}>{item.coM_NAME}</Text>
+            </View>
+            <View style={styles.bodyFG3}>
+              <Text style={styles.bodyFG3}></Text>
+            </View>
           </View>
+          <Text style={styles.bodyFG3}>
+            {item.eQ_STATUS}</Text>
+
+
         </View>
+
 
       </TouchableOpacity>
     );
@@ -119,7 +126,8 @@ const Product = ({ navigation }) => {
   const [searchValue, setSearchValue] = useState('');
   filteredData = data.filter(item =>
     item.eQ_NAME.toLowerCase().includes(searchValue.toLowerCase()) ||
-    item.description.toLowerCase().includes(searchValue.toLowerCase())
+    item.description.toLowerCase().includes(searchValue.toLowerCase() ||
+    item.coM_NAME.toLowerCase().includes(searchValue.toLowerCase()))
   );
 
   return (
@@ -144,6 +152,19 @@ const Product = ({ navigation }) => {
 const { width } = Dimensions.get('window');
 const isSmallScreen = width <= 375;
 const styles = StyleSheet.create({
+  container2: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  box: {
+    width: 100,
+    height: 100,
+    backgroundColor: 'red',
+    margin: 10,
+  },
   container: {
     backgroundColor: '#F6F6F6',
     flex: 1,
@@ -170,16 +191,48 @@ const styles = StyleSheet.create({
     marginTop: 5,
     paddingBottom: 15,
     borderRadius: 20,
+    // flex: 1,
+    // flexDirection: 'row'
+  },
+  itemTitle: {
+    marginTop: 5,
+    paddingBottom: 15,
+  },
+  title_header: {
+    color: '#000000',
+    fontSize: isSmallScreen ? 15 : 18,
+    paddingTop: 5,
+    marginLeft: 10,
+    fontWeight: 'bold'
+  },
+  body: {
     flex: 1,
     flexDirection: 'row'
   },
-  title_header: {
-    color: '#00008B',
-    fontSize: isSmallScreen ? 14 : 18,
-    marginLeft: 20,
-    marginRight: 20,
-    textAlign: 'right',
-    fontWeight: 'bold'
+  bodyFG1: {
+    flex: 0.3,
+    color: '#9E9E9E',
+    margin: 2.5,
+    marginLeft: 10,
+    textAlign: 'left',
+    flexWrap: 'wrap',
+    // bottom: '',
+  },
+  bodyFG2: {
+    flex: 0.7,
+    margin: 2.5,
+    color: '#444444',
+    fontWeight: '500',
+    textAlign: 'left',
+
+  },
+  bodyFG3: {
+    marginLeft: 10,
+    margin: 2.5,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    flexWrap: 'wrap'
   },
 });
 export default Product

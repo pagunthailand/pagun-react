@@ -40,7 +40,6 @@ const Register = ({ navigation }) => {
 
           const send_OTP = async () => {
                     phone.phone = phoneNumber;
-                    // alert(phone.phone + '333');
                     var response = await send_OTP_Action(phone);
                     if (response.ResultStatus == 200) {
                               AsyncStorage.setItem('PhoneRegister', phoneNumber);

@@ -98,7 +98,7 @@ const Claim = ({ navigation }) => {
                               //console.log('paramnoti' , paramnoti);
                               var response = await SendNotificationSingleUser_Action(paramnoti);
                               if (response.ResultStatus == 200) {
-                                       
+
                               } else {
 
                               }
@@ -111,7 +111,7 @@ const Claim = ({ navigation }) => {
                               let title = 'เครม ' + data.eQ_NAME;
                               let detail = data.detail
                               get_Equipment_ฺbyID();
-                              send_Noti_welcome(title,detail)
+                              send_Noti_welcome(title, detail)
                               console.log(res);
                     }, (err) => {
                               console.log('err', err);
@@ -207,13 +207,15 @@ const Claim = ({ navigation }) => {
           return (
 
                     <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
-
-                              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                        <ButtonClaimLocation onPress={() => OpenMapPartner()} title="ที่ตั้งร้าน"></ButtonClaimLocation>
-                                        <ButtonClaimUpload onPress={() => handleChoosePhoto()} title="เพิ่มรูป"></ButtonClaimUpload>
-                                        <ButtonClaimaSave onPress={() => create_WorkOrder_event()} title="ส่งเครม"></ButtonClaimaSave>
-                              </View>
-
+                              {data.eQ_STATUS_ID !== 1 ?
+                                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                                  <ButtonClaimLocation onPress={() => OpenMapPartner()} title="ที่ตั้งร้าน"></ButtonClaimLocation>
+                                                  <ButtonClaimUpload onPress={() => handleChoosePhoto()} title="เพิ่มรูป"></ButtonClaimUpload>
+                                                  {data.eQ_STATUS_ID == 0 ?
+                                                            <ButtonClaimaSave onPress={() => create_WorkOrder_event()} title="ส่งเครม"></ButtonClaimaSave>
+                                                            : ''}
+                                        </View>
+                                        : ''}
                               <ScrollView style={{ flex: 1 }} refreshControl={
                                         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                               }>

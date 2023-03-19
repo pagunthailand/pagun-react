@@ -19,6 +19,7 @@ import VartifyOTPphone1 from './VartifyOTPphone1';
 import VartifyOTPphone2 from './VartifyOTPphone2';
 import { updateFCMToken_Action } from '../Model/Action';
 import Claim from './Claim';
+import Upload from './Upload';
 
 const ProductStack = createNativeStackNavigator();
 function ProductStackScreen() {
@@ -38,19 +39,33 @@ function ProductStackScreen() {
           headerLeft: () => <ActionBarLogo />,
         }}
       ></ProductStack.Screen>
-      <ProductStack.Screen name='ส่งเครม' component={Claim} 
-      options={{
-        headerShadowVisible: false,
-        headerTintColor: '#000000',
-        title: 'ส่งเครม',
-        headerStyle: {
-          backgroundColor: '#F6F6F6', //Set Header color
-        },
-        headerTitleStyle: {
-          fontWeight: 'bold',
-          alignItems: 'flex-start',
-        },
-      }}></ProductStack.Screen>
+      <ProductStack.Screen name='ส่งเครม' component={Claim}
+        options={{
+          headerShadowVisible: false,
+          headerTintColor: '#000000',
+          title: 'ส่งเครม',
+          headerStyle: {
+            backgroundColor: '#F6F6F6', //Set Header color
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            alignItems: 'flex-start',
+          },
+        }}></ProductStack.Screen>
+
+      <ProductStack.Screen name='Upload' component={Upload}
+        options={{
+          headerShadowVisible: false,
+          headerTintColor: '#000000',
+          title: 'อัพโหลด',
+          headerStyle: {
+            backgroundColor: '#F6F6F6', //Set Header color
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            alignItems: 'flex-start',
+          },
+        }}></ProductStack.Screen>
     </ProductStack.Navigator>
   );
 }

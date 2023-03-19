@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder } from '../Model/Action'
+import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder, SendNotificationSingleUser_Action } from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ButtonSave from '../Other/ButtonSave';
 import ButtonRegisPhone from '../Other/ButtonRegisPhone';
@@ -81,21 +81,36 @@ const Claim = ({ navigation }) => {
                               console.log(err);
                     });
           }
+          const [paramnoti, setparamnoti] = useState(
+                    {
+                              userid: 0,
+                              title: "",
+                              body: "",
+                              subtitle: ""
+                    });
+          const send_Noti_welcome = async (title, detail) => {
+                    AsyncStorage.getItem('OTPtoken', async (err, result) => {
+                              paramnoti.userid = Global.userId;
+                              paramnoti.title = title;
+                              paramnoti.body = detail;
+                              paramnoti.subtitle = "";
 
-          const update_User = async () => {
-                    var response = await UpdateUser_Action(data);
-                    if (response.ResultStatus == 200) {
-                              alert("สำเร็จ")
-                              GetUserByid
-                    } else {
-                              alert("ไม่สำเร็จ")
-                    }
+                              //console.log('paramnoti' , paramnoti);
+                              var response = await SendNotificationSingleUser_Action(paramnoti);
+                              if (response.ResultStatus == 200) {
+
+                              } else {
+
+                              }
+                    });
           };
-          let lop = 0
+
           const create_WorkOrder_event = async () => {
-                    console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
-                    lop++
+                    // console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
                     await create_WorkOrder(route.params.id, data.detail, Global.userId).then((res) => {
+                              let title = 'เครม ' + data.eQ_NAME;
+                              let detail = data.detail
+                              send_Noti_welcome(title,detail)
                               console.log(res);
                     }, (err) => {
                               console.log('err', err);
@@ -103,7 +118,7 @@ const Claim = ({ navigation }) => {
 
           };
 
-       
+
           const [state, setState] = useState([]);
           source = null;
           handleChoosePhoto = () => {
@@ -119,7 +134,7 @@ const Claim = ({ navigation }) => {
                                         //Photo_List.push(state.photo[0])
                                         console.log('response.assets', state);
                                         handleUploadPhoto();
-                              } 
+                              }
                     })
           }
 
@@ -180,7 +195,7 @@ const Claim = ({ navigation }) => {
 
           };
 
-          const OpenMapPartner = ()=>{
+          const OpenMapPartner = () => {
                     alert('ที่ตั้งร้าน')
           }
 
@@ -192,7 +207,7 @@ const Claim = ({ navigation }) => {
 
                     <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
 
-                              <View style={{ flexDirection: 'row' , justifyContent: 'center'}}>
+                              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                                         <ButtonClaimLocation onPress={() => OpenMapPartner()} title="ที่ตั้งร้าน"></ButtonClaimLocation>
                                         <ButtonClaimUpload onPress={() => handleChoosePhoto()} title="เพิ่มรูป"></ButtonClaimUpload>
                                         <ButtonClaimaSave onPress={() => create_WorkOrder_event()} title="ส่งเครม"></ButtonClaimaSave>

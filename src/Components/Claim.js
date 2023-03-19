@@ -13,13 +13,14 @@ import ButtonClaimUpload from '../Other/ButtonClaimUpload';
 import ButtonClaimLocation from '../Other/ButtonClaimLocation';
 import * as ImagePicker from 'react-native-image-picker';
 import axios from 'axios';
+import ImageView from "react-native-image-viewing";
 
 const Claim = ({ navigation }) => {
           [formatted_warrantY_VALID_UTIL, setformatted_warrantY_VALID_UTIL] = useState('');
           [formatted_warrantY_VALID_FROM, setformatted_warrantY_VALID_FROM] = useState('');
 
           [ClaimDetail, setClaimDetail] = useState({ detail: '' });
-          
+
           [data, setData] = useState({
                     eQ_ID: 0,
                     eQ_CODE: null,
@@ -88,16 +89,24 @@ const Claim = ({ navigation }) => {
                               "wO_NO": null
                     }
           )
+          let ImgDetail = {}
+          const [visible, setIsVisible] = useState(false);
           [data, setData] = useState({
                     "erR_DESC": null,
           });
+          const images = [
+                    {
+                      uri: "http://183.90.170.87:3000/FileUpload//1015/000015/48AECBA3-A5D5-44F0-A27F-E301FF1A4CBE.png",
+                    }
+                  ];
           const get_WorkOrder_event = async (WO_ID) => {
                     // console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
                     await GetWorkOrder_Action(WO_ID).then((res) => {
-                              WoDetail =  setWoDetail (res.Result.data)
-                              console.log('GetWorkOrder_Action', res.Result.data);
+                              WoDetail = setWoDetail(res.Result.data.wono)
+                              ImgDetail = res.Result.data.img
+                              console.log('ImgDetail', ImgDetail);
                     }, (err) => {
-                              console.log('err', err);
+                              console.log('err', err); 
                     })
 
           };
@@ -170,13 +179,13 @@ const Claim = ({ navigation }) => {
 
           handleUploadPhoto = async () => {
 
-
+                    alert(WoDetail.wO_NO)
 
                     let fromData = new FormData();
 
                     let body = {
                               UserId: parseInt(Global.userId),
-                              WoNo: route.params.id
+                              WoNo: WoDetail.wO_NO
                     }
                     Object.keys(body).forEach(key => {
                               fromData.append(key, body[key]);
@@ -203,10 +212,7 @@ const Claim = ({ navigation }) => {
                                         'content-type': 'multipart/form-data',
                               },
                     };
-
-
                     console.log('createFormData', JSON.stringify(fromData));
-
 
                     try {
                               let res = await axios.post("http://183.90.170.87:3000/api/FileUpload/UploadFile"
@@ -230,6 +236,8 @@ const Claim = ({ navigation }) => {
           return (
 
                     <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
+                               
+
                               {data.eQ_STATUS_ID !== 1 ?
                                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                                                   <ButtonClaimLocation onPress={() => OpenMapPartner()} title="ที่ตั้งร้าน"></ButtonClaimLocation>
@@ -274,6 +282,13 @@ const Claim = ({ navigation }) => {
                                                   </View>
                                         </View>
 
+                                        <ImageView
+                                                  images={images}
+                                                  imageIndex={0}
+                                                  visible={visible}
+                                                  onRequestClose={() => setIsVisible(false)}
+                                        />
+                                        
                                         <ButtonCancel onPress={() => create_WorkOrder_event()} title="ยกเลิก"></ButtonCancel>
 
                               </ScrollView>

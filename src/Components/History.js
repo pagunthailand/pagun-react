@@ -25,7 +25,7 @@ const History = ({ navigation }) => {
   }, [navigation]);
 
 
-  
+
 
 
   [getnoti, setgetnoti] = useState({
@@ -47,14 +47,14 @@ const History = ({ navigation }) => {
       .then(response => response.Result.data)
       .then(json => setData(json))
       .catch(error => console.error(error))
- 
-    //console.log('response.Result ', data);
+
+   // console.log('response.Result ', data);
   };
 
   setSelectedId_ = (id_) => {
 
     navigation.navigate('ส่งเครม', { id: id_ });
-  } 
+  }
 
   const updateReadNotication = async (id) => {
     console.log(id);
@@ -63,7 +63,7 @@ const History = ({ navigation }) => {
       .then(GetNoticationHistoryByuserid())
       .catch(error => console.error(error))
 
-  }; 
+  };
 
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
@@ -90,20 +90,20 @@ const History = ({ navigation }) => {
         <View style={styles.title_box}>
           <View style={{ flex: 0.7, padding: 10, marginVertical: 2 }}>
 
-          <Text style={{ color: '#444444', fontWeight: 'bold', paddingLeft: 10 }}>
-              
+            <Text style={{ color: '#444444', fontWeight: 'bold', paddingLeft: 10 }}>
+
               {formattedDatetime}</Text>
             <Text style={{ color: '#000000', fontWeight: 'bold', paddingLeft: 10 }}>
-              
+
               {item.erR_DESC}</Text>
             <Text style={{ color: '#000000', fontWeight: 'bold', paddingLeft: 10 }}>{item.description}</Text>
           </View>
           <View style={{ flex: 0.3, padding: 10, marginVertical: 2 }}>
-            
-          <Text style={{ color: '#444444', fontWeight: 'bold',  paddingRight: 10, textAlign: 'right' }}></Text>
-            <Text style={{ color: '#444444', fontWeight: 'bold',  paddingRight: 10, textAlign: 'right' }}>{item.wO_STATUS}</Text>
+
+            <Text style={{ color: '#444444', fontWeight: 'bold', paddingRight: 10, textAlign: 'right' }}></Text>
+            <Text style={{ color: '#444444', fontWeight: 'bold', paddingRight: 10, textAlign: 'right' }}>{item.wO_STATUS}</Text>
           </View>
-          
+
         </View>
 
       </TouchableOpacity>
@@ -111,14 +111,16 @@ const History = ({ navigation }) => {
   };
 
 
- 
+
   const [searchValue, setSearchValue] = useState('');
-  if(data.length>0)
-  filteredData = data.filter(item =>
-    item.description.toLowerCase().includes(searchValue.toLowerCase()) ||
-    item.wO_STATUS.toLowerCase().includes(searchValue.toLowerCase() ||
-    item.erR_DESC.toLowerCase().includes(searchValue.toLowerCase()))
-  );
+  if (!!data)
+    filteredData = data.filter(item =>
+      item.description.toLowerCase().includes(searchValue.toLowerCase()) ||
+      item.wO_STATUS.toLowerCase().includes(searchValue.toLowerCase() ||
+        item.erR_DESC.toLowerCase().includes(searchValue.toLowerCase()))
+    );
+  else
+    filteredData = null
 
   return (
 

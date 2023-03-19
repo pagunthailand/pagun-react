@@ -111,7 +111,7 @@ const Claim = ({ navigation }) => {
                               noData: true,
                     }
                     ImagePicker.launchImageLibrary(options, response => {
-                              if (response.assets[0].uri) {
+                              if (response.assets[0]) {
                                         //console.log(state.lenght);
 
                                         setState(oldArray => [response.assets[0], ...oldArray]);
@@ -119,7 +119,7 @@ const Claim = ({ navigation }) => {
                                         //Photo_List.push(state.photo[0])
                                         console.log('response.assets', state);
                                         handleUploadPhoto();
-                              }
+                              } 
                     })
           }
 

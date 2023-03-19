@@ -214,30 +214,30 @@ export default function MainMenu() {
             if (route.name === 'สินค้า') {
               if (!focused) {
 
-                return <Image source={require('../assets/Navi/Home_inavtive.png')} style={{ width: 30, height: 30, }} />;
+                return <Image source={require('../assets/Navi/Home_inavtive.png')} style={{ width: 25, height: 25, }} />;
               } else {
-                return <Image source={require('../assets/Navi/Home_active.png')} style={{ width: 30, height: 30, }} />;
+                return <Image source={require('../assets/Navi/Home_active.png')} style={{ width: 25, height: 25, }} />;
               }
             }
             else if (route.name === 'ประวัติ') {
               if (!focused) {
-                return <Image source={require('../assets/Navi/Histy_inactive.png')} style={{ width: 30, height: 30, }} />;
+                return <Image source={require('../assets/Navi/Histy_inactive.png')} style={{ width: 25, height: 25, }} />;
               } else {
-                return <Image source={require('../assets/Navi/Histy_active.png')} style={{ width: 30, height: 30, }} />;
+                return <Image source={require('../assets/Navi/Histy_active.png')} style={{ width: 25, height: 25, }} />;
               }
             }
             else if (route.name === 'แจ้งเตือน') {
               if (!focused) {
-                return <Image source={require('../assets/Navi/Notification_inactive.png')} style={{ width: 30, height: 30, }} />;
+                return <Image source={require('../assets/Navi/Notification_inactive.png')} style={{ width: 25, height: 25, }} />;
               } else {
-                return <Image source={require('../assets/Navi/Notification_active.png')} style={{ width: 30, height: 30, }} />;
+                return <Image source={require('../assets/Navi/Notification_active.png')} style={{ width: 25, height: 25, }} />;
               }
             }
             else if (route.name === 'ผู้ใช้') {
               if (!focused) {
-                return <Image source={require('../assets/Navi/User_inactive.png')} style={{ width: 30, height: 30, }} />;
+                return <Image source={require('../assets/Navi/User_inactive.png')} style={{ width: 25, height: 25, }} />;
               } else {
-                return <Image source={require('../assets/Navi/User_active.png')} style={{ width: 30, height: 30, }} />;
+                return <Image source={require('../assets/Navi/User_active.png')} style={{ width: 25, height: 25, }} />;
               }
             }
 

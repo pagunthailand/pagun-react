@@ -89,8 +89,8 @@ const Notication = ({ navigation }) => {
       <TouchableOpacity onPress={() => setSelectedId_(item.id)}>
 
         <View style={styles.title_box}>
-          <View style={{ flex: 1, padding: 10, marginVertical: 2 }}>
-            <Text style={{ color: '#444444', fontWeight: '300', fontSize: 12, paddingLeft: 10, textAlign: 'right' }}><View style={{
+          <View style={{ flex: 1, padding: 10, marginVertical: 2,textAlign: 'left'  }}>
+            <Text style={{ color: '#444444', fontWeight: '300', fontSize: 12, paddingLeft: 10, textAlign: 'left' }}><View style={{
               width: 10,
               height: 10,
               backgroundColor: item.isRead === true ? '#EFCDCD' : '#F47322',

@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder, SendNotificationSingleUser_Action } from '../Model/Action'
+import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder, SendNotificationSingleUser_Action, GetWorkOrderLog_Action, GetWorkOrder_Action } from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ButtonSave from '../Other/ButtonSave';
 import ButtonRegisPhone from '../Other/ButtonRegisPhone';
@@ -19,9 +19,7 @@ const Claim = ({ navigation }) => {
           [formatted_warrantY_VALID_FROM, setformatted_warrantY_VALID_FROM] = useState('');
 
           [ClaimDetail, setClaimDetail] = useState({ detail: '' });
-          [data, setData] = useState({
-                    "detail": null,
-          });
+          
           [data, setData] = useState({
                     eQ_ID: 0,
                     eQ_CODE: null,
@@ -44,8 +42,6 @@ const Claim = ({ navigation }) => {
           let { param_id } = route.params;
           useEffect(() => {
 
-
-
                     const unsubscribe = navigation.addListener('focus', () => {
                               get_Equipment_ฺbyID();
                     }, []);
@@ -65,6 +61,8 @@ const Claim = ({ navigation }) => {
                     get_Equipment_ฺbyID_Action(route.params.id).then((res_GetUserByid_Action) => {
                               data = res_GetUserByid_Action.Result.data[0];
                               data = setData(data);
+                              console.log('data_wO_NO', res_GetUserByid_Action.Result.data[0].wO_NO);
+                              get_WorkOrder_event(res_GetUserByid_Action.Result.data[0].wO_NO)
                               //console.log('data',res_GetUserByid_Action.Result.data);
                               if (!data) {
                                         const datetimeUTIL = moment(res_GetUserByid_Action.Result.warrantY_VALID_UTIL);
@@ -81,6 +79,29 @@ const Claim = ({ navigation }) => {
                               console.log(err);
                     });
           }
+          let [WoDetail, setWoDetail] = useState(
+                    {
+                              "create_Date": null,
+                              "description": null,
+                              "eQ_NAME": null,
+                              "erR_DESC": null,
+                              "wO_NO": null
+                    }
+          )
+          [data, setData] = useState({
+                    "erR_DESC": null,
+          });
+          const get_WorkOrder_event = async (WO_ID) => {
+                    // console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
+                    await GetWorkOrder_Action(WO_ID).then((res) => {
+                              WoDetail =  setWoDetail (res.Result.data)
+                              console.log('GetWorkOrder_Action', res.Result.data);
+                    }, (err) => {
+                              console.log('err', err);
+                    })
+
+          };
+
           const [paramnoti, setparamnoti] = useState(
                     {
                               userid: 0,
@@ -204,7 +225,7 @@ const Claim = ({ navigation }) => {
 
 
           const handleClaimDetailChange = (value) => {
-                    setData(prevData => ({ ...prevData, detail: value }));
+                    setWoDetail(prevData => ({ ...prevData, erR_DESC: value }));
           }
           return (
 
@@ -245,7 +266,7 @@ const Claim = ({ navigation }) => {
 
                                                                       <TextInput placeholder="ระบุรายละเอียด เครมสินค้า"
                                                                                 multiline={true}
-                                                                                value={data ? data.detail : ''}
+                                                                                value={data ? WoDetail.erR_DESC : ''}
                                                                                 onChangeText={handleClaimDetailChange}
                                                                                 style={style.input_area}
                                                                       />

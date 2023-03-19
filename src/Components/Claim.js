@@ -8,6 +8,9 @@ import Global from '../Global';
 import { useRoute } from '@react-navigation/native';
 import moment from 'moment';
 import ButtonCancel from '../Other/ButtonCancel';
+import ButtonClaimaSave from '../Other/ButtonClaimaSave';
+import ButtonClaimUpload from '../Other/ButtonClaimUpload';
+import ButtonClaimLocation from '../Other/ButtonClaimLocation';
 
 const Claim = ({ navigation }) => {
           [formatted_warrantY_VALID_UTIL, setformatted_warrantY_VALID_UTIL] = useState('');
@@ -112,6 +115,13 @@ const Claim = ({ navigation }) => {
           return (
 
                     <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
+
+                              <View style={{ flexDirection: 'row' , justifyContent: 'center'}}>
+                                        <ButtonClaimLocation onPress={() => update_User()} title="ที่ตั้งร้าน"></ButtonClaimLocation>
+                                        <ButtonClaimUpload onPress={() => update_User()} title="อัพโหลด"></ButtonClaimUpload>
+                                        <ButtonClaimaSave onPress={() => create_WorkOrder_event()} title="ส่งเครม"></ButtonClaimaSave>
+                              </View>
+
                               <ScrollView style={{ flex: 1 }} refreshControl={
                                         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                               }>
@@ -147,16 +157,6 @@ const Claim = ({ navigation }) => {
                                                   </View>
                                         </View>
 
-
-                                        <View style={{ flex: 1, flexDirection: 'row', }}>
-                                                  <View style={{ flex: 0.5 }}>
-                                                            <ButtonCancel onPress={() => update_User()} title="ยกเลิก"></ButtonCancel>
-                                                            <ButtonSave onPress={() => Upload_event()} title="อัพโหลด"></ButtonSave>
-                                                  </View>
-                                                  <View style={{ flex: 0.5 }}>
-                                                            <ButtonSave onPress={() => create_WorkOrder_event()} title="บันทึกข้อมูลเครม"></ButtonSave>
-                                                  </View>
-                                        </View>
 
 
                               </ScrollView>

@@ -77,7 +77,6 @@ const Upload = ({ navigation }) => {
                     setRefreshing(false)
           };
           const [state, setState] = useState([]);
-          // state = {}
           source = null;
           handleChoosePhoto = () => {
                     const options = {
@@ -95,7 +94,6 @@ const Upload = ({ navigation }) => {
                     })
           }
 
-          Photo_List = [];
           handleClearPhoto = () => {
                     setState([]);
           }

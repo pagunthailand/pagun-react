@@ -11,6 +11,8 @@ import ButtonCancel from '../Other/ButtonCancel';
 import ButtonClaimaSave from '../Other/ButtonClaimaSave';
 import ButtonClaimUpload from '../Other/ButtonClaimUpload';
 import ButtonClaimLocation from '../Other/ButtonClaimLocation';
+import * as ImagePicker from 'react-native-image-picker';
+import axios from 'axios';
 
 const Claim = ({ navigation }) => {
           [formatted_warrantY_VALID_UTIL, setformatted_warrantY_VALID_UTIL] = useState('');
@@ -101,12 +103,86 @@ const Claim = ({ navigation }) => {
 
           };
 
-          const Upload_event = async () => {
-                    navigation.navigate('Upload');
+       
+          const [state, setState] = useState([]);
+          source = null;
+          handleChoosePhoto = () => {
+                    const options = {
+                              noData: true,
+                    }
+                    ImagePicker.launchImageLibrary(options, response => {
+                              if (response.assets[0].uri) {
+                                        //console.log(state.lenght);
+
+                                        setState(oldArray => [response.assets[0], ...oldArray]);
+                                        //if(state == [])  setState(oldArray => [response.assets, ...oldArray]);
+                                        //Photo_List.push(state.photo[0])
+                                        console.log('response.assets', state);
+                                        handleUploadPhoto();
+                              }
+                    })
+          }
+
+          handleClearPhoto = () => {
+                    setState([]);
+          }
+
+
+
+          handleUploadPhoto = async () => {
+
+
+
+                    let fromData = new FormData();
+
+                    let body = {
+                              UserId: parseInt(Global.userId),
+                              WoNo: route.params.id
+                    }
+                    Object.keys(body).forEach(key => {
+                              fromData.append(key, body[key]);
+                    });
+
+                    let value = []
+                    state.forEach((_state, index) => {
+                              value.push({
+                                        uri: Platform.OS === "android" ? _state.uri : _state.uri.replace("file://", ""),
+                                        type: _state.type,
+                                        name: _state.fileName
+                              }
+                              )
+                    });
+
+                    value.forEach(element => {
+                              fromData.append("formFile", element);
+                    });
+
+
+
+                    const config = {
+                              headers: {
+                                        'content-type': 'multipart/form-data',
+                              },
+                    };
+
+
+                    console.log('createFormData', JSON.stringify(fromData));
+
+
+                    try {
+                              let res = await axios.post("http://183.90.170.87:3000/api/FileUpload/UploadFile"
+                                        , fromData, config)
+                              console.log('Success Status : ', res.status, res);
+
+                    } catch (error) {
+                              console.log('error', error);
+                    }
 
           };
 
-
+          const OpenMapPartner = ()=>{
+                    alert('ที่ตั้งร้าน')
+          }
 
 
           const handleClaimDetailChange = (value) => {
@@ -117,8 +193,8 @@ const Claim = ({ navigation }) => {
                     <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
 
                               <View style={{ flexDirection: 'row' , justifyContent: 'center'}}>
-                                        <ButtonClaimLocation onPress={() => update_User()} title="ที่ตั้งร้าน"></ButtonClaimLocation>
-                                        <ButtonClaimUpload onPress={() => update_User()} title="อัพโหลด"></ButtonClaimUpload>
+                                        <ButtonClaimLocation onPress={() => OpenMapPartner()} title="ที่ตั้งร้าน"></ButtonClaimLocation>
+                                        <ButtonClaimUpload onPress={() => handleChoosePhoto()} title="เพิ่มรูป"></ButtonClaimUpload>
                                         <ButtonClaimaSave onPress={() => create_WorkOrder_event()} title="ส่งเครม"></ButtonClaimaSave>
                               </View>
 
@@ -157,7 +233,7 @@ const Claim = ({ navigation }) => {
                                                   </View>
                                         </View>
 
-
+                                        <ButtonCancel onPress={() => create_WorkOrder_event()} title="ยกเลิก"></ButtonCancel>
 
                               </ScrollView>
                     </View>

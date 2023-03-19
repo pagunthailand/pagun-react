@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action } from '../Model/Action'
+import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder } from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ButtonSave from '../Other/ButtonSave';
 import ButtonRegisPhone from '../Other/ButtonRegisPhone';
@@ -12,8 +12,11 @@ import ButtonCancel from '../Other/ButtonCancel';
 const Claim = ({ navigation }) => {
           [formatted_warrantY_VALID_UTIL, setformatted_warrantY_VALID_UTIL] = useState('');
           [formatted_warrantY_VALID_FROM, setformatted_warrantY_VALID_FROM] = useState('');
-   
-          [ClaimDetail, setClaimDetail] = useState('');
+
+          [ClaimDetail, setClaimDetail] = useState({ detail: '' });
+          [data, setData] = useState({
+                    "detail": null,
+          });
           [data, setData] = useState({
                     eQ_ID: 0,
                     eQ_CODE: null,
@@ -83,11 +86,28 @@ const Claim = ({ navigation }) => {
                               alert("ไม่สำเร็จ")
                     }
           };
+          let lop = 0
+          const create_WorkOrder_event = async () => {
+                    console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
+                    lop++
+                    await create_WorkOrder(route.params.id, data.detail, Global.userId).then((res) => {
+                              console.log(res);
+                    }, (err) => {
+                              console.log('err', err);
+                    })
+
+          };
+
+          const Upload_event = async () => {
+                    navigation.navigate('Upload');
+
+          };
+
 
 
 
           const handleClaimDetailChange = (value) => {
-                    setData(prevData => ({ ...prevData, ClaimDetail: value }));
+                    setData(prevData => ({ ...prevData, detail: value }));
           }
           return (
 
@@ -118,8 +138,8 @@ const Claim = ({ navigation }) => {
                                                                       <Text style={style.bodyFG1}>ราคาที่ซื้อ : <Text style={style.bodyFG2}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'THB' }).format(data.eQ_VALUE)}</Text></Text>
 
                                                                       <TextInput placeholder="ระบุรายละเอียด เครมสินค้า"
-                                                                                multiline={true} 
-                                                                                value={ClaimDetail}
+                                                                                multiline={true}
+                                                                                value={data ? data.detail : ''}
                                                                                 onChangeText={handleClaimDetailChange}
                                                                                 style={style.input_area}
                                                                       />
@@ -128,12 +148,13 @@ const Claim = ({ navigation }) => {
                                         </View>
 
 
-                                        <View style={{ flex: 1 ,  flexDirection: 'row',}}>
+                                        <View style={{ flex: 1, flexDirection: 'row', }}>
                                                   <View style={{ flex: 0.5 }}>
                                                             <ButtonCancel onPress={() => update_User()} title="ยกเลิก"></ButtonCancel>
+                                                            <ButtonSave onPress={() => Upload_event()} title="อัพโหลด"></ButtonSave>
                                                   </View>
                                                   <View style={{ flex: 0.5 }}>
-                                                            <ButtonSave onPress={() => update_User()} title="บันทึกข้อมูลเครม"></ButtonSave>
+                                                            <ButtonSave onPress={() => create_WorkOrder_event()} title="บันทึกข้อมูลเครม"></ButtonSave>
                                                   </View>
                                         </View>
 

@@ -127,15 +127,17 @@ const Claim = ({ navigation }) => {
                               noData: true,
                     }
                     ImagePicker.launchImageLibrary(options, response => {
-                              if (response.assets[0]) {
-                                        //console.log(state.lenght);
+                              // console.log('=?', response,!response.didCancel);
+                              if (!response.didCancel)
+                                        if (response.assets[0]) {
+                                                  //console.log(state.lenght);
 
-                                        setState(oldArray => [response.assets[0], ...oldArray]);
-                                        //if(state == [])  setState(oldArray => [response.assets, ...oldArray]);
-                                        //Photo_List.push(state.photo[0])
-                                        console.log('response.assets', state);
-                                        handleUploadPhoto();
-                              }
+                                                  setState(oldArray => [response.assets[0], ...oldArray]);
+                                                  //if(state == [])  setState(oldArray => [response.assets, ...oldArray]);
+                                                  //Photo_List.push(state.photo[0])
+                                                  console.log('response.assets', state);
+                                                  handleUploadPhoto();
+                                        }
                     })
           }
 

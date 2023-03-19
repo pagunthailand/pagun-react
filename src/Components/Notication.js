@@ -89,20 +89,18 @@ const Notication = ({ navigation }) => {
       <TouchableOpacity onPress={() => setSelectedId_(item.id)}>
 
         <View style={styles.title_box}>
-          <View style={{ flex: 0.7, padding: 10, marginVertical: 2 }}>
-
+          <View style={{ flex: 1, padding: 10, marginVertical: 2 }}>
+            <Text style={{ color: '#444444', fontWeight: '300', fontSize: 12, paddingLeft: 10, textAlign: 'right' }}><View style={{
+              width: 10,
+              height: 10,
+              backgroundColor: item.isRead === true ? '#EFCDCD' : '#F47322',
+              borderRadius: 5
+            }}></View>{formattedDatetime}</Text>
             <Text style={{ color: '#000000', fontWeight: 'bold', paddingLeft: 10 }}>
-              <View style={{
-                width: 10,
-                height: 10,
-                backgroundColor: item.isRead === true ? '#EFCDCD' : '#F47322',
-                borderRadius: 5
-              }}></View>
+
               {item.nthTitle}</Text>
+
             <Text style={{ color: '#444444', fontWeight: '300', paddingLeft: 10 }}>{item.nthDetail}</Text>
-          </View>
-          <View style={{ flex: 0.3, padding: 10, marginVertical: 2 }}>
-            <Text style={{ color: '#444444', fontWeight: '300', fontSize: 10, paddingRight: 10, textAlign: 'right' }}>{formattedDatetime}</Text>
           </View>
         </View>
 
@@ -116,7 +114,7 @@ const Notication = ({ navigation }) => {
 
 
     <View style={styles.container}
-     >
+    >
       <Text style={styles.title_header}>อ่านทั้งหมด</Text>
       <FlatList
         data={data}

@@ -98,7 +98,7 @@ const Claim = ({ navigation }) => {
                               //console.log('paramnoti' , paramnoti);
                               var response = await SendNotificationSingleUser_Action(paramnoti);
                               if (response.ResultStatus == 200) {
-
+                                       
                               } else {
 
                               }
@@ -110,6 +110,7 @@ const Claim = ({ navigation }) => {
                     await create_WorkOrder(route.params.id, data.detail, Global.userId).then((res) => {
                               let title = 'เครม ' + data.eQ_NAME;
                               let detail = data.detail
+                              get_Equipment_ฺbyID();
                               send_Noti_welcome(title,detail)
                               console.log(res);
                     }, (err) => {

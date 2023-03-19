@@ -30,6 +30,7 @@ const History = ({ navigation }) => {
 
   [getnoti, setgetnoti] = useState({
     "wO_NO": null,
+    "eQ_ID": null,
     "eQ_NAME": null,
     "wO_STATUS": null,
     "description": null,
@@ -84,7 +85,7 @@ const History = ({ navigation }) => {
     const formattedDatetime = datetime.format('DD/MM/YYYY HH:mm');
     return (
 
-      <TouchableOpacity onPress={() => setSelectedId_(item.wO_NO)}>
+      <TouchableOpacity onPress={() => setSelectedId_(item.eQ_ID)}>
 
         <View style={styles.title_box}>
           <View style={{ flex: 0.7, padding: 10, marginVertical: 2 }}>
@@ -112,6 +113,7 @@ const History = ({ navigation }) => {
 
  
   const [searchValue, setSearchValue] = useState('');
+  if(data.length>0)
   filteredData = data.filter(item =>
     item.description.toLowerCase().includes(searchValue.toLowerCase()) ||
     item.wO_STATUS.toLowerCase().includes(searchValue.toLowerCase() ||

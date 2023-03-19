@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl, FlatList, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder, SendNotificationSingleUser_Action, GetWorkOrderLog_Action, GetWorkOrder_Action } from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,384 +16,414 @@ import axios from 'axios';
 import ImageView from "react-native-image-viewing";
 
 const Claim = ({ navigation }) => {
-          [formatted_warrantY_VALID_UTIL, setformatted_warrantY_VALID_UTIL] = useState('');
-          [formatted_warrantY_VALID_FROM, setformatted_warrantY_VALID_FROM] = useState('');
+  [formatted_warrantY_VALID_UTIL, setformatted_warrantY_VALID_UTIL] = useState('');
+  [formatted_warrantY_VALID_FROM, setformatted_warrantY_VALID_FROM] = useState('');
 
-          [ClaimDetail, setClaimDetail] = useState({ detail: '' });
+  [ClaimDetail, setClaimDetail] = useState({ detail: '' });
 
-          [data, setData] = useState({
-                    eQ_ID: 0,
-                    eQ_CODE: null,
-                    eQ_NAME: null,
-                    description: null,
-                    createDate: null,
-                    createBy: null,
-                    updateDate: null,
-                    updateBy: null,
-                    eQ_STATUS: null,
-                    warrantY_VALID_FROM: null,
-                    warrantY_VALID_UTIL: null,
-                    seriaL_NO: null,
-                    model: null,
-                    eQ_TYPE: null,
-                    eQ_VALUE: null,
-                    iD_USER: null,
-          });
-          let route = useRoute();
-          let { param_id } = route.params;
-          useEffect(() => {
+  [data, setData] = useState({
+    eQ_ID: 0,
+    eQ_CODE: null,
+    eQ_NAME: null,
+    description: null,
+    createDate: null,
+    createBy: null,
+    updateDate: null,
+    updateBy: null,
+    eQ_STATUS: null,
+    warrantY_VALID_FROM: null,
+    warrantY_VALID_UTIL: null,
+    seriaL_NO: null,
+    model: null,
+    eQ_TYPE: null,
+    eQ_VALUE: null,
+    iD_USER: null,
+  });
+  let route = useRoute();
+  let { param_id } = route.params;
+  useEffect(() => {
 
-                    const unsubscribe = navigation.addListener('focus', () => {
-                              get_Equipment_ฺbyID();
-                    }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      get_Equipment_ฺbyID();
+    }, []);
 
-                    return unsubscribe;
-          });
+    return unsubscribe;
+  });
 
-          const [refreshing, setRefreshing] = useState(false);
-          const onRefresh = () => {
-                    setRefreshing(true);
-                    get_Equipment_ฺbyID();
-                    setRefreshing(false)
-          };
-
-
-          const get_Equipment_ฺbyID = async () => {
-                    get_Equipment_ฺbyID_Action(route.params.id).then((res_GetUserByid_Action) => {
-                              data = res_GetUserByid_Action.Result.data[0];
-                              data = setData(data);
-                              console.log('data_wO_NO', res_GetUserByid_Action.Result.data[0].wO_NO);
-                              get_WorkOrder_event(res_GetUserByid_Action.Result.data[0].wO_NO)
-                              //console.log('data',res_GetUserByid_Action.Result.data);
-                              if (!data) {
-                                        const datetimeUTIL = moment(res_GetUserByid_Action.Result.warrantY_VALID_UTIL);
-                                        setformatted_warrantY_VALID_UTIL(datetimeUTIL.format('DD/MM/YYYY'))
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    setRefreshing(true);
+    get_Equipment_ฺbyID();
+    setRefreshing(false)
+  };
 
 
-                                        const datetimeFROM = moment(res_GetUserByid_Action.Result.warrantY_VALID_FROM);
-                                        setformatted_warrantY_VALID_FROM(datetimeFROM.format('DD/MM/YYYY'))
+  const get_Equipment_ฺbyID = async () => {
+    get_Equipment_ฺbyID_Action(route.params.id).then((res_GetUserByid_Action) => {
+      data = res_GetUserByid_Action.Result.data[0];
+      data = setData(data);
+      console.log('data_wO_NO', res_GetUserByid_Action.Result.data[0].wO_NO);
+      get_WorkOrder_event(res_GetUserByid_Action.Result.data[0].wO_NO)
+      //console.log('data',res_GetUserByid_Action.Result.data);
+      if (!data) {
+        const datetimeUTIL = moment(res_GetUserByid_Action.Result.warrantY_VALID_UTIL);
+        setformatted_warrantY_VALID_UTIL(datetimeUTIL.format('DD/MM/YYYY'))
 
 
-                              }
-
-                    }, (err) => {
-                              console.log(err);
-                    });
-          }
-          let [WoDetail, setWoDetail] = useState(
-                    {
-                              "create_Date": null,
-                              "description": null,
-                              "eQ_NAME": null,
-                              "erR_DESC": null,
-                              "wO_NO": null
-                    }
-          )
-          let ImgDetail = {}
-          const [visible, setIsVisible] = useState(false);
-          [data, setData] = useState({
-                    "erR_DESC": null,
-          });
-          const images = [
-                    {
-                      uri: "http://183.90.170.87:3000/FileUpload//1015/000015/48AECBA3-A5D5-44F0-A27F-E301FF1A4CBE.png",
-                    }
-                  ];
-          const get_WorkOrder_event = async (WO_ID) => {
-                    // console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
-                    await GetWorkOrder_Action(WO_ID).then((res) => {
-                              WoDetail = setWoDetail(res.Result.data.wono)
-                              ImgDetail = res.Result.data.img
-                              console.log('ImgDetail', ImgDetail);
-                    }, (err) => {
-                              console.log('err', err); 
-                    })
-
-          };
-
-          const [paramnoti, setparamnoti] = useState(
-                    {
-                              userid: 0,
-                              title: "",
-                              body: "",
-                              subtitle: ""
-                    });
-          const send_Noti_welcome = async (title, detail) => {
-                    AsyncStorage.getItem('OTPtoken', async (err, result) => {
-                              paramnoti.userid = Global.userId;
-                              paramnoti.title = title;
-                              paramnoti.body = detail;
-                              paramnoti.subtitle = "";
-
-                              //console.log('paramnoti' , paramnoti);
-                              var response = await SendNotificationSingleUser_Action(paramnoti);
-                              if (response.ResultStatus == 200) {
-
-                              } else {
-
-                              }
-                    });
-          };
-
-          const create_WorkOrder_event = async () => {
-                    // console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
-                    await create_WorkOrder(route.params.id, data.detail, Global.userId).then((res) => {
-                              let title = 'เครม ' + data.eQ_NAME;
-                              let detail = data.detail
-                              get_Equipment_ฺbyID();
-                              send_Noti_welcome(title, detail)
-                              console.log(res);
-                    }, (err) => {
-                              console.log('err', err);
-                    })
-
-          };
+        const datetimeFROM = moment(res_GetUserByid_Action.Result.warrantY_VALID_FROM);
+        setformatted_warrantY_VALID_FROM(datetimeFROM.format('DD/MM/YYYY'))
 
 
-          const [state, setState] = useState([]);
-          source = null;
-          handleChoosePhoto = () => {
-                    const options = {
-                              noData: true,
-                    }
-                    ImagePicker.launchImageLibrary(options, response => {
-                              // console.log('=?', response,!response.didCancel);
-                              if (!response.didCancel)
-                                        if (response.assets[0]) {
-                                                  //console.log(state.lenght);
+      }
 
-                                                  setState(oldArray => [response.assets[0], ...oldArray]);
-                                                  //if(state == [])  setState(oldArray => [response.assets, ...oldArray]);
-                                                  //Photo_List.push(state.photo[0])
-                                                  console.log('response.assets', state);
-                                                  handleUploadPhoto();
-                                        }
-                    })
-          }
+    }, (err) => {
+      console.log(err);
+    });
+  }
+  let [WoDetail, setWoDetail] = useState(
+    {
+      "create_Date": null,
+      "description": null,
+      "eQ_NAME": null,
+      "erR_DESC": null,
+      "wO_NO": null
+    }
+  )
+  let ImgDetail = {}
+  const [_ImgDetail, set_ImgDetail] = useState();
+  [data, setData] = useState({
+    "erR_DESC": null,
+  });
+  const images = [
+    {
+      uri: "http://183.90.170.87:3000/FileUpload//1015/000015/48AECBA3-A5D5-44F0-A27F-E301FF1A4CBE.png",
+    }
+  ];
+  const get_WorkOrder_event = async (WO_ID) => {
+    // console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
+    await GetWorkOrder_Action(WO_ID).then((res) => {
+      WoDetail = setWoDetail(res.Result.data.wono)
+      ImgDetail = res.Result.data.img
+      _ImgDetail = set_ImgDetail(res.Result.data.img)
+      console.log('ImgDetail', ImgDetail);
+    }, (err) => {
+      console.log('err', err);
+    })
 
-          handleClearPhoto = () => {
-                    setState([]);
-          }
+  };
+
+  const [paramnoti, setparamnoti] = useState(
+    {
+      userid: 0,
+      title: "",
+      body: "",
+      subtitle: ""
+    });
+  const send_Noti_welcome = async (title, detail) => {
+    AsyncStorage.getItem('OTPtoken', async (err, result) => {
+      paramnoti.userid = Global.userId;
+      paramnoti.title = title;
+      paramnoti.body = detail;
+      paramnoti.subtitle = "";
+
+      //console.log('paramnoti' , paramnoti);
+      var response = await SendNotificationSingleUser_Action(paramnoti);
+      if (response.ResultStatus == 200) {
+
+      } else {
+
+      }
+    });
+  };
+
+  const create_WorkOrder_event = async () => {
+    // console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
+    await create_WorkOrder(route.params.id, data.detail, Global.userId).then((res) => {
+      let title = 'เครม ' + data.eQ_NAME;
+      let detail = data.detail
+      get_Equipment_ฺbyID();
+      send_Noti_welcome(title, detail)
+      console.log(res);
+    }, (err) => {
+      console.log('err', err);
+    })
+
+  };
 
 
+  const [state, setState] = useState([]);
+  source = null;
+  handleChoosePhoto = () => {
+    const options = {
+      noData: true,
+    }
+    ImagePicker.launchImageLibrary(options, response => {
+      // console.log('=?', response,!response.didCancel);
+      if (!response.didCancel)
+        if (response.assets[0]) {
+          //console.log(state.lenght);
 
-          handleUploadPhoto = async () => {
+          setState(oldArray => [response.assets[0], ...oldArray]);
+          //if(state == [])  setState(oldArray => [response.assets, ...oldArray]);
+          //Photo_List.push(state.photo[0])
+          console.log('response.assets', state);
+          handleUploadPhoto();
+        }
+    })
+  }
 
-                    alert(WoDetail.wO_NO)
-
-                    let fromData = new FormData();
-
-                    let body = {
-                              UserId: parseInt(Global.userId),
-                              WoNo: WoDetail.wO_NO
-                    }
-                    Object.keys(body).forEach(key => {
-                              fromData.append(key, body[key]);
-                    });
-
-                    let value = []
-                    state.forEach((_state, index) => {
-                              value.push({
-                                        uri: Platform.OS === "android" ? _state.uri : _state.uri.replace("file://", ""),
-                                        type: _state.type,
-                                        name: _state.fileName
-                              }
-                              )
-                    });
-
-                    value.forEach(element => {
-                              fromData.append("formFile", element);
-                    });
+  handleClearPhoto = () => {
+    setState([]);
+  }
 
 
 
-                    const config = {
-                              headers: {
-                                        'content-type': 'multipart/form-data',
-                              },
-                    };
-                    console.log('createFormData', JSON.stringify(fromData));
+  handleUploadPhoto = async () => {
 
-                    try {
-                              let res = await axios.post("http://183.90.170.87:3000/api/FileUpload/UploadFile"
-                                        , fromData, config)
-                              console.log('Success Status : ', res.status, res);
+    alert(WoDetail.wO_NO)
 
-                    } catch (error) {
-                              console.log('error', error);
-                    }
+    let fromData = new FormData();
 
-          };
+    let body = {
+      UserId: parseInt(Global.userId),
+      WoNo: WoDetail.wO_NO
+    }
+    Object.keys(body).forEach(key => {
+      fromData.append(key, body[key]);
+    });
 
-          const OpenMapPartner = () => {
-                    alert('ที่ตั้งร้าน')
-          }
+    let value = []
+    state.forEach((_state, index) => {
+      value.push({
+        uri: Platform.OS === "android" ? _state.uri : _state.uri.replace("file://", ""),
+        type: _state.type,
+        name: _state.fileName
+      }
+      )
+    });
 
-
-          const handleClaimDetailChange = (value) => {
-                    setWoDetail(prevData => ({ ...prevData, erR_DESC: value }));
-          }
-          return (
-
-                    <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
-                               
-
-                              {data.eQ_STATUS_ID !== 1 ?
-                                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                                  <ButtonClaimLocation onPress={() => OpenMapPartner()} title="ที่ตั้งร้าน"></ButtonClaimLocation>
-                                                  <ButtonClaimUpload onPress={() => handleChoosePhoto()} title="เพิ่มรูป"></ButtonClaimUpload>
-                                                  {data.eQ_STATUS_ID == 0 ?
-                                                            <ButtonClaimaSave onPress={() => create_WorkOrder_event()} title="ส่งเครม"></ButtonClaimaSave>
-                                                            : ''}
-                                        </View>
-                                        : ''}
-                              <ScrollView style={{ flex: 1 }} refreshControl={
-                                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                              }>
-                                        <Text style={style.title_header}>สถานะของสินค้า</Text>
-                                        <View style={style.title_box}>
+    value.forEach(element => {
+      fromData.append("formFile", element);
+    });
 
 
-                                                  <Text style={style.title_headname}>
-                                                            {data.eQ_STATUS}</Text>
 
-                                        </View>
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+    console.log('createFormData', JSON.stringify(fromData));
 
-                                        <Text style={style.title_header}>รายละเอียด</Text>
-                                        <View style={style.title_box}>
-                                                  <Text style={style.title_headname}>
-                                                            {data.eQ_NAME}</Text>
-                                                  <View style={style.container2}>
-                                                            <View style={style.bodyFG1}>
-                                                                      <Text style={style.bodyFG1}>รายละเอียด  : <Text style={style.bodyFG2}>{data.description}</Text> </Text>
-                                                                      <Text style={style.bodyFG1}>Serial Number(S/N) : <Text style={style.bodyFG2}>{data.seriaL_NO}</Text> </Text>
-                                                                      <Text style={style.bodyFG1}>เริ่มต้นประกัน : <Text style={style.bodyFG2}>{formatted_warrantY_VALID_FROM}</Text></Text>
-                                                                      <Text style={style.bodyFG1}>สิ้นสุดประกัน : <Text style={style.bodyFG2}>{formatted_warrantY_VALID_UTIL}</Text></Text>
-                                                                      <Text style={style.bodyFG1}>จากร้าน : <Text style={style.bodyFG2}>{data.coM_NAME}</Text></Text>
-                                                                      <Text style={style.bodyFG1}>ราคาที่ซื้อ : <Text style={style.bodyFG2}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'THB' }).format(data.eQ_VALUE)}</Text></Text>
+    try {
+      let res = await axios.post("http://183.90.170.87:3000/api/FileUpload/UploadFile"
+        , fromData, config)
+      console.log('Success Status : ', res.status, res);
 
-                                                                      <TextInput placeholder="ระบุรายละเอียด เครมสินค้า"
-                                                                                multiline={true}
-                                                                                value={data ? WoDetail.erR_DESC : ''}
-                                                                                onChangeText={handleClaimDetailChange}
-                                                                                style={style.input_area}
-                                                                      />
-                                                            </View>
-                                                  </View>
-                                        </View>
+    } catch (error) {
+      console.log('error', error);
+    }
 
-                                        <ImageView
-                                                  images={images}
-                                                  imageIndex={0}
-                                                  visible={visible}
-                                                  onRequestClose={() => setIsVisible(false)}
-                                        />
-                                        
-                                        <ButtonCancel onPress={() => create_WorkOrder_event()} title="ยกเลิก"></ButtonCancel>
+  };
 
-                              </ScrollView>
-                    </View>
-          )
+  const OpenMapPartner = () => {
+    alert('ที่ตั้งร้าน')
+  }
+
+
+  const handleClaimDetailChange = (value) => {
+    setWoDetail(prevData => ({ ...prevData, erR_DESC: value }));
+  }
+
+  renderItem = ({ item }) => {
+    console.log('item', item);
+    return (
+
+      <View style={{
+        flex: 1,
+        flexDirection: 'row'
+      }}>
+        <Text> {item.urL_IMAGE}</Text>
+        <Image source={{ uri: item.urL_IMAGE }} style={{ width: 200, height: 200 }} />
+      </View>
+    );
+  };
+
+  // let renderItem = ({ item }) => {
+  //   return (
+  //     <Text> </Text>
+  //     <Image source={{ uri: item.urL_IMAGE }} style={{ width: 200, height: 200 }} />
+  //   )
+
+  // };
+
+  return (
+
+    <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
+
+      {data.eQ_STATUS_ID !== 1 ?
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          <ButtonClaimLocation onPress={() => OpenMapPartner()} title="ที่ตั้งร้าน"></ButtonClaimLocation>
+          <ButtonClaimUpload onPress={() => handleChoosePhoto()} title="เพิ่มรูป"></ButtonClaimUpload>
+          {data.eQ_STATUS_ID == 0 ?
+            <ButtonClaimaSave onPress={() => create_WorkOrder_event()} title="ส่งเครม"></ButtonClaimaSave>
+            : ''}
+        </View>
+        : ''}
+      <ScrollView style={{ flex: 1 }} refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
+        <Text style={style.title_header}>สถานะของสินค้า</Text>
+        <View style={style.title_box}>
+
+
+          <Text style={style.title_headname}>
+            {data.eQ_STATUS}</Text>
+
+        </View>
+
+        <Text style={style.title_header}>รายละเอียด</Text>
+        <View style={style.title_box}>
+          <Text style={style.title_headname}>
+            {data.eQ_NAME}</Text>
+          <View style={style.container2}>
+            <View style={style.bodyFG1}>
+              <Text style={style.bodyFG1}>รายละเอียด  : <Text style={style.bodyFG2}>{data.description}</Text> </Text>
+              <Text style={style.bodyFG1}>Serial Number(S/N) : <Text style={style.bodyFG2}>{data.seriaL_NO}</Text> </Text>
+              <Text style={style.bodyFG1}>เริ่มต้นประกัน : <Text style={style.bodyFG2}>{formatted_warrantY_VALID_FROM}</Text></Text>
+              <Text style={style.bodyFG1}>สิ้นสุดประกัน : <Text style={style.bodyFG2}>{formatted_warrantY_VALID_UTIL}</Text></Text>
+              <Text style={style.bodyFG1}>จากร้าน : <Text style={style.bodyFG2}>{data.coM_NAME}</Text></Text>
+              <Text style={style.bodyFG1}>ราคาที่ซื้อ : <Text style={style.bodyFG2}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'THB' }).format(data.eQ_VALUE)}</Text></Text>
+
+              <TextInput placeholder="ระบุรายละเอียด เครมสินค้า"
+                multiline={true}
+                value={WoDetail ? WoDetail.erR_DESC : ''}
+                onChangeText={handleClaimDetailChange}
+                style={style.input_area}
+              />
+            </View>
+          </View>
+        </View>
+        {/* <Image source={{ uri: "http://183.90.170.87:3000/FileUpload//1015/000015/48AECBA3-A5D5-44F0-A27F-E301FF1A4CBE.png" }} style={{ width: 200, height: 200 }} /> */}
+
+        <Text style={style.title_header}>รูปที่อัพโหลด</Text>
+        <View style={style.title_box}>
+          <FlatList
+            data={_ImgDetail}
+            renderItem={({ item }) =>
+              <Image source={{ uri: item.urL_IMAGE }} style={{ height: 400, margin: 20 }} />
+            }
+          />
+        </View>
+
+        <ButtonCancel onPress={() => create_WorkOrder_event()} title="ยกเลิก"></ButtonCancel>
+
+      </ScrollView>
+
+    </View>
+  )
+
+
 }
 
 const { width } = Dimensions.get('window');
 const isSmallScreen = width <= 375;
 const style = StyleSheet.create({
-          container2: {
-                    flexDirection: 'row',
-                    alignItems: 'flex-start',
-                    justifyContent: 'flex-start',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-          },
-          bodyFG1: {
-                    flex: 1,
-                    color: '#9E9E9E',
-                    margin: 2.5,
-                    marginLeft: 10,
-                    textAlign: 'left',
-                    fontSize: isSmallScreen ? 12 : 15,
-                    // bottom: '',
-          },
-          bodyFG2: {
-                    flex: 1,
-                    margin: 2.5,
-                    color: '#444444',
-                    fontWeight: '500',
-                    textAlign: 'left',
+  container2: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  bodyFG1: {
+    flex: 1,
+    color: '#9E9E9E',
+    margin: 2.5,
+    marginLeft: 10,
+    textAlign: 'left',
+    fontSize: isSmallScreen ? 12 : 15,
+    // bottom: '',
+  },
+  bodyFG2: {
+    flex: 1,
+    margin: 2.5,
+    color: '#444444',
+    fontWeight: '500',
+    textAlign: 'left',
 
-          },
-          title_header: {
-                    color: '#9E9E9E',
-                    fontSize: isSmallScreen ? 12 : 15,
-                    marginTop: 15,
-                    marginLeft: 20,
-                    marginRight: 25,
-                    textAlign: 'left',
-                    fontWeight: 'bold'
-          },
-          title_headname: {
-                    color: '#000000',
-                    fontSize: isSmallScreen ? 15 : 18,
-                    marginTop: 15,
-                    marginLeft: 20,
-                    marginRight: 25,
-                    textAlign: 'left',
-                    fontWeight: 'bold'
-          },
-          title_box: {
-                    backgroundColor: '#FFFFFF',
-                    marginTop: 5,
-                    paddingBottom: 15,
-                    borderRadius: 20
-          },
-          text_title_input: {
-                    color: '#9E9E9E',
-                    fontSize: isSmallScreen ? 10 : 12,
-                    marginTop: 5,
-                    marginLeft: 20,
-                    marginRight: 20,
-                    textAlign: 'left',
-                    fontWeight: '500'
-          },
-          input: {
-                    color: '#000000',
-                    marginTop: 5,
-                    paddingTop: 10,
-                    marginLeft: 20,
-                    marginRight: 20,
-                    height: 40,
-                    fontSize: isSmallScreen ? 15 : 18,
-                    textAlign: 'center',
-                    fontWeight: '500',
-                    textAlign: 'left',
-                    backgroundColor: '#FFFFFF',
-                    borderBottomColor: '#F6F6F6',
-                    borderBottomWidth: 1,
-                    flex: 1,
-          },
-          input_area: {
-                    color: '#000000',
-                    marginTop: 5,
-                    // paddingTop: 10,
-                    marginLeft: 10,
-                    marginRight: 10,
-                    height: 70,
-                    fontSize: isSmallScreen ? 15 : 18,
-                    textAlign: 'center',
-                    fontWeight: '500',
-                    textAlign: 'left',
-                    borderRadius: 15,
-                    backgroundColor: '#E5E5E5',
-                    flex: 1,
-          },
-          set_button: {
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    textAlign: 'right',
-                    paddingHorizontal: 10,
-          }
+  },
+  title_header: {
+    color: '#9E9E9E',
+    fontSize: isSmallScreen ? 12 : 15,
+    marginTop: 15,
+    marginLeft: 20,
+    marginRight: 25,
+    textAlign: 'left',
+    fontWeight: 'bold'
+  },
+  title_headname: {
+    color: '#000000',
+    fontSize: isSmallScreen ? 15 : 18,
+    marginTop: 15,
+    marginLeft: 20,
+    marginRight: 25,
+    textAlign: 'left',
+    fontWeight: 'bold'
+  },
+  title_box: {
+    backgroundColor: '#FFFFFF',
+    marginTop: 5,
+    paddingBottom: 15,
+    borderRadius: 20
+  },
+  text_title_input: {
+    color: '#9E9E9E',
+    fontSize: isSmallScreen ? 10 : 12,
+    marginTop: 5,
+    marginLeft: 20,
+    marginRight: 20,
+    textAlign: 'left',
+    fontWeight: '500'
+  },
+  input: {
+    color: '#000000',
+    marginTop: 5,
+    paddingTop: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    height: 40,
+    fontSize: isSmallScreen ? 15 : 18,
+    textAlign: 'center',
+    fontWeight: '500',
+    textAlign: 'left',
+    backgroundColor: '#FFFFFF',
+    borderBottomColor: '#F6F6F6',
+    borderBottomWidth: 1,
+    flex: 1,
+  },
+  input_area: {
+    color: '#000000',
+    marginTop: 5,
+    // paddingTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    height: 70,
+    fontSize: isSmallScreen ? 15 : 18,
+    textAlign: 'center',
+    fontWeight: '500',
+    textAlign: 'left',
+    borderRadius: 15,
+    backgroundColor: '#E5E5E5',
+    flex: 1,
+  },
+  set_button: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    textAlign: 'right',
+    paddingHorizontal: 10,
+  }
 
 });
 

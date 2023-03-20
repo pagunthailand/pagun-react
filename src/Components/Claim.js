@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl, FlatList, Image, Button, TouchableOpacity ,SafeAreaView} from 'react-native'
+import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl, FlatList, Image, Button, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder, SendNotificationSingleUser_Action, GetWorkOrderLog_Action, GetWorkOrder_Action } from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -136,8 +136,8 @@ const Claim = ({ navigation }) => {
   };
 
   const create_WorkOrder_event = async () => {
-    // console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
-    await create_WorkOrder(route.params.id, data.detail, Global.userId).then((res) => {
+    //console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
+    await create_WorkOrder(route.params.id, WoDetail.erR_DESC, Global.userId).then((res) => {
       let title = 'เครม ' + data.eQ_NAME;
       let detail = data.detail
       get_Equipment_ฺbyID();
@@ -217,6 +217,8 @@ const Claim = ({ navigation }) => {
     try {
       let res = await axios.post("http://183.90.170.87:3000/api/FileUpload/UploadFile"
         , fromData, config)
+
+      get_Equipment_ฺbyID();
       console.log('Success Status : ', res.status, res);
 
     } catch (error) {

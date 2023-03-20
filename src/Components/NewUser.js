@@ -64,7 +64,7 @@ const NewUser = ({ navigation }) => {
             paramnoti.subtitle = "";
 
 
-            
+
             //console.log('paramnoti' , paramnoti);
             var response = await SendNotificationSingleUser_Action(paramnoti);
             if (response.ResultStatus == 200) {
@@ -86,51 +86,51 @@ const NewUser = ({ navigation }) => {
         ID_USER: null
     })
     const Create_Equipment_newUser_itm1 = async () => {
-        input.EQ_CODE = '00000'+Global.userId
+        input.EQ_CODE = '00000' + Global.userId
         input.EQ_NAME = 'เครื่องหุงข้าวอัตโนมัติแบบ กึ่งสัมผัส ขนาน 5 ลิตร 1200 วัต รุ่น ' + param.name
         input.DESCRIPTION = 'หุงข้าวด้วย ระยะเวลา 5 ชั่วโมงแบบพร้อมทาน'
-        input.CreateBy = Global.userId
+        input.CreateBy = ''
         input.WARRANTY_VALID_FROM = '2022-03-03'
         input.WARRANTY_VALID_UTIL = '2024-03-03'
         input.EQ_VALUE = 6500
         input.ID_USER = Global.userId
 
-        console.log('input' , input);
+        console.log('input', input);
         await Create_Equipment(input).then(() => {
-            send_Noti_Create( input.EQ_NAME ,  input.DESCRIPTION)
-            console.log('Create_Equipment 1' , res);
+            send_Noti_Create('เครื่องหุงข้าวอัตโนมัติแบบ กึ่งสัมผัส ขนาน 5 ลิตร 1200 วัต รุ่น ' + param.name, 'หุงข้าวด้วย ระยะเวลา 5 ชั่วโมงแบบพร้อมทาน')
+            console.log('Create_Equipment 1', res);
         }, (err) => {
             console.log('err', err);
         })
     }
     const Create_Equipment_newUser_itm2 = async () => {
-        input.EQ_CODE = '00000'+Global.userId
+        input.EQ_CODE = '00000' + Global.userId
         input.EQ_NAME = 'รถเข็นไฟฟ้า แบบมอเตอร์ 2000watt รุ่น ' + param.name
         input.DESCRIPTION = 'รถเข็น 4 ล้อสีแดงฉ่ำ'
-        input.CreateBy = Global.userId
+        input.CreateBy = ''
         input.WARRANTY_VALID_FROM = '2022-03-03'
         input.WARRANTY_VALID_UTIL = '2024-03-03'
         input.EQ_VALUE = 6500
         input.ID_USER = Global.userId
-        await Create_Equipment(input).then((res) => { 
-            send_Noti_Create( input.EQ_NAME ,  input.DESCRIPTION)
-            console.log('Create_Equipment 1' , res);
+        await Create_Equipment(input).then((res) => {
+            send_Noti_Create('รถเข็นไฟฟ้า แบบมอเตอร์ 2000watt รุ่น ' + param.name, 'รถเข็น 4 ล้อสีแดงฉ่ำ');
+            console.log('Create_Equipment 1', res);
         }, (err) => {
             console.log('err', err);
         })
+
     }
 
-    const send_Noti_Create = async (title , body) => {
+    const send_Noti_Create = async (title, body) => {
         AsyncStorage.getItem('OTPtoken', async (err, result) => {
             paramnoti.userid = Global.userId;
-            paramnoti.title = 'สินค้าใหม่!! '+title;
+            paramnoti.title = 'สินค้าใหม่!! ' + title;
             paramnoti.body = body;
             paramnoti.subtitle = "";
 
             //console.log('paramnoti' , paramnoti);
             var response = await SendNotificationSingleUser_Action(paramnoti);
             if (response.ResultStatus == 200) {
-
             } else {
 
             }

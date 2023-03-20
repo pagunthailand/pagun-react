@@ -115,12 +115,15 @@ const Product = ({ navigation }) => {
             color: item.htmL_COLOR
           }}>
             {item.eQ_STATUS}</Text>
-          <Text style={{
-            fontSize: isSmallScreen ? 11 : 15,
-            fontWeight: 'bold',
-            textAlign: 'center',
-          }}>
-            ({item.wO_NO}){item.wO_STATUS}</Text>
+
+          {!!item.wO_NO ?
+            <Text style={{
+              fontSize: isSmallScreen ? 11 : 15,
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}>
+              ({item.wO_NO}){item.wO_STATUS}</Text>
+            : ''}
 
 
         </View>

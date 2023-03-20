@@ -264,7 +264,7 @@ export const get_Equipment_ฺbyID_Action = async (id) => {
 
 
 export const Create_Equipment = async (input) => {
-    var response = (await axios.get(Base_url + '/api/Equipment/', input))
+    var response = (await axios.post(Base_url + '/api/Equipment/', input))
     if (response.status == 200) {
         return {
             Result: response,
@@ -273,7 +273,7 @@ export const Create_Equipment = async (input) => {
     } else {
         return {
             StatusCode: response,
-            StatusCode: response.status
+            StatusCode: response.status 
         };
     }
 };

@@ -411,7 +411,7 @@ const style = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     marginTop: 5,
     paddingBottom: 15,
-    borderRadius: 20
+    borderRadius: 5
   },
   text_title_input: {
     color: '#9E9E9E',
@@ -449,7 +449,7 @@ const style = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '500',
     textAlign: 'left',
-    borderRadius: 15,
+    borderRadius: 5,
     backgroundColor: '#E5E5E5',
     flex: 1,
   },

@@ -6,7 +6,7 @@ const isSmallScreen = width <= 375;
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#3b50ce',
-    borderRadius: 15,
+    borderRadius: 5,
     padding: 8,
     marginLeft: '2%',
     marginRight: '2%',

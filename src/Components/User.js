@@ -278,7 +278,7 @@ const style = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     marginTop: 5,
     paddingBottom: 15,
-    borderRadius: 20
+    borderRadius: 5
   },
   text_title_input: {
     color: '#9E9E9E',

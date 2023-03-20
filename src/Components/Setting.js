@@ -78,7 +78,7 @@ const style = StyleSheet.create({
     marginTop: 5,
     paddingTop: 10,
     paddingBottom: 10,
-    borderRadius: 20,
+    borderRadius: 5,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -109,7 +109,7 @@ const style = StyleSheet.create({
     marginTop: 5,
     paddingTop: 10,
     paddingBottom: 10,
-    borderRadius: 20,
+    borderRadius: 5,
   },
   text_version: {
     color: '#444444',

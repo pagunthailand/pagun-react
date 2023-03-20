@@ -4,7 +4,7 @@ import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#0C590A',
-    borderRadius: 15,
+    borderRadius: 5,
     padding: 10,
     marginTop:45,
     marginLeft: '30%',

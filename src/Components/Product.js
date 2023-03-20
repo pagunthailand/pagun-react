@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     marginLeft: 0,
     marginRight: 0,
-    borderRadius: 15,
+    borderRadius: 5,
     height: 40,
     fontSize: 18,
     textAlign: 'left',
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     marginTop: 5,
     paddingBottom: 15,
-    borderRadius: 20,
+    borderRadius: 5,
     // flex: 1,
     // flexDirection: 'row'
   },

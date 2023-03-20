@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl, FlatList, Image } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl, FlatList, Image, Button, TouchableOpacity ,SafeAreaView} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder, SendNotificationSingleUser_Action, GetWorkOrderLog_Action, GetWorkOrder_Action } from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,7 +13,11 @@ import ButtonClaimUpload from '../Other/ButtonClaimUpload';
 import ButtonClaimLocation from '../Other/ButtonClaimLocation';
 import * as ImagePicker from 'react-native-image-picker';
 import axios from 'axios';
-import ImageView from "react-native-image-viewing";
+import {
+  ImageGallery,
+  ImageObject,
+} from '@georstat/react-native-image-gallery';
+
 
 const Claim = ({ navigation }) => {
   [formatted_warrantY_VALID_UTIL, setformatted_warrantY_VALID_UTIL] = useState('');
@@ -90,15 +94,10 @@ const Claim = ({ navigation }) => {
     }
   )
   let ImgDetail = {}
-  const [_ImgDetail, set_ImgDetail] = useState();
+  let [_ImgDetail, set_ImgDetail] = useState();
   [data, setData] = useState({
     "erR_DESC": null,
   });
-  const images = [
-    {
-      uri: "http://183.90.170.87:3000/FileUpload//1015/000015/48AECBA3-A5D5-44F0-A27F-E301FF1A4CBE.png",
-    }
-  ];
   const get_WorkOrder_event = async (WO_ID) => {
     // console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
     await GetWorkOrder_Action(WO_ID).then((res) => {
@@ -249,13 +248,14 @@ const Claim = ({ navigation }) => {
     );
   };
 
-  // let renderItem = ({ item }) => {
-  //   return (
-  //     <Text> </Text>
-  //     <Image source={{ uri: item.urL_IMAGE }} style={{ width: 200, height: 200 }} />
-  //   )
 
-  // };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isCustomGalleryOpen, setIsCustomGalleryOpen] = useState(false);
+
+  const openGallery = () => setIsOpen(true);
+  const closeGallery = () => setIsOpen(false);
+
 
   return (
 
@@ -306,15 +306,30 @@ const Claim = ({ navigation }) => {
         </View>
         {/* <Image source={{ uri: "http://183.90.170.87:3000/FileUpload//1015/000015/48AECBA3-A5D5-44F0-A27F-E301FF1A4CBE.png" }} style={{ width: 200, height: 200 }} /> */}
 
+
         <Text style={style.title_header}>รูปที่อัพโหลด</Text>
-        <View style={style.title_box}>
-          <FlatList
-            data={_ImgDetail}
-            renderItem={({ item }) =>
-              <Image source={{ uri: item.urL_IMAGE }} style={{ height: 400, margin: 20 }} />
-            }
-          />
-        </View>
+        <SafeAreaView style={style.title_box}>
+
+          <View style={style.screen}>
+            <ImageGallery
+              close={closeGallery}
+              images={_ImgDetail}
+              isOpen={isOpen}
+              hideThumbs
+              resizeMode="contain"
+            />
+          </View>
+
+          <TouchableOpacity onPress={openGallery}>
+            <FlatList
+              horizontal={true}
+              data={_ImgDetail} style={{ margin: 5, flexDirection: 'row' }}
+              renderItem={({ item }) =>
+                <Image source={{ uri: item.url }} style={{ width: 60, height: 60, marginRight: 10, marginLeft: 10, resizeMode: 'cover' }} />
+              }
+            />
+          </TouchableOpacity>
+        </SafeAreaView>
 
         <ButtonCancel onPress={() => create_WorkOrder_event()} title="ยกเลิก"></ButtonCancel>
 
@@ -329,6 +344,27 @@ const Claim = ({ navigation }) => {
 const { width } = Dimensions.get('window');
 const isSmallScreen = width <= 375;
 const style = StyleSheet.create({
+  screen: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  customImageContainer: {
+    alignItems: 'center',
+    borderRadius: 11,
+    height: '100%',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    width: '100%',
+  },
+  customImage: {
+    borderColor: 'green',
+    borderRadius: 250,
+    borderWidth: 3,
+    height: 300,
+    overflow: 'hidden',
+    width: 300,
+  },
   container2: {
     flexDirection: 'row',
     alignItems: 'flex-start',

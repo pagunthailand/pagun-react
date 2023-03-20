@@ -281,7 +281,7 @@ export const GetWorkOrderLog_Action = async (id) => {
 };
 
 export const GetWorkOrder_Action = async (id) => {
-    var response = (await axios.get(Base_url + '/api/WorkOrder/GetWorkOrder/' + id))
+    var response = (await axios.get(Base_url + '/api/WorkOrder/GetWorkOrder/USER/' + id))
     
     if (response.status == 200) {
         

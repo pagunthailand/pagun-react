@@ -179,7 +179,7 @@ const Claim = ({ navigation }) => {
 
   handleUploadPhoto = async () => {
 
-    alert(WoDetail.wO_NO)
+    //alert(WoDetail.wO_NO)
 
     let fromData = new FormData();
 

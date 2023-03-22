@@ -48,7 +48,7 @@ const History = ({ navigation }) => {
       .then(json => setData(json))
       .catch(error => console.error(error))
 
-   // console.log('response.Result ', data);
+    console.log('response.Result ', data);
   };
 
   setSelectedId_ = (id_) => {
@@ -90,13 +90,16 @@ const History = ({ navigation }) => {
         <View style={styles.title_box}>
           <View style={{ flex: 0.7, padding: 10, marginVertical: 2 }}>
 
-            <Text style={{ color: '#444444', fontWeight: 'bold', paddingLeft: 10 }}>
+            <Text style={{ color: '#444444', fontWeight: '300', fontSize: 12, paddingLeft: 10, textAlign: 'left' }}>
 
               {formattedDatetime}</Text>
             <Text style={{ color: '#000000', fontWeight: 'bold', paddingLeft: 10 }}>
 
+              {item.eQ_NAME}</Text>
+            <Text  style={{ color: '#444444', fontWeight: '300', fontSize: 12, paddingLeft: 10, textAlign: 'left' }}>
+
               {item.erR_DESC}</Text>
-           
+
           </View>
           <View style={{ flex: 0.3, padding: 10, marginVertical: 2 }}>
 

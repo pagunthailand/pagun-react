@@ -96,12 +96,12 @@ const History = ({ navigation }) => {
             <Text style={{ color: '#000000', fontWeight: 'bold', paddingLeft: 10 }}>
 
               {item.erR_DESC}</Text>
-            <Text style={{ color: '#000000', fontWeight: 'bold', paddingLeft: 10 }}>{item.description}</Text>
+           
           </View>
           <View style={{ flex: 0.3, padding: 10, marginVertical: 2 }}>
 
             <Text style={{ color: '#444444', fontWeight: 'bold', paddingRight: 10, textAlign: 'right' }}></Text>
-            <Text style={{ color: '#444444', fontWeight: 'bold', paddingRight: 10, textAlign: 'right' }}>{item.wO_STATUS}</Text>
+            <Text style={{ color: '#444444', fontWeight: 'bold', paddingRight: 10, textAlign: 'right' }}>{item.description}</Text>
           </View>
 
         </View>

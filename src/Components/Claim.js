@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl, FlatList, Image, Button, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl, FlatList, Image, Button, TouchableOpacity, SafeAreaView, TouchableHighlight } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder, SendNotificationSingleUser_Action, GetWorkOrderLog_Action, GetWorkOrder_Action } from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,7 +17,9 @@ import {
   ImageGallery,
   ImageObject,
 } from '@georstat/react-native-image-gallery';
-
+import { Swipeable } from 'react-native-gesture-handler';
+import Swipeout from 'react-native-swipeout';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Claim = ({ navigation }) => {
   [formatted_warrantY_VALID_UTIL, setformatted_warrantY_VALID_UTIL] = useState('');
@@ -250,7 +252,9 @@ const Claim = ({ navigation }) => {
     );
   };
 
-
+  handleDeleteImage = (val) => {
+    console.log(val);
+  }
 
   const [isOpen, setIsOpen] = useState(false);
   const [isCustomGalleryOpen, setIsCustomGalleryOpen] = useState(false);
@@ -258,6 +262,48 @@ const Claim = ({ navigation }) => {
   const openGallery = () => setIsOpen(true);
   const closeGallery = () => setIsOpen(false);
 
+
+  const renderSwipeable = (item) => {
+
+    let swipeBtns = [{
+      text: 'ลบรูปนี้',
+      backgroundColor: 'red',
+      underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+      onPress: () => { handleDelete(item) }
+    }];
+
+    const handleDelete = () => {
+      console.log(item)
+    };
+
+    return (
+      <View>
+        <TouchableOpacity onPress={openGallery} style={{ position: 'relative' }}>
+          <Image source={{ uri: item.url }} style={{ width: 100, height: 100, margin: 10, marginLeft: 0, resizeMode: 'cover' }} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => removeImage(item.url)}>
+          <Icon name="close" style={{
+            position: 'absolute',
+            height: 20,
+            width:20,
+            paddingHorizontal : 2,
+            borderRadius:10,
+            backgroundColor : 'red',
+            top: -120,
+            left: 90,
+            zIndex: 1,
+          }} size={20} color="#FFFFFF" />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+  const removeImage = (image) => {
+    alert(image)
+    console.log(image);
+    // const newImages = images.filter((item) => item.id !== image.id);
+    // setImages(newImages);
+  };
 
   return (
 
@@ -306,9 +352,6 @@ const Claim = ({ navigation }) => {
             </View>
           </View>
         </View>
-        {/* <Image source={{ uri: "http://183.90.170.87:3000/FileUpload//1015/000015/48AECBA3-A5D5-44F0-A27F-E301FF1A4CBE.png" }} style={{ width: 200, height: 200 }} /> */}
-
-
         <Text style={style.title_header}>รูปที่อัพโหลด</Text>
         <SafeAreaView style={style.title_box}>
 
@@ -320,17 +363,18 @@ const Claim = ({ navigation }) => {
               hideThumbs
               resizeMode="contain"
             />
+
           </View>
 
-          <TouchableOpacity onPress={openGallery}>
-            <FlatList
-              horizontal={true}
-              data={_ImgDetail} style={{ margin: 5, flexDirection: 'row' }}
-              renderItem={({ item }) =>
-                <Image source={{ uri: item.url }} style={{ width: 60, height: 60, marginRight: 10, marginLeft: 10, resizeMode: 'cover' }} />
-              }
-            />
-          </TouchableOpacity>
+          <FlatList
+            data={_ImgDetail}
+            numColumns={3}  
+            contentContainerStyle={{  padding: 20}}
+            keyExtractor={(item) => item.url}
+            renderItem={({ item }) => renderSwipeable(item)}
+          />
+
+
         </SafeAreaView>
 
         <ButtonCancel onPress={() => create_WorkOrder_event()} title="ยกเลิก"></ButtonCancel>
@@ -346,26 +390,14 @@ const Claim = ({ navigation }) => {
 const { width } = Dimensions.get('window');
 const isSmallScreen = width <= 375;
 const style = StyleSheet.create({
+  image: {
+    height: 200,
+    marginVertical: 5,
+  },
   screen: {
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-  },
-  customImageContainer: {
-    alignItems: 'center',
-    borderRadius: 11,
-    height: '100%',
-    justifyContent: 'center',
-    paddingHorizontal: 24,
-    width: '100%',
-  },
-  customImage: {
-    borderColor: 'green',
-    borderRadius: 250,
-    borderWidth: 3,
-    height: 300,
-    overflow: 'hidden',
-    width: 300,
   },
   container2: {
     flexDirection: 'row',

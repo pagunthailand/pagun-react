@@ -22,7 +22,6 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const Product = ({ navigation }) => {
-
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       getuser_Equipment();
@@ -48,12 +47,13 @@ const Product = ({ navigation }) => {
   let [data, setData] = useState([]);
   let [filteredData, setfilteredData] = useState([]);
   const getuser_Equipment = async () => {
+    setRefreshing(true);
     AsyncStorage.getItem('sessionID', async (err, result_sessionID) => {
       getuser_Equipment_Action(result_sessionID)
         .then(response => response.Result.data)
         .then(json => setData(json))
         .catch(error => console.error('error ==>', result_sessionID, error))
-
+       await  setRefreshing(false);
     });
   }
 

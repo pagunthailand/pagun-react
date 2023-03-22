@@ -2,6 +2,8 @@ apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: "com.google.gms.google-services"
 
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 import com.android.build.OutputFile
 
 /**
@@ -155,6 +157,7 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:31.2.3')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation project(':react-native-vector-icons')
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
 

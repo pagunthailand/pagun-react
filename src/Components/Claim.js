@@ -17,8 +17,6 @@ import {
   ImageGallery,
   ImageObject,
 } from '@georstat/react-native-image-gallery';
-import { Swipeable } from 'react-native-gesture-handler';
-import Swipeout from 'react-native-swipeout';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Claim = ({ navigation }) => {
@@ -138,7 +136,6 @@ const Claim = ({ navigation }) => {
   };
 
   const create_WorkOrder_event = async () => {
-    //console.log('ClaimDetail', lop, data.detail, Global.userId, route.params.id);
     await create_WorkOrder(route.params.id, WoDetail.erR_DESC, Global.userId).then((res) => {
       let title = 'เครม ' + data.eQ_NAME;
       let detail = data.detail
@@ -165,8 +162,6 @@ const Claim = ({ navigation }) => {
           //console.log(state.lenght);
 
           setState(oldArray => [response.assets[0], ...oldArray]);
-          //if(state == [])  setState(oldArray => [response.assets, ...oldArray]);
-          //Photo_List.push(state.photo[0])
           console.log('response.assets', state);
           handleUploadPhoto();
         }
@@ -265,42 +260,35 @@ const Claim = ({ navigation }) => {
 
   const renderSwipeable = (item) => {
 
-    let swipeBtns = [{
-      text: 'ลบรูปนี้',
-      backgroundColor: 'red',
-      underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
-      onPress: () => { handleDelete(item) }
-    }];
-
-    const handleDelete = () => {
-      console.log(item)
-    };
-
     return (
       <View>
-        <TouchableOpacity onPress={openGallery} style={{ position: 'relative' }}>
-          <Image source={{ uri: item.url }} style={{ width: 100, height: 100, margin: 10, marginLeft: 0, resizeMode: 'cover' }} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => removeImage(item.url)}>
-          <Icon name="close" style={{
+        <View>
+          <TouchableOpacity style={{
             position: 'absolute',
             height: 20,
-            width:20,
-            paddingHorizontal : 2,
-            borderRadius:10,
-            backgroundColor : 'red',
+            width: 20,
+            paddingHorizontal: 2,
+            borderRadius: 10,
+            backgroundColor: 'red',
             top: -120,
             left: 90,
             zIndex: 1,
-          }} size={20} color="#FFFFFF" />
-        </TouchableOpacity>
+          }}
+            onPress={() => removeImage(item)}>
+            <Icon name="close" size={20} color="#FFFFFF" />
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity onPress={openGallery} style={{ position: 'relative' }}>
+            <Image source={{ uri: item.url }} style={{ width: 100, height: 100, margin: 10, marginLeft: 0, resizeMode: 'cover' }} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
-  const removeImage = (image) => {
-    alert(image)
-    console.log(image);
+  const removeImage = () => {
+    alert(555)
+    //console.log(image);
     // const newImages = images.filter((item) => item.id !== image.id);
     // setImages(newImages);
   };
@@ -368,8 +356,8 @@ const Claim = ({ navigation }) => {
 
           <FlatList
             data={_ImgDetail}
-            numColumns={3}  
-            contentContainerStyle={{  padding: 20}}
+            numColumns={3}
+            contentContainerStyle={{ padding: 20 }}
             keyExtractor={(item) => item.url}
             renderItem={({ item }) => renderSwipeable(item)}
           />

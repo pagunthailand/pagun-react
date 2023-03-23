@@ -93,6 +93,16 @@ const Claim = ({ navigation }) => {
       "wO_NO": null
     }
   )
+
+  let [WoPermission, setPermission] = useState(
+    {
+      "cancel": null,
+      "location": null,
+      "image": null,
+      "open": null
+    }
+  )
+
   let ImgDetail = {}
   let [_ImgDetail, set_ImgDetail] = useState();
   [data, setData] = useState({
@@ -104,6 +114,8 @@ const Claim = ({ navigation }) => {
       WoDetail = setWoDetail(res.Result.data.wono)
       ImgDetail = res.Result.data.img
       _ImgDetail = set_ImgDetail(res.Result.data.img)
+      WoPermission= setPermission(res.Result.data)
+
       console.log('ImgDetail', ImgDetail);
     }, (err) => {
       console.log('err', err);
@@ -225,6 +237,16 @@ const Claim = ({ navigation }) => {
   };
 
   const OpenMapPartner = () => {
+    const latitude = "18.318509";
+    const longitude = "99.396712";
+    Platform.select({
+        ios: () => {
+            Linking.openURL('http://maps.apple.com/maps?daddr='+latitude+','+longitude);
+        },
+        android: () => {
+            Linking.openURL('http://maps.google.com/maps?daddr='+latitude+','+longitude);
+        }
+    });
     alert('ที่ตั้งร้าน')
   }
 
@@ -299,8 +321,14 @@ const Claim = ({ navigation }) => {
 
       {data.eQ_STATUS_ID !== 1 ?
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-          <ButtonClaimLocation onPress={() => OpenMapPartner()} title="ที่ตั้งร้าน"></ButtonClaimLocation>
+     {WoPermission.location==true ? 
+          <ButtonClaimLocation onPress={() => OpenMapPartner()} title="ที่ตั้งร้าน"></ButtonClaimLocation> : false
+          }
+            {WoPermission.image==true ? 
           <ButtonClaimUpload onPress={() => handleChoosePhoto()} title="เพิ่มรูป"></ButtonClaimUpload>
+          : false
+          }
+
           {data.eQ_STATUS_ID == 0 ?
             <ButtonClaimaSave onPress={() => create_WorkOrder_event()} title="ส่งเครม"></ButtonClaimaSave>
             : ''}

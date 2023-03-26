@@ -20,6 +20,7 @@ import VartifyOTPphone2 from './VartifyOTPphone2';
 import { updateFCMToken_Action } from '../Model/Action';
 import Claim from './Claim';
 import Upload from './Upload';
+import PrivacyPolicy from './PrivacyPolicy';
 
 const ProductStack = createNativeStackNavigator();
 function ProductStackScreen() {
@@ -52,6 +53,7 @@ function ProductStackScreen() {
             alignItems: 'flex-start',
           },
         }}></ProductStack.Screen>
+
 
       <ProductStack.Screen name='Upload' component={Upload}
         options={{
@@ -249,6 +251,7 @@ export default function MainMenu() {
                 && route.name == 'VartifyOTP' ? 'none' : 'flex'
                   && route.name == 'NewUser' ? 'none' : 'flex'
                     && route.name == 'Onpage' ? 'none' : 'flex'
+                    && route.name == 'PrivacyPolicy' ? 'none' : 'flex'
           },
 
           tabBarActiveTintColor: '#000000',
@@ -265,6 +268,7 @@ export default function MainMenu() {
         <Tab.Screen name="Register" component={Register} options={{ tabBarItemStyle: { display: 'none', } }} />
         <Tab.Screen name="VartifyOTP" component={VartifyOTP} options={{ tabBarItemStyle: { display: 'none', } }} />
         <Tab.Screen name="NewUser" component={NewUser} options={{ tabBarItemStyle: { display: 'none', } }} />
+        <Tab.Screen name="PrivacyPolicy" component={PrivacyPolicy} options={{ tabBarItemStyle: { display: 'none', } }} />
 
       </Tab.Navigator>
 

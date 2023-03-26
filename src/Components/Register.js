@@ -9,7 +9,10 @@ import Global from '../Global';
 
 
 const Register = ({ navigation }) => {
-          useEffect(() => {
+
+
+
+  useEffect(() => {
                     const backAction = () => {
                       return true; // disable back button
                     };
@@ -37,7 +40,9 @@ const Register = ({ navigation }) => {
 
           const [phoneNumber, setPhoneNumber] = useState('');
           const [phone, setphone] = useState({ phone: '' });
-
+          const link_privcy = () => {
+             navigation.navigate('PrivacyPolicy')
+          }
           const send_OTP = async () => {
                     phone.phone = phoneNumber;
                     var response = await send_OTP_Action(phone);
@@ -52,6 +57,7 @@ const Register = ({ navigation }) => {
                               // Global.userPhone = phoneNumber;
                               // AsyncStorage.setItem('isLoggedIn', 'true');
                               // Global.isLogin = 'true'
+
                               navigation.navigate('NewUser')
                               alert("ไม่สามารถส่ง OTP ได้กรุณาตรวจสอบเบอร์" + Global.isLogin)
                     }
@@ -71,14 +77,14 @@ const Register = ({ navigation }) => {
                                         <TextInput style={style.inputPhone}
                                                   value={phoneNumber}
                                                   onChangeText={text => setPhoneNumber(text)}
-                                                  maxLength={10}
+                                                  maxLength={10} 
                                                   keyboardType="numeric"
                                                   placeholder="เบอร์โทรศัพท์ 10 หลัก"></TextInput>
 
                                         <ButtonRegister style={style.ButtonPhone} onPress={() => send_OTP()} title="ต่อไป" />
                               </View>
                               <View style={{ backgroundColor: '#F6F6F6', flex: 0.05 }} >
-                                        <Text style={style.title_end}>ข้อกำหนด</Text>
+                                        <Text style={style.title_end}  onPress={() =>link_privcy()}>ข้อกำหนด</Text>
                               </View>
 
                     </View>

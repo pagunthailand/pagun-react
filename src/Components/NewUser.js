@@ -21,7 +21,9 @@ const NewUser = ({ navigation }) => {
             "phoneNumber": "",
             "fcmToken": ""
         });
-
+    const link_privcy = () => {
+            navigation.navigate('PrivacyPolicy')
+        }
     const Create_User = async () => {
         param.phoneNumber = Global.userPhone;
         param.name = name;
@@ -163,7 +165,7 @@ const NewUser = ({ navigation }) => {
                 <ButtonRegister onPress={() => Create_User()} title="บันทึก" />
             </View>
             <View style={{ backgroundColor: '#F6F6F6', flex: 0.05 }} >
-                <Text style={style.title_end}>ข้อกำหนด</Text>
+                <Text style={style.title_end} onPress={()=>link_privcy()}>ข้อกำหนด</Text>
             </View>
 
         </View>

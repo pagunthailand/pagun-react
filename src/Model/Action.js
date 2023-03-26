@@ -324,6 +324,21 @@ export const create_WorkOrder = async (EQ_ID, ERR_DESC, REPORTED_BY_ID) => {
         return {
             StatusCode: response.status
         };
+    } 
+};
+export const deleteImage = async (id) => {
+    var response = (await axios.get(Base_url + '/api/FileUpload/DeleteFile/' + id ))
+    if (response.status == 200) {
+        return {
+        //    Result: response.data.value,
+           // ResultStatus: response.data.statusCode,
+            StatusCode: response.status
+        }
+    } else {
+        return {
+            StatusCode: response.status,
+          //  ResultStatus: response.data.statusCode,
+           // StatusCode: response.status
+        };
     }
 };
-

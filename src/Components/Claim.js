@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl, FlatList, Image, Button, TouchableOpacity, SafeAreaView, TouchableHighlight } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder, SendNotificationSingleUser_Action, GetWorkOrderLog_Action, GetWorkOrder_Action } from '../Model/Action'
+import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder, SendNotificationSingleUser_Action, GetWorkOrderLog_Action, GetWorkOrder_Action,deleteImage } from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ButtonSave from '../Other/ButtonSave';
 import ButtonRegisPhone from '../Other/ButtonRegisPhone';
@@ -122,7 +122,7 @@ const Claim = ({ navigation }) => {
     })
 
   };
-
+ 
   const [paramnoti, setparamnoti] = useState(
     {
       userid: 0,
@@ -154,6 +154,18 @@ const Claim = ({ navigation }) => {
       get_Equipment_ฺbyID();
       send_Noti_welcome(title, detail)
       console.log(res);
+    }, (err) => {
+      console.log('err', err);
+    })
+
+  };
+  const deleteImages = async (inte) => {
+    await deleteImage(inte).then((res) => {
+      if(res.StatusCode==200){
+        get_Equipment_ฺbyID();
+        alert("ลบสำเร็จ");
+      }
+     
     }, (err) => {
       console.log('err', err);
     })
@@ -308,10 +320,11 @@ const Claim = ({ navigation }) => {
       </View>
     );
   };
-  const removeImage = (image) => {
-    
-    alert(image)
-    //console.log(image);
+  const removeImage = (images) => {
+
+    deleteImages(images.iD_ROW);
+   // alert(images.iD_ROW) 
+   // console.log("imffffaga",images);
     // const newImages = images.filter((item) => item.id !== image.id);
     // setImages(newImages);
   };

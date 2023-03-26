@@ -308,8 +308,9 @@ const Claim = ({ navigation }) => {
       </View>
     );
   };
-  const removeImage = () => {
-    alert(555)
+  const removeImage = (image) => {
+    
+    alert(image)
     //console.log(image);
     // const newImages = images.filter((item) => item.id !== image.id);
     // setImages(newImages);
@@ -329,9 +330,9 @@ const Claim = ({ navigation }) => {
           : false
           }
 
-          {data.eQ_STATUS_ID == 0 ?
+          {WoPermission.open == true ?
             <ButtonClaimaSave onPress={() => create_WorkOrder_event()} title="ส่งเครม"></ButtonClaimaSave>
-            : ''}
+            : false}
         </View>
         : ''}
       <ScrollView style={{ flex: 1 }} refreshControl={

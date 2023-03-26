@@ -342,3 +342,21 @@ export const deleteImage = async (id) => {
         };
     }
 };
+ 
+export const UpdateStatusWorkOrders = async (tWoNo,nStatus) => { 
+    
+    var response = (await axios.get(Base_url +'/api/WorkOrder/UpdateStatusWorkOrder/'+tWoNo+'/'+nStatus))
+    if (response.status == 200) {
+        return {
+        //    Result: response.data.value,
+           // ResultStatus: response.data.statusCode,
+            StatusCode: response.status
+        }
+    } else {
+        return {
+            StatusCode: response.status,
+          //  ResultStatus: response.data.statusCode,
+           // StatusCode: response.status
+        };
+    }
+};

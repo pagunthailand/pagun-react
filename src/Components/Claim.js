@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, Dimensions, ScrollView, RefreshControl, FlatList, Image, Button, TouchableOpacity, SafeAreaView, TouchableHighlight } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder, SendNotificationSingleUser_Action, GetWorkOrderLog_Action, GetWorkOrder_Action,deleteImage } from '../Model/Action'
+import { GetUserByid_Action, UpdateUser_Action, get_Equipment_ฺbyID_Action, send_OTP_Action, create_WorkOrder,SendNotificationSingleUser_Action, GetWorkOrderLog_Action, GetWorkOrder_Action,deleteImage ,UpdateStatusWorkOrders} from '../Model/Action'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ButtonSave from '../Other/ButtonSave';
 import ButtonRegisPhone from '../Other/ButtonRegisPhone';
@@ -115,7 +115,7 @@ const Claim = ({ navigation }) => {
       ImgDetail = res.Result.data.img
       _ImgDetail = set_ImgDetail(res.Result.data.img)
       WoPermission= setPermission(res.Result.data)
-
+ //console.log('WoPermission',res.Result.data);
       console.log('ImgDetail', ImgDetail);
     }, (err) => {
       console.log('err', err);
@@ -171,8 +171,20 @@ const Claim = ({ navigation }) => {
     })
 
   };
+  const UpdateStatusWorkOrderFN = async (tWoNo,nStatus) => {
+    await UpdateStatusWorkOrders(tWoNo,nStatus).then((res) => {
+      if(res.StatusCode==200){
+        get_Equipment_ฺbyID();
+        alert("ยกเลิกสำเร็จ");
+      }
+     
+    }, (err) => {
+      console.log('err', err);
+    })
 
+  };
 
+  
   const [state, setState] = useState([]);
   source = null;
   handleChoosePhoto = () => {
@@ -328,7 +340,11 @@ const Claim = ({ navigation }) => {
     // const newImages = images.filter((item) => item.id !== image.id);
     // setImages(newImages);
   };
-
+  const UpdateStatusWorkOrder = (tWoNo,nStatus) => {
+  
+    UpdateStatusWorkOrderFN(tWoNo,nStatus);
+  
+  };
   return (
 
     <View style={{ backgroundColor: '#F6F6F6', flex: 1 }}>
@@ -406,8 +422,10 @@ const Claim = ({ navigation }) => {
 
 
         </SafeAreaView>
-
-        <ButtonCancel onPress={() => create_WorkOrder_event()} title="ยกเลิก"></ButtonCancel>
+        {WoPermission.cancel == true ?
+             <ButtonCancel onPress={() => UpdateStatusWorkOrder(data.wO_NO,9)} title="ยกเลิก"></ButtonCancel>
+            : false}
+     
 
       </ScrollView>
 

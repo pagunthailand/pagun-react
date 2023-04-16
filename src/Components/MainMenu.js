@@ -11,6 +11,7 @@ import Notication from './Notication';
 import User from './User';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Register from './Register';
+import Promotion from './Promotion';
 import NewUser from './NewUser';
 import VartifyOTP from './VartifyOTP';
 import Global from '../Global';
@@ -21,6 +22,7 @@ import { updateFCMToken_Action } from '../Model/Action';
 import Claim from './Claim';
 import Upload from './Upload';
 import PrivacyPolicy from './PrivacyPolicy';
+import DetailPromotion from './DetailPromotion';
 
 const ProductStack = createNativeStackNavigator();
 function ProductStackScreen() {
@@ -72,6 +74,7 @@ function ProductStackScreen() {
   );
 }
 
+
 const HistoryStack = createNativeStackNavigator();
 function HistoryStackScreen() {
   return (
@@ -94,7 +97,43 @@ function HistoryStackScreen() {
     </HistoryStack.Navigator>
   );
 }
+const PromotionStack = createNativeStackNavigator();
+function PromotionStackScreen() {
+  return (
+    <PromotionStack.Navigator>
+      <PromotionStack.Screen name="โปรโมชั่น" component={Promotion}
+        options={{
+          headerShadowVisible: false,
+          title: '',
+          headerStyle: {
+            backgroundColor: '#F6F6F6', //Set Header color
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            alignItems: 'flex-start',
+          },
+          headerLeft: () => <ActionBarLogo />,
+        }}
+      ></PromotionStack.Screen>
+    
+    <PromotionStack.Screen name='รายละเอียดสินค้า' component={DetailPromotion}
+        options={{
+          headerShadowVisible: false,
+          headerTintColor: '#000000',
+          title: 'รายละเอียดสินค้า',
+          headerStyle: {
+            backgroundColor: '#F6F6F6', //Set Header color
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            alignItems: 'flex-start',
+          },
+        }}></PromotionStack.Screen>
 
+    
+    </PromotionStack.Navigator>
+  );
+}
 const NoticationStack = createNativeStackNavigator();
 function NoticationStackScreen() {
   return (
@@ -228,6 +267,13 @@ export default function MainMenu() {
                 return <Image source={require('../assets/Navi/Histy_active.png')} style={{ width: 25, height: 25, }} />;
               }
             }
+            else if (route.name === 'โปรโมชั่น') {
+              if (!focused) {
+                return <Image source={require('../assets/Navi/PromotioninActive.png')} style={{ width: 25, height: 25, }} />;
+              } else {
+                return <Image source={require('../assets/Navi/PromotionActive.png')} style={{ width: 25, height: 25, }} />;
+              }
+            }
             else if (route.name === 'แจ้งเตือน') {
               if (!focused) {
                 return <Image source={require('../assets/Navi/Notification_inactive.png')} style={{ width: 25, height: 25, }} />;
@@ -262,6 +308,7 @@ export default function MainMenu() {
 
         <Tab.Screen name="สินค้า" component={ProductStackScreen} />
         <Tab.Screen name="ประวัติ" component={HistoryStackScreen} />
+        <Tab.Screen name="โปรโมชั่น" component={PromotionStackScreen} />
         <Tab.Screen name="แจ้งเตือน" component={NoticationStackScreen} />
         <Tab.Screen name="ผู้ใช้" component={UserStackScreen} />
 

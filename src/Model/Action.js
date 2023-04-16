@@ -348,12 +348,33 @@ export const UpdateStatusWorkOrders = async (tWoNo,nStatus) => {
     var response = (await axios.get(Base_url +'/api/WorkOrder/UpdateStatusWorkOrder/'+tWoNo+'/'+nStatus))
     if (response.status == 200) {
         return {
+            Result: response,
         //    Result: response.data.value,
            // ResultStatus: response.data.statusCode,
             StatusCode: response.status
         }
     } else {
         return {
+            Result: response,
+            StatusCode: response.status,
+          //  ResultStatus: response.data.statusCode,
+           // StatusCode: response.status
+        };
+    }
+};
+
+export const GetEqType = async () => { 
+    
+    var response = (await axios.get(Base_url +'/api/Equipment/GetEqType'))
+    if (response.status == 200) {
+        return {
+           Result: response.data,
+           // ResultStatus: response.data.statusCode,
+            StatusCode: response.status
+        }
+    } else {
+        return {
+            Result: response.data,
             StatusCode: response.status,
           //  ResultStatus: response.data.statusCode,
            // StatusCode: response.status

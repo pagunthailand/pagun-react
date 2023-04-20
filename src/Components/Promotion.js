@@ -1,31 +1,36 @@
 import { View, Text, FlatList, StyleSheet, Image,TouchableOpacity  } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { GetEqType, updateReadNotication_action } from '../Model/Action';
+import { GetEqType, GetProductAll } from '../Model/Action';
 
 const Promotion = ({ navigation }) => {
-  const DATA = [
-    { id: '1', name: 'Item 1', image: 'https://fastly.picsum.photos/id/480/200/200.jpg?hmac=q_kzh_8Ih85_5t_jN3rcD3npeNBLA41oDGtQZVkmmYs' },
-    { id: '2', name: 'Item 2', image: 'https://fastly.picsum.photos/id/480/200/200.jpg?hmac=q_kzh_8Ih85_5t_jN3rcD3npeNBLA41oDGtQZVkmmYs' },
-    { id: '3', name: 'Item 3', image: 'https://fastly.picsum.photos/id/480/200/200.jpg?hmac=q_kzh_8Ih85_5t_jN3rcD3npeNBLA41oDGtQZVkmmYs' },
-    { id: '4', name: 'Item 4', image: 'https://fastly.picsum.photos/id/480/200/200.jpg?hmac=q_kzh_8Ih85_5t_jN3rcD3npeNBLA41oDGtQZVkmmYs' },
-    { id: '5', name: 'Item 5', image: 'https://fastly.picsum.photos/id/480/200/200.jpg?hmac=q_kzh_8Ih85_5t_jN3rcD3npeNBLA41oDGtQZVkmmYs' },
-    { id: '6', name: 'Item 6', image: 'https://fastly.picsum.photos/id/480/200/200.jpg?hmac=q_kzh_8Ih85_5t_jN3rcD3npeNBLA41oDGtQZVkmmYs' },
-  ];
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      GetEqTypeByuserids();
+      GetEqTypes();
+     GetEqProductAll(1,6,0,"");
     });
     return unsubscribe;
   }, [navigation]);
 
   let [DATAs, setData] = useState([]);
-  setSelectedId_ = (id) => {
-
+  setSelectedId_s = (ids) => {
+    GetEqProductAll(1,6,ids,"")
    // updateReadNotication(id);
   }
+  let [DATA, setDatad] = useState([]);
+  
+  const GetEqProductAll = async (nPage,nItemPerPage,nType,tName) => {
+    
+     GetProductAll(nPage,nItemPerPage,nType,tName)
+    .then(response => response.Result)
+    .then(json => setDatad(json))
+    .catch(error => console.error(error))
 
+    console.log('response.Result ', DATA);
+   //console.log('response.Result ', response);
+  };
 
-  const GetEqTypeByuserids = async () => {
+  const GetEqTypes = async () => {
     GetEqType()
     .then(response => response.Result)
     .then(json => setData(json))
@@ -43,7 +48,6 @@ const Promotion = ({ navigation }) => {
   
    
   
-    //console.log('response.Result ', data);
   };
 setSelectedId_ = (id_) => {
 
@@ -55,23 +59,28 @@ setSelectedId_ = (id_) => {
  
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      GetEqTypeByuserids();
+      GetEqTypes();
     });
     return unsubscribe;
   }, [navigation]);
 
   
     const renderItems = ({ item }) => (
-        <TouchableOpacity style={styless.button} >
+        <TouchableOpacity style={styless.button} onPress={() => setSelectedId_s(item.value)} >
           <Text style={styless.text}>{item.label}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> 
       ); 
     const renderItem = ({ item }) => (
       <TouchableOpacity style={styles.container}  onPress={() => setSelectedId_(item.id)}>
         <View style={styles.item}  >
-        <Image source={{ uri: item.image }} style={styles.image} />
-        <Text style={styles.texts}>{item.name}</Text>
-        <Text style={styles.text}>{item.name}</Text>
+        <Image source={{ uri: item.productImage }} style={styles.image} />
+      
+        <View  style={styles.itemds}   >
+        <Text style={styles.textr}>{item.priceSale} ฿</Text>
+        <Text style={styles.texttyg}>{item.price} ฿</Text>
+        </View>   
+        <Text style={styles.textnb}>{item.productName}</Text>
+        <Text style={styles.text}>{item.productBy}</Text> 
       </View>              
         </TouchableOpacity>
       );
@@ -99,59 +108,96 @@ setSelectedId_ = (id_) => {
   )
 }
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    paddingTop: 1,
-    },
-    item: {
-      flex: 1,
-      flexDirection: 'column',
-      margin: 1,
-      height: 200,
-    },
-    
-    image: {
-      flex: 1,
-      resizeMode: 'cover',
-    },
-    texts: {
-        textAlign: 'center',
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginTop: 2,
-        color: '#000',
-      },
-    text: {
-        
+  container: {
+    flex: 1,
+  paddingTop: 1,
+  },
+  item: {
+    flex: 1,
+    flexDirection: 'column',
+    margin: 1,
+    height: 200,
+  },
+  itemds: {
+
+    flexDirection: 'row',
+  
+  },
+  
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+  texts: {
       textAlign: 'center',
       fontSize: 14,
       fontWeight: 'bold',
-      marginBottom: 10,
-    },
-  });
-  const styless = StyleSheet.create({
-    container: {
-       marginBottom:2,
-      flex: 1,
-      height:3,
-      alignItems: 'center',
-      justifyContent: 'center',
-      
-    },
-    button: {
-        marginBottom:10,
-      height:40,
-      backgroundColor: '#fff',
-      padding: 10,
-      color:'#000',
-      margin: 5,
-      borderRadius: 25,
-    },
-    text: {
+      marginTop: 2,
       color: '#000',
-      fontSize: 14,
-      fontWeight: 'bold',
     },
-  });
+  text: {
+    marginRight:10,
+   
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  
+  },
+  textnb: {
+    marginRight:10,
+   
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#000',
+  
+  },
+  textty: {
+    marginRight:10,
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: 'bold',
+
+  },
+  texttyg: {
+    marginRight:10,
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: 'bold',
+
+    textDecorationLine: 'line-through', textDecorationStyle: 'solid',
+  },
+  textr: {
+    marginRight:10,
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#FF0000',
+  },
+});
+const styless = StyleSheet.create({
+  container: {
+     marginBottom:2,
+    flex: 1,
+    height:3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    
+  },
+  button: {
+      marginBottom:10,
+    height:40,
+    backgroundColor: '#fff',
+    padding: 10,
+    color:'#000',
+    margin: 5,
+    borderRadius: 25,
+  },
+  text: {
+    color: '#000',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+});
+
   
 export default Promotion

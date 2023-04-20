@@ -380,4 +380,25 @@ export const GetEqType = async () => {
            // StatusCode: response.status
         };
     }
+    
+};
+
+export const GetProductAll = async (nPage,nItemPerPage,nType,tName) => { 
+    
+    var response = (await axios.get(Base_url +'/api/Promotion/GetProductAll?Page='+nPage+'&ItemPerPage='+nItemPerPage+'&type='+nType+'&name='+tName))
+    if (response.status == 200) {
+        return {
+           Result: response.data,
+           // ResultStatus: response.data.statusCode,
+            StatusCode: response.status
+        }
+    } else {
+        return {
+            Result: response.data,
+            StatusCode: response.status,
+          //  ResultStatus: response.data.statusCode,
+           // StatusCode: response.status
+        };
+    }
+    
 };
